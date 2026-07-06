@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Aether — L6 · The Experience (prototype)</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --paper:#EFF2F3; --card:#FFFFFF; --ink:#13242E; --ink2:rgba(19,36,46,.6);
+  --faint:rgba(19,36,46,.4); --line:rgba(19,36,46,.12); --line2:rgba(19,36,46,.06);
+  --teal:#135B7C; --teal-lift:#2C86B0; --teal-soft:rgba(19,91,124,.1);
+  --mono:'SF Mono','JetBrains Mono','IBM Plex Mono',ui-monospace,monospace;
+  --pad:clamp(20px,4vw,60px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Montserrat',system-ui,sans-serif;color:var(--ink);min-height:100vh;background:var(--paper);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.6;
+  background-image:linear-gradient(var(--line2) 1px,transparent 1px),linear-gradient(90deg,var(--line2) 1px,transparent 1px);
+  background-size:46px 46px;
+  -webkit-mask-image:radial-gradient(120% 90% at 50% 16%,#000 26%,transparent 76%);
+          mask-image:radial-gradient(120% 90% at 50% 16%,#000 26%,transparent 76%)}
+.wrap{position:relative;z-index:1;max-width:1320px;margin:0 auto;padding:clamp(48px,8vh,104px) var(--pad)}
+
+.eyebrow{display:flex;align-items:center;gap:14px;font-size:12px;font-weight:700;letter-spacing:.24em;color:var(--ink2)}
+.eyebrow .n{font-family:var(--mono);color:var(--teal);font-weight:400}
+.datum{display:flex;flex-direction:column;gap:3px;margin-left:4px}
+.datum span{height:3px;width:30px;background:var(--ink);opacity:.8;display:block}
+.datum span:nth-child(2){width:18px;opacity:.45}
+h1{font-weight:300;font-size:clamp(28px,4.6vw,56px);line-height:1.05;letter-spacing:-.015em;margin:20px 0 0}
+h1 .b{font-weight:600}h1 .t{color:var(--teal)}
+.lead{margin-top:18px;max-width:56ch;font-size:clamp(14px,1.5vw,17px);line-height:1.6;color:var(--ink2)}
+.lead b{color:var(--ink);font-weight:600}
+
+/* ── control row: flow player (left) · web/mobile toggle (right), bottom-aligned ───── */
+.controlbar{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  margin-top:clamp(30px,4.6vh,46px)}
+
+.flowbar{display:flex;align-items:stretch;background:#fff;border:1px solid var(--line);border-radius:12px;
+  box-shadow:0 14px 34px -18px rgba(19,36,46,.5);overflow:hidden;max-width:100%}
+.flowbar .pb{flex:0 0 auto;width:46px;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  background:none;border:none;border-right:1px solid var(--line2);color:var(--teal)}
+.flowbar .pb .ic{width:0;height:0;border-left:11px solid currentColor;border-top:7px solid transparent;border-bottom:7px solid transparent}
+.flowbar .pb.playing .ic{border:none;width:9px;height:11px;box-shadow:inset 3px 0 currentColor,inset -3px 0 currentColor}
+.flowbar .segs{display:flex;overflow:hidden}
+.fseg{position:relative;padding:11px 16px;display:flex;flex-direction:column;gap:3px;border-right:1px solid var(--line2);min-width:0;transition:.3s;cursor:pointer;background:none}
+.fseg:last-child{border-right:none}
+.fseg .fi{font-family:var(--mono);font-size:8.5px;letter-spacing:.06em;color:var(--faint)}
+.fseg .fl{font-size:12px;font-weight:600;color:var(--faint);white-space:nowrap;transition:.3s}
+.fseg.done .fl{color:var(--ink2)}.fseg.done .fi{color:var(--teal)}
+.fseg.cur .fl{color:var(--teal)}.fseg.cur .fi{color:var(--teal)}
+.fseg .uf{position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--teal);transition:width .25s linear}
+.fseg.done .uf{width:100%}.fseg.cur .uf{width:var(--p,0%)}
+
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;padding:3px;background:var(--card);flex:0 0 auto}
+.seg button{font-family:inherit;font-size:12.5px;font-weight:600;color:var(--ink2);background:none;border:none;border-radius:6px;padding:9px 18px;cursor:pointer;display:flex;align-items:center;gap:7px;transition:.2s}
+.seg button svg{width:14px;height:14px;stroke:currentColor;stroke-width:1.7;fill:none}
+.seg button.on{background:var(--teal);color:#fff}
+
+/* ── two-column: caption (left) · device visual (right) ───── */
+.l6{display:grid;grid-template-columns:minmax(240px,27%) 1fr;gap:clamp(28px,4vw,56px);
+  margin-top:clamp(30px,4.6vh,46px);align-items:stretch}
+
+.exp{display:flex;flex-direction:column}
+.exp .stepno{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--faint);text-transform:uppercase;margin-bottom:14px}
+.exp .key{animation:fade .45s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.exp .eta{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+.exp .st{font-size:clamp(22px,2.8vw,32px);font-weight:600;line-height:1.12;letter-spacing:-.015em}
+.exp .sd{margin-top:12px;font-size:15px;line-height:1.6;color:var(--ink2)}
+.exp .badge{display:inline-flex;align-items:center;gap:7px;margin-top:16px;font-family:var(--mono);font-size:10px;
+  letter-spacing:.08em;color:var(--teal);background:var(--teal-soft);border-radius:4px;padding:7px 11px;width:fit-content}
+.exp .tail{margin-top:auto;padding-top:24px}
+.spec{display:flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card);width:fit-content;max-width:100%}
+.spec .c{padding:9px 13px;border-right:1px solid var(--line2);font-family:var(--mono);font-size:11px;color:var(--ink);white-space:nowrap}
+.spec .c:last-child{border-right:none}
+.spec .c b{color:var(--faint);font-weight:400;font-size:8px;letter-spacing:.12em;display:block;margin-bottom:3px}
+
+/* right: device */
+.device{display:flex;flex-direction:column}
+.dv-stage{position:relative;height:clamp(420px,58vh,600px);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.frame{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  opacity:0;transform:scale(.97);pointer-events:none;transition:opacity .35s ease,transform .35s cubic-bezier(.2,.7,.3,1)}
+.frame.show{opacity:1;transform:scale(1);pointer-events:auto}
+
+/* ── placeholder screen (stages without a dedicated design yet) ───── */
+.ph{width:min(100%,940px);aspect-ratio:940/620;max-height:100%;border-radius:10px;overflow:hidden;
+  background:#0B141C;border:1px solid rgba(255,255,255,.06);box-shadow:0 24px 50px -34px rgba(19,36,46,.6);
+  display:flex;flex-direction:column;font-family:var(--mono);color:#fff}
+.ph .ph-nav{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.ph .ph-nav .brand{font-weight:700;letter-spacing:.22em;font-size:11px}
+.ph .ph-nav .links{display:flex;gap:18px;font-size:10.5px;color:rgba(255,255,255,.4)}
+.ph .ph-nav .links b{color:#fff;font-weight:600}
+.ph-body{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px}
+.ph-body .tag{font-size:9.5px;letter-spacing:.16em;color:rgba(255,255,255,.28)}
+.ph-body .lab{font-size:15px;font-weight:600;letter-spacing:.02em;color:rgba(255,255,255,.75)}
+.ph-body .sub{font-size:10.5px;color:rgba(255,255,255,.32);max-width:38ch;text-align:center;line-height:1.5}
+.ph-mob{width:100%;height:100%;background:#0B141C;color:#fff;font-family:var(--mono);display:flex;flex-direction:column}
+.ph-mob .ph-nav{padding:24px 16px 10px}
+
+/* ── coded FacOS production dashboard (Production step only) ───── */
+.ps{width:min(100%,940px);max-height:100%;aspect-ratio:940/650;display:flex;flex-direction:column;
+  background:#0B141C;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.06);
+  box-shadow:0 24px 50px -34px rgba(19,36,46,.6);font-family:var(--mono);color:#fff}
+.ps-nav{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid rgba(255,255,255,.08);flex:0 0 auto}
+.ps-nav .brand{font-weight:700;letter-spacing:.22em;font-size:11px}
+.ps-nav .links{display:flex;gap:18px;font-size:10.5px;color:rgba(255,255,255,.4);letter-spacing:.02em}
+.ps-nav .links b{color:#fff;font-weight:600}
+.ps-nav .status{display:flex;align-items:center;gap:6px;font-size:9.5px;letter-spacing:.06em;color:rgba(255,255,255,.55)}
+.dotgreen{width:5px;height:5px;border-radius:50%;background:#8FE3B4;animation:pulse 1.8s ease-in-out infinite;display:inline-block}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+.ps-body{display:flex;flex:1;min-height:0}
+.ps-side{width:190px;flex:0 0 auto;border-right:1px solid rgba(255,255,255,.08);padding:14px 14px 0;display:flex;flex-direction:column;gap:12px;overflow:hidden}
+.ps-side .lab{font-size:8px;letter-spacing:.12em;color:rgba(255,255,255,.35)}
+.ps-side .wo{font-size:12px;font-weight:600;letter-spacing:.02em}
+.ps-prog{display:flex;align-items:center;justify-content:space-between;font-size:9px;color:rgba(255,255,255,.5)}
+.ps-bar{height:3px;border-radius:2px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:5px}
+.ps-bar i{display:block;height:100%;width:0;background:#2C86B0;animation:fillbar50 1.6s ease forwards .3s}
+@keyframes fillbar50{to{width:50%}}
+.ps-details{display:grid;grid-template-columns:1fr 1fr;gap:8px 0;font-size:9.5px}
+.ps-details div b{display:block;color:rgba(255,255,255,.3);font-weight:400;font-size:7.5px;letter-spacing:.08em;margin-bottom:2px}
+.ps-ops{list-style:none;display:flex;flex-direction:column;gap:7px;font-size:9.5px;margin-top:2px}
+.ps-ops li{display:flex;align-items:center;gap:7px;color:rgba(255,255,255,.32)}
+.ps-ops li .ck{width:12px;height:12px;border-radius:50%;border:1px solid rgba(255,255,255,.25);flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:7px}
+.ps-ops li.done{color:rgba(255,255,255,.62)}
+.ps-ops li.done .ck{background:#2C86B0;border-color:#2C86B0}
+.ps-ops li.cur{color:#fff;font-weight:600}
+.ps-ops li.cur .ck{border-color:#2C86B0;background:#0B141C;box-shadow:0 0 0 3px rgba(44,134,176,.25)}
+.ps-ops li.cur .ck i{width:5px;height:5px;border-radius:50%;background:#2C86B0}
+
+.ps-main{flex:1;display:flex;flex-direction:column;min-width:0}
+.ps-main-head{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;font-size:9.5px;letter-spacing:.1em;color:rgba(255,255,255,.4)}
+.ps-live{display:flex;align-items:center;gap:6px;color:#8FE3B4}
+
+.ps-view{flex:1;position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(120% 100% at 50% 20%,#101c26 0%,#0b141c 70%)}
+.ps-rig{width:62%;position:relative}
+.ps-rig .spindle{width:14px;height:64px;margin:0 auto;background:linear-gradient(180deg,#3a4a58,#1b2731);border-radius:2px;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+.ps-rig .tool{width:4px;height:16px;margin:0 auto;background:#8FA1AC}
+.ps-rig .part{margin-top:8px;height:46px;border-radius:23px;background:linear-gradient(180deg,#DCE4E8 0%,#9AA7AF 55%,#7C8991 100%);box-shadow:0 10px 24px -10px rgba(0,0,0,.55)}
+.ps-rig .bed{margin-top:6px;height:8px;border-radius:2px;background:#182430;border:1px solid rgba(255,255,255,.06)}
+.ps-tag{position:absolute;top:10px;left:10px;font-size:8px;color:rgba(255,255,255,.35);letter-spacing:.04em}
+
+.ps-foot{border-top:1px solid rgba(255,255,255,.08);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex:0 0 auto}
+.ps-foot .op b,.ps-foot .est b{display:block;font-size:7.5px;letter-spacing:.1em;color:rgba(255,255,255,.3);font-weight:400;margin-bottom:2px}
+.ps-foot .op span{font-size:11px;font-weight:600}
+.ps-foot .est{text-align:right}
+.ps-foot .est span{font-size:11px;font-weight:600;color:#2C86B0}
+.ps-specs{display:flex;gap:16px;padding:0 16px 12px;flex:0 0 auto}
+.ps-specs div b{display:block;font-size:7px;letter-spacing:.1em;color:rgba(255,255,255,.3);font-weight:400;margin-bottom:2px}
+.ps-specs div span{font-size:10px;color:rgba(255,255,255,.75)}
+
+.webshot{width:100%;height:100%;border-radius:10px;overflow:hidden;box-shadow:0 24px 50px -28px rgba(19,36,46,.6);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center}
+.webshot img{width:100%;height:100%;object-fit:contain;display:block}
+.phone{height:100%;max-height:100%;aspect-ratio:390/844;border:11px solid #1b2a33;border-radius:36px;overflow:hidden;background:#0f1920;box-shadow:0 26px 46px -30px rgba(19,36,46,.6);position:relative}
+.phone .notch{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:90px;height:6px;border-radius:4px;background:#000;opacity:.5;z-index:2}
+.phone img{display:block;width:100%;height:100%;object-fit:cover}
+.phone-raw{height:100%;max-height:100%;display:flex;align-items:center;justify-content:center}
+.phone-raw img{max-height:100%;width:auto;display:block;filter:drop-shadow(0 22px 40px rgba(19,36,46,.35))}
+.psm{width:100%;height:100%;display:flex;flex-direction:column;color:#fff;font-family:var(--mono);background:#0B141C}
+.psm-nav{padding:24px 16px 10px;display:flex;align-items:center;justify-content:space-between;font-size:10px;letter-spacing:.18em;font-weight:700}
+.psm-nav .status{display:flex;align-items:center;gap:5px;font-weight:400;letter-spacing:.05em;color:rgba(255,255,255,.5);font-size:8.5px}
+.psm-body{padding:6px 16px;display:flex;flex-direction:column;gap:10px}
+.psm .wo{font-size:13px;font-weight:600}
+.psm-bar{height:3px;border-radius:2px;background:rgba(255,255,255,.1);overflow:hidden}
+.psm-bar i{display:block;height:100%;width:0;background:#2C86B0;animation:fillbar50 1.6s ease forwards .3s}
+.psm-view{margin:6px 16px;flex:1;border-radius:8px;background:radial-gradient(120% 100% at 50% 20%,#101c26 0%,#0b141c 70%);display:flex;align-items:center;justify-content:center;position:relative}
+.psm-ops{padding:0 16px 20px;display:flex;flex-direction:column;gap:8px;font-size:10px}
+.psm-ops div{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.35)}
+.psm-ops div.cur{color:#fff;font-weight:600}
+.psm-ops div .ck{width:13px;height:13px;border-radius:50%;border:1px solid rgba(255,255,255,.25);flex:0 0 auto}
+.psm-ops div.cur .ck{border-color:#2C86B0;box-shadow:0 0 0 3px rgba(44,134,176,.25)}
+
+/* ── coded Shipment tracking + support screen (Shipment step only, light theme) ───── */
+.sh{width:min(100%,960px);max-height:100%;aspect-ratio:960/640;display:flex;flex-direction:column;
+  background:#fff;border-radius:10px;overflow:hidden;border:1px solid var(--line);
+  box-shadow:0 24px 50px -34px rgba(19,36,46,.6);color:var(--ink)}
+.sh-nav{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid var(--line);flex:0 0 auto;background:#F7F8F9}
+.sh-nav .brand{font-family:var(--mono);font-weight:700;letter-spacing:.22em;font-size:11px}
+.sh-nav .links{display:flex;gap:18px;font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+.sh-nav .links b{color:var(--teal);font-weight:600}
+.sh-nav .status{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:var(--ink2)}
+.dotgreen-d{width:5px;height:5px;border-radius:50%;background:#3FAE72;animation:pulse 1.8s ease-in-out infinite;display:inline-block}
+
+.sh-body{display:flex;flex:1;min-height:0}
+.sh-side{width:190px;flex:0 0 auto;border-right:1px solid var(--line);padding:14px 14px 0;display:flex;flex-direction:column;gap:12px;overflow:hidden;background:#FBFCFC}
+.sh-side .lab{font-family:var(--mono);font-size:8px;letter-spacing:.12em;color:var(--faint)}
+.sh-side .wo{font-size:13px;font-weight:700}
+.sh-prog{display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:9px;color:var(--ink2)}
+.sh-bar{height:3px;border-radius:2px;background:var(--line);overflow:hidden;margin-top:5px}
+.sh-bar i{display:block;height:100%;width:0;background:var(--teal);animation:fillbar60 1.6s ease forwards .3s}
+@keyframes fillbar60{to{width:60%}}
+.sh-stepper{display:flex;flex-direction:column;font-size:10.5px}
+.sh-step{display:flex;align-items:center;gap:8px;position:relative;padding-bottom:16px}
+.sh-step:last-child{padding-bottom:0}
+.sh-step::before{content:"";position:absolute;left:6px;top:15px;bottom:-2px;width:1px;background:var(--line)}
+.sh-step:last-child::before{display:none}
+.sh-step .ck{width:13px;height:13px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff;background:var(--faint)}
+.sh-step.done .ck{background:var(--teal)}
+.sh-step.cur .ck{background:#fff;border:2px solid var(--teal)}
+.sh-step.cur span{font-weight:700}
+.sh-step.pending span{color:var(--faint)}
+.sh-details{display:flex;flex-direction:column;gap:6px;font-family:var(--mono);font-size:9.5px;color:var(--ink2)}
+.sh-details div{display:flex;justify-content:space-between}
+.sh-details div b{color:var(--faint);font-weight:400}
+.sh-details div span{color:var(--ink)}
+
+.sh-main{flex:1;display:flex;flex-direction:column;min-width:0}
+.sh-main-head{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--ink2)}
+.sh-live{display:flex;align-items:center;gap:6px;color:#3FAE72}
+.sh-map{flex:1;position:relative;background:linear-gradient(180deg,#F1F5F6,#E7EEF0);display:flex;align-items:center;padding:0 40px}
+.sh-route{position:relative;width:100%;height:2px;background:var(--line)}
+.sh-route .prog{position:absolute;left:0;top:0;height:100%;width:42%;background:var(--teal)}
+.sh-route .stop{position:absolute;top:50%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid var(--faint)}
+.sh-route .stop.done{border-color:var(--teal);background:var(--teal)}
+.sh-route .stop.cur{border-color:var(--teal);background:#fff;box-shadow:0 0 0 4px rgba(19,91,124,.18)}
+.sh-route .lbl{position:absolute;top:16px;transform:translateX(-50%);font-family:var(--mono);font-size:8px;color:var(--faint);white-space:nowrap}
+.sh-pill{position:absolute;top:-30px;transform:translateX(-50%);background:var(--teal);color:#fff;font-family:var(--mono);font-size:8.5px;padding:5px 9px;border-radius:6px;white-space:nowrap}
+.sh-eta{position:absolute;top:14px;right:16px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-family:var(--mono);text-align:center;box-shadow:0 8px 18px -12px rgba(19,36,46,.3)}
+.sh-eta b{display:block;font-size:7px;letter-spacing:.1em;color:var(--faint);font-weight:400;margin-bottom:3px}
+.sh-eta span{font-size:11px;font-weight:700}
+
+.sh-stats{display:flex;border-top:1px solid var(--line);border-bottom:1px solid var(--line);flex:0 0 auto}
+.sh-stats div{flex:1;padding:9px 16px;font-family:var(--mono);border-right:1px solid var(--line)}
+.sh-stats div:last-child{border-right:none}
+.sh-stats div b{display:block;font-size:7.5px;letter-spacing:.1em;color:var(--faint);font-weight:400;margin-bottom:3px}
+.sh-stats div span{font-size:11px;font-weight:700}
+
+.sh-lower{display:flex;flex:1;min-height:0}
+.sh-events{flex:1;padding:12px 16px;overflow:hidden}
+.sh-events .lab{font-family:var(--mono);font-size:8px;letter-spacing:.12em;color:var(--faint);margin-bottom:10px}
+.sh-chat{width:230px;flex:0 0 auto;border-left:1px solid var(--line);display:flex;flex-direction:column;background:#FBFCFC}
+.sh-chat-head{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line);font-size:10.5px;font-weight:700}
+.sh-chat-head .av{width:20px;height:20px;border-radius:5px;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px}
+.sh-chat-head small{display:block;font-weight:400;color:#3FAE72;font-size:8.5px}
+.sh-msgs{flex:1;padding:10px 14px;display:flex;flex-direction:column;gap:7px;overflow:hidden}
+.msg{font-size:9.5px;line-height:1.4;padding:7px 9px;border-radius:8px;max-width:88%}
+.msg.in{background:var(--line2);align-self:flex-start;border-bottom-left-radius:2px}
+.msg.out{background:var(--teal);color:#fff;align-self:flex-end;border-bottom-right-radius:2px}
+.sh-input{padding:8px 10px;border-top:1px solid var(--line);display:flex;gap:6px}
+.sh-input .fld{flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;padding:7px 10px;font-size:9px;color:var(--faint)}
+.sh-input .snd{width:26px;height:26px;border-radius:50%;background:var(--teal);flex:0 0 auto}
+
+.cta{margin-top:36px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.cta a{font-size:14px;font-weight:600;color:#fff;background:var(--teal);border-radius:7px;padding:13px 26px;text-decoration:none;transition:.2s}
+.cta a:hover{background:var(--teal-lift)}.cta .hint{font-size:13px;color:var(--ink2)}
+.note{margin-top:38px;padding:14px 18px;border-left:2px solid var(--teal);font-size:12.5px;line-height:1.6;color:var(--ink2);max-width:90ch;background:rgba(19,91,124,.05)}
+.note b{color:var(--ink);font-weight:600}
+
+@media(max-width:860px){
+  .l6{grid-template-columns:1fr;gap:24px}
+  .device{order:-1}
+  .dv-stage{height:clamp(360px,66vh,560px)}
+  .controlbar{flex-direction:column;align-items:stretch}
+  .flowbar{flex-wrap:nowrap;max-width:100%;overflow-x:auto}
+  .fseg{padding:9px 11px}.fseg .fl{font-size:11px}
+  .seg{align-self:flex-start}
+  .ps-side,.sh-side{width:150px}
+  .sh-chat{width:190px}
+}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.08s!important;animation-duration:.001s!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div class="eyebrow"><span class="n">04</span> THE EXPERIENCE
+      <span class="datum"><span></span><span></span></span>
+    </div>
+    <h1>Industrial power.<br><span class="b t">Consumer simplicity.</span></h1>
+    <p class="lead">Behind every order is the full Aether system — APG, FacOS, QMS, the cell on the floor.
+       For you, it's an upload and a tracking link. <b>The same flow, on any screen.</b></p>
+  </header>
+
+  <div class="controlbar">
+    <div class="flowbar">
+      <button class="pb playing" id="pb" aria-label="Play/pause"><span class="ic"></span></button>
+      <div class="segs" id="segs"></div>
+    </div>
+    <div class="seg" id="seg">
+      <button class="on" data-m="web"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="1"/><path d="M8 20h8M12 17v3"/></svg>Web</button>
+      <button data-m="mob"><svg viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg>Mobile</button>
+    </div>
+  </div>
+
+  <div class="l6">
+    <div class="exp" id="exp">
+      <div class="stepno" id="stepno"></div>
+      <div class="key" id="key">
+        <div class="eta" id="eta"></div>
+        <div class="st" id="st"></div>
+        <div class="sd" id="sd"></div>
+        <div class="badge" id="badge"></div>
+      </div>
+      <div class="tail">
+        <div class="spec">
+          <div class="c"><b>PART</b>AE-2207-A</div><div class="c"><b>MATERIAL</b>6061-T6</div>
+          <div class="c"><b>OPERATION</b><span id="opv">5-axis mill</span></div><div class="c"><b>NODE</b>Fairview PA</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="device">
+      <div class="dv-stage" id="dvStage">
+
+        <!-- 0 Upload — placeholder -->
+        <div class="frame" data-stage="0" data-m="web"><div class="webshot"><img src="../assets/images/04-experience-01.png" alt="Aether APG — My projects (upload)"/></div></div>
+        <div class="frame" data-stage="0" data-m="mob"><div class="phone"><span class="notch"></span><img src="../assets/images/04-experience-02.jpg" alt="Aether — My projects (mobile)"/></div></div>
+
+        <!-- 1 Quote — placeholder -->
+        <div class="frame" data-stage="1" data-m="web"><div class="webshot"><img src="../assets/images/04-experience-03.jpg" alt="Aether APG — Review quote"/></div></div>
+        <div class="frame" data-stage="1" data-m="mob"><div class="phone"><span class="notch"></span><img src="../assets/images/04-experience-04.jpg" alt="Aether — Review quote (mobile)"/></div></div>
+
+        <!-- 2 Production — FacOS dashboard (final) -->
+        <div class="frame" data-stage="2" data-m="web">
+          <div class="webshot"><img src="../assets/images/04-experience-05.png" alt="Aether FacOS — Production (live machining view)"/></div>
+        </div>
+        <div class="frame" data-stage="2" data-m="mob"><div class="phone"><span class="notch"></span><img src="../assets/images/04-experience-04.jpg" alt="Aether — Review quote (mobile)"/></div></div>
+
+        <!-- 3 Inspection — placeholder -->
+        <div class="frame" data-stage="3" data-m="web"><div class="ph"><div class="ph-nav"><div class="brand">AETHER</div><div class="links">Production · <b>QMS</b> · Orders</div></div><div class="ph-body"><span class="tag">STEP 04 · INSPECTION</span><span class="lab">In-line CMM screen</span><span class="sub">Design pending — dimension-by-dimension results and traceability record.</span></div></div></div>
+        <div class="frame" data-stage="3" data-m="mob"><div class="phone"><span class="notch"></span><img src="../assets/images/04-experience-04.jpg" alt="Aether — Review quote (mobile)"/></div></div>
+
+        <!-- 4 Shipment — coded tracking + support screen (final) -->
+        <div class="frame" data-stage="4" data-m="web">
+          <div class="sh">
+            <div class="sh-nav">
+              <div class="brand">AETHER</div>
+              <div class="links">Dashboard · Orders · <b>Production</b> · QMS</div>
+              <div class="status"><span class="dotgreen-d"></span>CELL 4B · ONLINE</div>
+            </div>
+            <div class="sh-body">
+              <div class="sh-side">
+                <div><div class="lab">SHIPMENT</div><div class="wo">AE-2207-A</div></div>
+                <div><div class="sh-prog"><span>PROGRESS</span><span>60%</span></div><div class="sh-bar"><i></i></div></div>
+                <div class="sh-stepper">
+                  <div class="sh-step done"><span class="ck">✓</span><span>Confirmed</span></div>
+                  <div class="sh-step done"><span class="ck">✓</span><span>Packed</span></div>
+                  <div class="sh-step done"><span class="ck">✓</span><span>Picked up</span></div>
+                  <div class="sh-step cur"><span class="ck"></span><span>In transit</span></div>
+                  <div class="sh-step pending"><span class="ck"></span><span>Delivered</span></div>
+                </div>
+                <div class="sh-details">
+                  <div><b>CARRIER</b><span>FedEx Freight</span></div>
+                  <div><b>TRACKING</b><span>748-930-2817</span></div>
+                  <div><b>FROM</b><span>Fairview, PA</span></div>
+                  <div><b>TO</b><span>New York, NY</span></div>
+                  <div><b>WEIGHT</b><span>12.4 kg</span></div>
+                  <div><b>PIECES</b><span>50 pcs</span></div>
+                  <div><b>ETA</b><span>Jul 08</span></div>
+                </div>
+              </div>
+              <div class="sh-main">
+                <div class="sh-main-head"><span>LIVE TRACKING · AE-2207-A</span><span class="sh-live"><span class="dotgreen-d"></span>LIVE</span></div>
+                <div class="sh-map">
+                  <div class="sh-eta"><b>EST. DELIVERY</b><span>Jul 08 · 14:00</span></div>
+                  <div class="sh-route">
+                    <div class="prog"></div>
+                    <div class="stop done" style="left:4%"></div><div class="lbl" style="left:4%">FAIRVIEW</div>
+                    <div class="stop done" style="left:26%"></div><div class="lbl" style="left:26%">ERIE</div>
+                    <div class="stop cur" style="left:42%"></div>
+                    <div class="sh-pill" style="left:42%">CLEVELAND, OH · 68%</div>
+                    <div class="stop" style="left:74%"></div><div class="lbl" style="left:74%">PITTSBURGH</div>
+                    <div class="stop" style="left:96%"></div><div class="lbl" style="left:96%">NEW YORK</div>
+                  </div>
+                </div>
+                <div class="sh-stats">
+                  <div><b>CARRIER</b><span>FedEx Freight</span></div>
+                  <div><b>DISTANCE</b><span>588 mi</span></div>
+                  <div><b>ETA</b><span>Jul 08 · 14:00</span></div>
+                  <div><b>PARCELS</b><span>50 pcs</span></div>
+                </div>
+                <div class="sh-lower">
+                  <div class="sh-events">
+                    <div class="lab">SHIPMENT EVENTS</div>
+                    <div class="sh-stepper">
+                      <div class="sh-step done"><span class="ck">✓</span><span>Picked up — Fairview, PA</span></div>
+                      <div class="sh-step done"><span class="ck">✓</span><span>Departed hub — Erie, PA</span></div>
+                      <div class="sh-step cur"><span class="ck"></span><span>In transit — Cleveland, OH</span></div>
+                      <div class="sh-step pending"><span class="ck"></span><span>Out for delivery</span></div>
+                    </div>
+                  </div>
+                  <div class="sh-chat">
+                    <div class="sh-chat-head"><span class="av">AE</span><span>AE Support<small>Online</small></span></div>
+                    <div class="sh-msgs">
+                      <div class="msg in">Your shipment is on track, in transit through Cleveland, OH.</div>
+                      <div class="msg out">Can I reschedule the delivery window?</div>
+                      <div class="msg in">Sure — what window works best?</div>
+                    </div>
+                    <div class="sh-input"><span class="fld">Ask about your shipment…</span><span class="snd"></span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="frame" data-stage="4" data-m="mob"><div class="phone-raw"><img src="../assets/images/04-experience-06.jpg" alt="Aether — Shipment (mobile)"/></div></div>
+
+        <!-- 5 Delivered — placeholder -->
+        <div class="frame" data-stage="5" data-m="web"><div class="ph"><div class="ph-nav"><div class="brand">AETHER</div><div class="links">Orders · <b>Delivered</b></div></div><div class="ph-body"><span class="tag">STEP 06 · DELIVERED</span><span class="lab">Order complete screen</span><span class="sub">Design pending — final confirmation and inspection record download.</span></div></div></div>
+        <div class="frame" data-stage="5" data-m="mob"><div class="phone-raw"><img src="../assets/images/04-experience-06.jpg" alt="Aether — Shipment (mobile)"/></div></div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <a href="#">Get a quote</a>
+    <span class="hint">Upload a STEP file — instant price, no account needed.</span>
+  </div>
+
+  
+</main>
+
+<script>
+const STAGES=[
+  {lab:'Upload',sys:'APG',eta:'Step 1 of 6',st:'STEP file received',
+   sd:'Drag in your part. APG reads the geometry automatically — no drawings to prepare, no forms to fill.',badge:'Powered by APG · geometry parsing'},
+  {lab:'Instant Quote',short:'Quote',sys:'APG',eta:'Ready in minutes',st:'Quote ready — $485.61',
+   sd:'A transparent price, lead time, and full operation breakdown. No CAM programmer, no back-and-forth.',badge:'Powered by APG · process + cost'},
+  {lab:'Production',sys:'FacOS',eta:'In progress · Fairview PA',st:'Running on the floor',
+   sd:'Scheduled and producing at the nearest node. The same OS runs it whether it ships from PA or a franchise partner.',badge:'Powered by FacOS · scheduling & execution'},
+  {lab:'Inspection',sys:'QMS',eta:'Quality verified',st:'Every dimension checked',
+   sd:'In-line CMM verifies the critical features and records full traceability — built into the line, not bolted on.',badge:'Powered by QMS · in-line CMM'},
+  {lab:'Shipment',sys:'FacOS',eta:'On its way',st:'Shipped — tracking live',
+   sd:'Packed and dispatched with a live tracking link — the same status you see here, on your phone.',badge:'Powered by FacOS · fulfillment'},
+  {lab:'Delivered',sys:'—',eta:'Complete',st:'Parts on your dock',
+   sd:'From a STEP file to finished, inspected parts — tracked the whole way, simple the whole way.',badge:'Order complete'},
+];
+const DUR=2600;
+
+const segs=document.getElementById('segs');
+STAGES.forEach((s,i)=>{const d=document.createElement('div');d.className='fseg';d.dataset.i=i;
+  d.innerHTML=`<span class="fi">0${i+1}</span><span class="fl">${s.short||s.lab}</span><span class="uf"></span>`;segs.appendChild(d);});
+const fsegs=[...document.querySelectorAll('.fseg')];
+const allFrames=[...document.querySelectorAll('.frame')];
+let curDevice='web';
+
+let cur=0,playing=true,raf=null,t0=null;
+function showFrame(){
+  allFrames.forEach(f=>f.classList.toggle('show', +f.dataset.stage===cur && f.dataset.m===curDevice));
+}
+function paint(i){
+  const s=STAGES[i];
+  document.getElementById('stepno').textContent='STEP 0'+(i+1)+' OF 06';
+  const key=document.getElementById('key');key.classList.remove('key');void key.offsetWidth;key.classList.add('key');
+  document.getElementById('eta').textContent=s.eta;
+  document.getElementById('st').textContent=s.st;
+  document.getElementById('sd').textContent=s.sd;
+  document.getElementById('badge').textContent=s.badge;
+  fsegs.forEach((f,k)=>{f.classList.toggle('done',k<i);f.classList.toggle('cur',k===i);
+    if(k!==i)f.style.removeProperty('--p');});
+  cur=i;
+  showFrame();
+}
+function loop(ts){
+  if(!playing)return;
+  if(t0===null)t0=ts;
+  const p=Math.min(1,(ts-t0)/DUR);
+  fsegs[cur].style.setProperty('--p',(p*100)+'%');
+  if(p>=1){ t0=ts; const nx=(cur+1)%STAGES.length; if(nx===0){fsegs.forEach(f=>f.classList.remove('done'));} paint(nx); }
+  raf=requestAnimationFrame(loop);
+}
+function play(){playing=true;document.getElementById('pb').classList.add('playing');t0=null;raf=requestAnimationFrame(loop);}
+function pause(){playing=false;document.getElementById('pb').classList.remove('playing');cancelAnimationFrame(raf);}
+document.getElementById('pb').addEventListener('click',()=>{playing?pause():play();});
+fsegs.forEach(f=>f.addEventListener('click',()=>{pause();t0=null;paint(+f.dataset.i);}));
+
+const seg=document.getElementById('seg');
+seg.querySelectorAll('button').forEach(btn=>btn.addEventListener('click',()=>{
+  seg.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===btn));
+  curDevice=btn.dataset.m;
+  showFrame();
+}));
+
+paint(0);play();
+</script>
+<script>(function(){var ID='f3';function p(){try{parent.postMessage({aetherH:document.documentElement.scrollHeight,aetherId:ID},'*');}catch(e){}}window.addEventListener('load',p);window.addEventListener('resize',p);if(window.ResizeObserver){new ResizeObserver(p).observe(document.body);}setInterval(p,800);})();</script></body>
+</html>

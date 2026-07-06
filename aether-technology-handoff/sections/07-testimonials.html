@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Aether — L5 · Proof (prototype)</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --teal:#135B7C; --teal-mid:#16648A; --teal-lift:#2C86B0; --teal-lite:#5FA8CC;
+  --ink:#FFFFFF; --dim:rgba(255,255,255,.6); --faint:rgba(255,255,255,.4); --ghost:rgba(255,255,255,.22);
+  --hair:rgba(255,255,255,.14); --hair2:rgba(255,255,255,.08);
+  --lite:#F1F4F5;
+  --mono:'SF Mono','JetBrains Mono','IBM Plex Mono',ui-monospace,monospace;
+  --pad:clamp(20px,4vw,60px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Montserrat',system-ui,sans-serif;color:var(--ink);min-height:100vh;
+  background:linear-gradient(170deg,#173243 0%,#12283540 40%,#0E222E 100%),#102531;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.4;
+  background-image:linear-gradient(var(--hair2) 1px,transparent 1px),linear-gradient(90deg,var(--hair2) 1px,transparent 1px);
+  background-size:50px 50px;-webkit-mask-image:radial-gradient(130% 90% at 50% 20%,#000 40%,transparent 88%);mask-image:radial-gradient(130% 90% at 50% 20%,#000 40%,transparent 88%)}
+.wrap{position:relative;z-index:1;max-width:1320px;margin:0 auto;padding:clamp(52px,9vh,108px) var(--pad)}
+
+.eyebrow{display:flex;align-items:center;gap:14px;font-size:12px;font-weight:700;letter-spacing:.24em;color:var(--dim)}
+.eyebrow .n{font-family:var(--mono);color:var(--teal-lite);font-weight:400}
+h1{font-weight:300;font-size:clamp(30px,5vw,60px);line-height:1.05;letter-spacing:-.01em;margin:18px 0 0}
+h1 .b{font-weight:600}
+.lead{margin-top:20px;max-width:60ch;font-size:clamp(15px,1.6vw,18px);line-height:1.62;color:var(--dim)}
+.lead b{color:var(--ink);font-weight:500}
+
+/* metrics band */
+.metrics{margin-top:clamp(36px,5vh,56px);display:grid;grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--hair);border-radius:12px;overflow:hidden;background:rgba(255,255,255,.025)}
+.metric{padding:clamp(22px,3vw,34px);border-right:1px solid var(--hair2)}
+.metric:last-child{border-right:none}
+.metric .v{font-family:var(--mono);font-size:clamp(30px,4.4vw,52px);font-weight:400;line-height:1;letter-spacing:-.02em}
+.metric .v b{color:var(--teal-lite);font-weight:400}
+.metric .k{margin-top:12px;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+
+/* sector portfolio */
+.port{margin-top:clamp(44px,7vh,76px)}
+.port-h{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px}
+.port-h .t{font-size:clamp(18px,2.2vw,24px);font-weight:600}
+.port-h .s{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:22px}
+.chip{font-family:inherit;font-size:13px;font-weight:500;color:var(--dim);background:rgba(255,255,255,.04);
+  border:1px solid var(--hair2);border-radius:30px;padding:9px 17px;cursor:pointer;transition:.2s}
+.chip:hover{color:var(--ink);border-color:var(--hair)}
+.chip.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+
+.show{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(20px,3vw,40px);align-items:stretch;
+  border:1px solid var(--hair);border-radius:14px;overflow:hidden;background:rgba(255,255,255,.022);min-height:340px}
+.show-info{padding:clamp(24px,3vw,38px);display:flex;flex-direction:column}
+.badgerow{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.s-badge{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-lite);background:rgba(95,168,204,.14);border:1px solid rgba(95,168,204,.3);border-radius:4px;padding:5px 9px}
+.status{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:6px;color:var(--faint)}
+.status.live{color:#8FE3B4}
+.status .d{width:6px;height:6px;border-radius:50%;background:currentColor}
+.status.live .d{box-shadow:0 0 7px #6FE0A6}
+.p-name{font-size:clamp(22px,2.6vw,30px);font-weight:600;line-height:1.1;letter-spacing:-.01em;animation:fade .4s ease}
+.p-spec{display:flex;flex-wrap:wrap;gap:18px;margin-top:14px;animation:fade .4s ease}
+.p-spec span{font-family:var(--mono);font-size:12px;color:var(--teal-lite);letter-spacing:.02em}
+.p-spec span b{color:var(--faint);font-weight:400;font-size:8px;letter-spacing:.12em;display:block;margin-bottom:4px;text-transform:uppercase}
+.p-desc{margin-top:18px;font-size:14.5px;line-height:1.6;color:var(--dim);max-width:42ch;animation:fade .4s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.p-cta{margin-top:auto;padding-top:22px}
+.p-cta a{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--teal-lite);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:gap .2s}
+.p-cta a:hover{gap:13px;color:#fff}
+
+.show-vis{position:relative;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.12)}
+.vis-photo{width:100%;height:100%;border-radius:10px;background:var(--lite);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.vis-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.vis-rep{width:100%;height:100%;min-height:280px;border:1px dashed var(--ghost);border-radius:10px;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  background:linear-gradient(180deg,rgba(95,168,204,.05),transparent)}
+.vis-rep::before{content:"";position:absolute;inset:0;opacity:.5;
+  background-image:linear-gradient(var(--hair2) 1px,transparent 1px),linear-gradient(90deg,var(--hair2) 1px,transparent 1px);background-size:26px 26px}
+.vis-rep .rl{position:relative;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--faint);text-transform:uppercase}
+.vis-rep .rn{position:relative;font-size:clamp(20px,2.4vw,28px);font-weight:300;color:var(--dim);text-align:center;padding:0 20px}
+.vis-rep .rt{position:relative;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:80%}
+.vis-rep .rt span{font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:var(--teal-lite);border:1px solid rgba(95,168,204,.25);border-radius:3px;padding:4px 8px}
+.vis-cap{position:absolute;bottom:10px;right:14px;font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;color:var(--faint);text-transform:uppercase}
+
+/* certs */
+.certs{margin-top:30px;display:flex;flex-wrap:wrap;align-items:center;gap:0;border:1px solid var(--hair);border-radius:10px;overflow:hidden;background:rgba(255,255,255,.02)}
+.certs .cl{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);padding:14px 18px;border-right:1px solid var(--hair2)}
+.cert{padding:14px 22px;border-right:1px solid var(--hair2);font-size:13px;font-weight:600;letter-spacing:.02em}
+.cert:last-child{border-right:none}
+.cert b{font-family:var(--mono);font-weight:400;font-size:9px;color:var(--teal-lite);display:block;margin-top:3px;letter-spacing:.06em}
+
+/* testimonials */
+.quotes{margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.quote{border:1px solid var(--hair);border-radius:12px;padding:clamp(22px,2.6vw,30px);background:rgba(255,255,255,.02)}
+.quote p{font-size:15px;line-height:1.62;color:var(--dim);font-style:italic}
+.quote .who{margin-top:20px}
+.quote .role{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-lite)}
+.quote .org{font-size:13px;color:var(--faint);margin-top:4px}
+
+/* cta */
+.cta{margin-top:clamp(40px,6vh,70px);display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:22px;
+  border-top:1px solid var(--hair);padding-top:34px}
+.cta .l h3{font-weight:300;font-size:clamp(22px,3vw,34px);letter-spacing:-.01em}
+.cta .l p{margin-top:10px;font-size:14px;color:var(--dim);max-width:48ch;line-height:1.55}
+.cta a.btn{font-size:14px;font-weight:600;color:#fff;background:var(--teal);border-radius:8px;padding:14px 26px;text-decoration:none;white-space:nowrap;transition:.2s}
+.cta a.btn:hover{background:var(--teal-lift)}
+
+.note{margin-top:40px;padding:14px 18px;border-left:2px solid var(--teal-lift);font-size:12.5px;line-height:1.6;color:var(--faint);max-width:92ch;background:rgba(95,168,204,.05)}
+.note b{color:var(--dim);font-weight:600}
+
+
+/* outro image — full-bleed, blends into page color at the edges */
+.outro{position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;width:100vw;
+  margin-top:clamp(48px,7vh,88px);height:clamp(240px,36vw,460px);overflow:hidden}
+.outro-img{position:absolute;inset:0;background-image:url('../assets/images/07-testimonials-01.jpg');
+  background-size:cover;background-position:center 45%;filter:brightness(.55) saturate(.82) contrast(1.05)}
+.outro-fade{position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,#102531 0%,transparent 22%,transparent 76%,#102531 100%),
+    linear-gradient(90deg,#102531 0%,transparent 16%,transparent 84%,#102531 100%),
+    radial-gradient(ellipse 70% 65% at 50% 48%,rgba(19,91,124,.18),transparent 72%)}
+
+@media(max-width:880px){
+  .metrics{grid-template-columns:1fr 1fr}.metric:nth-child(2){border-right:none}
+  .show{grid-template-columns:1fr}.show-vis{min-height:260px}
+  .quotes{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.08s!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<!-- testimonials -->
+  <div class="quotes">
+    <div class="quote">
+      <p>"Aether's team provided valuable GD&amp;T and manufacturability feedback during the machining process. Their AI-driven approach helped us refine design decisions and will influence how we design future robotic components."</p>
+      <div class="who"><div class="role">Lead Product Engineer</div><div class="org">Top U.S. Robotics Company</div></div>
+    </div>
+    <div class="quote">
+      <p>"When we needed parts quickly, Aether's platform delivered a quote and turnaround fast. Their responsiveness and manufacturing support made the process extremely efficient."</p>
+      <div class="who"><div class="role">Sr. Mechanical Engineer — Actuation</div><div class="org">Leading Humanoid Robotics Developer</div></div>
+    </div>
+  </div>
+
+  <!-- cta -->
+  <div class="cta">
+    <div class="l"><h3>See our process work on your part.</h3>
+      <p>Upload a STEP file and receive a transparent quote — process logic, tooling, runtime, and cost — in minutes.</p></div>
+    <a class="btn" href="https://quote.aethermfg.com/login" target="_blank" rel="noopener">Get an instant quote →</a>
+  </div>
+</main>
+
+<div class="outro">
+  <div class="outro-img"></div>
+  <div class="outro-fade"></div>
+</div>
+
+<script>(function(){var ID='f6';function p(){try{parent.postMessage({aetherH:document.documentElement.scrollHeight,aetherId:ID},'*');}catch(e){}}window.addEventListener('load',p);window.addEventListener('resize',p);if(window.ResizeObserver){new ResizeObserver(p).observe(document.body);}setInterval(p,800);})();</script></body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Aether — Technology</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--teal:#135B7C;--teal-lift:#2C86B0;--mono:'SF Mono','JetBrains Mono','IBM Plex Mono',ui-monospace,monospace;--nav:64px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:var(--nav)}
+body{font-family:'Montserrat',system-ui,sans-serif;background:#0C1B24}
+.screen{display:block;line-height:0}
+.screen iframe{width:100%;border:0;display:block;height:90vh}
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--nav);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(18px,4vw,48px);transition:background .35s,color .35s,border-color .35s;border-bottom:1px solid transparent}
+.nav[data-theme="dark"]{background:rgba(11,24,33,.6);backdrop-filter:blur(14px);color:#fff;border-bottom-color:rgba(255,255,255,.1)}
+.nav[data-theme="light"]{background:rgba(239,242,243,.82);backdrop-filter:blur(14px);color:#13242E;border-bottom-color:rgba(19,36,46,.1)}
+.brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:.26em;font-size:15px;text-decoration:none;color:inherit}
+.brand .bars{display:flex;flex-direction:column;gap:2.5px}
+.brand .bars span{height:2.5px;width:20px;background:currentColor;display:block}
+.brand .bars span:nth-child(2){width:12px;opacity:.5}
+.links{display:flex;align-items:center;gap:clamp(12px,1.8vw,26px)}
+.links a{font-size:13px;font-weight:500;letter-spacing:.02em;text-decoration:none;color:inherit;opacity:.72;transition:opacity .2s;white-space:nowrap}
+.links a:hover{opacity:1}
+.links a.cta{background:var(--teal);color:#fff;padding:9px 18px;border-radius:7px;opacity:1}
+.links a.cta:hover{background:var(--teal-lift)}
+@media(max-width:920px){.links a:not(.cta){display:none}.screen iframe{height:auto;min-height:80vh}}
+</style></head>
+<body>
+<nav class="nav" id="nav" data-theme="dark">
+  <a class="brand" href="#why"><span class="bars"><span></span><span></span></span>AETHER</a>
+  <div class="links"><a href="#why">Why</a>
+<a href="#system">System</a>
+<a href="#floor">Floor</a>
+<a href="#experience">Experience</a>
+<a href="#production">In production</a>
+<a href="#blueprint">Blueprint</a><a class="cta" href="https://quote.aethermfg.com/login" target="_blank" rel="noopener">Get a quote</a></div>
+</nav>
+<section id="why" class="screen" data-reg="dark"><iframe id="f0" data-id="f0" scrolling="no" loading="lazy" title="Why" src="sections/01-why.html"></iframe></section>
+<section id="system" class="screen" data-reg="dark"><iframe id="f1" data-id="f1" scrolling="no" loading="lazy" title="System" src="sections/02-system.html"></iframe></section>
+<section id="floor" class="screen" data-reg="dark"><iframe id="f2" data-id="f2" scrolling="no" loading="lazy" title="Floor" src="sections/03-floor.html"></iframe></section>
+<section id="experience" class="screen" data-reg="light"><iframe id="f3" data-id="f3" scrolling="no" loading="lazy" title="Experience" src="sections/04-experience.html"></iframe></section>
+<section id="production" class="screen" data-reg="dark"><iframe id="f4" data-id="f4" scrolling="no" loading="lazy" title="In production" src="sections/05-production.html"></iframe></section>
+<section id="blueprint" class="screen" data-reg="dark"><iframe id="f5" data-id="f5" scrolling="no" loading="lazy" title="Blueprint" src="sections/06-blueprint.html"></iframe></section>
+<section id="testimonials" class="screen" data-reg="dark"><iframe id="f6" data-id="f6" scrolling="no" loading="lazy" title="testimonials" src="sections/07-testimonials.html"></iframe></section>
+<script>
+window.addEventListener('message',function(e){var d=e.data||{};if(d.aetherId&&d.aetherH){var f=document.getElementById(d.aetherId);if(f){var h=Math.max(d.aetherH+2,320);if(Math.abs(parseInt(f.style.height||0)-h)>2)f.style.height=h+'px';}}});
+var nav=document.getElementById('nav');var screens=[].slice.call(document.querySelectorAll('.screen'));var ticking=false;
+function upd(){ticking=false;var y=nav.offsetHeight+2,cur='dark';for(var i=0;i<screens.length;i++){var r=screens[i].getBoundingClientRect();if(r.top<=y&&r.bottom>y){cur=screens[i].getAttribute('data-reg');break;}}nav.setAttribute('data-theme',cur);}
+window.addEventListener('scroll',function(){if(!ticking){requestAnimationFrame(upd);ticking=true;}});
+window.addEventListener('resize',upd);window.addEventListener('load',upd);upd();
+</script>
+</body></html>

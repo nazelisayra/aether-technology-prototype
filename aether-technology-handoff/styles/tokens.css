@@ -1,0 +1,30 @@
+/*
+ * Aether — design tokens (REFERENCE EXTRACT)
+ * Auto-collected from the :root blocks of index.html and every section.
+ * Not linked by any page — each section keeps its own inline copy so it
+ * stays standalone. Use this file as the canonical token list when
+ * porting to the production stack.
+ */
+:root {
+  --teal:#135B7C; /* from shell */
+  --teal-lift:#2C86B0; /* from shell */
+  --mono:'SF Mono','JetBrains Mono','IBM Plex Mono',ui-monospace,monospace; /* from shell */
+  --nav:64px; /* from shell */
+  --teal-lite:#5FA8CC; /* from 01-why */
+  --ink:#fff; /* from 01-why */
+  --dim:rgba(255,255,255,.62); /* from 01-why */
+  --faint:rgba(255,255,255,.4); /* from 01-why */
+  --ghost:rgba(255,255,255,.22); /* from 01-why */
+  --hair:rgba(255,255,255,.15); /* from 01-why */
+  --hair2:rgba(255,255,255,.08); /* from 01-why */
+  --pad:clamp(20px,4vw,60px); /* from 01-why */
+  --teal-deep:#0C3A50; /* from 02-system */
+  --teal-mid:#16648A; /* from 02-system */
+  --paper:#EFF2F3; /* from 04-experience */
+  --card:#FFFFFF; /* from 04-experience */
+  --ink2:rgba(19,36,46,.6); /* from 04-experience */
+  --line:rgba(19,36,46,.12); /* from 04-experience */
+  --line2:rgba(19,36,46,.06); /* from 04-experience */
+  --teal-soft:rgba(19,91,124,.1); /* from 04-experience */
+  --lite:#F1F4F5; /* from 05-production */
+}

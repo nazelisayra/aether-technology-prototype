@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Aether — L4 · The Blueprint (prototype)</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --teal:#135B7C; --teal-deep:#0C3A50; --teal-mid:#16648A; --teal-lift:#2C86B0; --teal-lite:#5FA8CC;
+  --ink:#FFFFFF; --dim:rgba(255,255,255,.56); --faint:rgba(255,255,255,.34); --ghost:rgba(255,255,255,.20);
+  --hair:rgba(255,255,255,.15); --hair2:rgba(255,255,255,.09);
+  --mono:'SF Mono','JetBrains Mono','IBM Plex Mono',ui-monospace,monospace;
+  --pad:clamp(20px,4vw,60px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Montserrat',system-ui,sans-serif;color:var(--ink);min-height:100vh;
+  background:radial-gradient(130% 95% at 50% 0%, #1C7096 0%, var(--teal) 40%, var(--teal) 72%, #104E6B 100%) fixed;
+  -webkit-font-smoothing:antialiased;
+}
+/* faint engineering grid wash */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background-image:linear-gradient(var(--hair2) 1px,transparent 1px),linear-gradient(90deg,var(--hair2) 1px,transparent 1px);
+  background-size:46px 46px;
+  -webkit-mask-image:radial-gradient(120% 90% at 50% 30%,#000 35%,transparent 85%);
+          mask-image:radial-gradient(120% 90% at 50% 30%,#000 35%,transparent 85%);
+}
+.wrap{position:relative;z-index:1;max-width:1320px;margin:0 auto;padding:clamp(44px,7vh,96px) var(--pad)}
+
+/* ── header / thesis ───────────────────────────── */
+.eyebrow{display:flex;align-items:center;gap:14px;font-size:12px;font-weight:700;letter-spacing:.24em;color:var(--dim)}
+.eyebrow .n{font-family:var(--mono);color:var(--teal-lite);font-weight:400}
+.datum{display:flex;flex-direction:column;gap:3px}
+.datum span{height:3px;width:30px;background:var(--ink);opacity:.85;display:block}
+.datum span:nth-child(2){width:18px;opacity:.5}
+h1{font-weight:300;font-size:clamp(30px,5vw,62px);line-height:1.05;letter-spacing:-.01em;margin:20px 0 0}
+h1 .a{color:var(--faint)}
+h1 .b{font-weight:600;color:var(--ink)}
+.lead{margin-top:20px;max-width:54ch;font-size:clamp(14px,1.5vw,17px);line-height:1.6;color:var(--dim)}
+
+/* ── magnitude band labels above rail ──────────── */
+.mags{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:clamp(34px,5vh,52px);
+  border:1px solid var(--hair2);background:var(--hair2);border-radius:8px 8px 0 0;overflow:hidden}
+.mag{background:transparent;padding:11px 16px;display:flex;align-items:center;gap:10px;transition:background .3s}
+.mag.on{background:rgba(95,168,204,.10)}
+.mag .mk{font-family:var(--mono);font-size:9px;color:var(--teal-lite);letter-spacing:.1em}
+.mag .ml{font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);transition:color .3s}
+.mag.on .ml{color:var(--ink)}
+.mag .mr{margin-left:auto;font-family:var(--mono);font-size:9px;color:var(--faint)}
+
+/* ── board ─────────────────────────────────────── */
+.board{position:relative;border:1px solid var(--hair);border-top:none;background:
+   linear-gradient(180deg,rgba(12,58,80,.30),rgba(10,42,58,.55));
+   overflow:hidden;border-radius:0 0 8px 8px}
+.board-grid{position:absolute;inset:0;opacity:.4;
+  background-image:linear-gradient(var(--hair2) 1px,transparent 1px),linear-gradient(90deg,var(--hair2) 1px,transparent 1px);
+  background-size:32px 32px;pointer-events:none}
+.corner{position:absolute;width:13px;height:13px;border:1px solid var(--faint);opacity:.55;z-index:3}
+.corner.tl{top:12px;left:12px;border-right:none;border-bottom:none}
+.corner.tr{top:12px;right:12px;border-left:none;border-bottom:none}
+.corner.bl{bottom:12px;left:12px;border-right:none;border-top:none}
+.corner.br{bottom:12px;right:12px;border-left:none;border-top:none}
+.hint{position:absolute;top:14px;left:50%;transform:translateX(-50%);font-family:var(--mono);
+  font-size:10px;letter-spacing:.1em;color:var(--faint);text-transform:uppercase;z-index:3}
+.stage{display:block;width:100%;height:clamp(340px,46vh,520px)}
+.stage svg{width:100%;height:100%}
+
+/* scene transition */
+#scene{transition:opacity .42s ease, transform .42s cubic-bezier(.4,0,.2,1)}
+.stage.warp #scene{opacity:0;transform:scale(1.05)}
+.box{animation:pop .5s cubic-bezier(.2,.7,.3,1) backwards;transform-box:fill-box}
+@keyframes pop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.anno{animation:fade .6s ease .25s backwards}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+/* titleblock inside board */
+.tblock{position:absolute;left:0;bottom:0;display:flex;border-top:1px solid var(--hair);
+  font-family:var(--mono);background:rgba(8,38,53,.62);backdrop-filter:blur(3px);z-index:3;max-width:100%;overflow-x:auto}
+.tblock .c{padding:9px 16px;border-right:1px solid var(--hair2);white-space:nowrap}
+.tblock .c:last-child{border-right:none}
+.tblock .k{font-size:8px;letter-spacing:.14em;color:var(--faint);display:block;margin-bottom:3px}
+.tblock .v{font-size:11.5px;color:var(--ink);letter-spacing:.02em}
+.tblock .v.teal{color:var(--teal-lite)}
+.tb-mark{display:flex;align-items:center;gap:7px}
+.tb-mark .bars{display:flex;flex-direction:column;gap:2px}
+.tb-mark .bars span{height:2px;width:20px;background:var(--ink);opacity:.85;display:block}
+.tb-mark .bars span:nth-child(2){width:12px;opacity:.5}
+.tb-mark .lbl{font-size:9px;letter-spacing:.18em;font-weight:700;font-family:'Montserrat'}
+
+/* live badge */
+.livebadge{position:absolute;z-index:4;display:flex;align-items:center;gap:6px;
+  font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:#8FE3B4;
+  background:rgba(20,60,46,.55);border:1px solid rgba(120,220,170,.35);border-radius:3px;padding:4px 8px}
+.livebadge::before{content:"";width:6px;height:6px;border-radius:50%;background:#6FE0A6;box-shadow:0 0 8px #6FE0A6;animation:bk 1.6s infinite}
+@keyframes bk{0%,100%{opacity:1}50%{opacity:.35}}
+.livebadge{position:absolute;z-index:4;display:flex;align-items:center;gap:6px;cursor:pointer;
+  font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:#8FE3B4;
+  background:rgba(20,60,46,.55);border:1px solid rgba(120,220,170,.35);border-radius:3px;padding:5px 9px;transition:background .2s}
+.livebadge:hover{background:rgba(30,80,60,.7)}
+.livebadge::before{content:"";width:6px;height:6px;border-radius:50%;background:#6FE0A6;box-shadow:0 0 8px #6FE0A6;animation:bk 1.6s infinite}
+.lb-open{color:rgba(143,227,180,.7);padding-left:7px;margin-left:4px;border-left:1px solid rgba(120,220,170,.3)}
+
+/* open-live control */
+.ctrl.open{width:auto;padding:0 14px;gap:8px;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;
+  color:#8FE3B4;border-color:rgba(120,220,170,.4)}
+.ctrl.open:hover{color:#fff;border-color:#8FE3B4;background:rgba(30,80,60,.4)}
+.ctrl.open .od{width:7px;height:7px;border-radius:50%;background:#6FE0A6;box-shadow:0 0 7px #6FE0A6;animation:bk 1.6s infinite}
+
+/* ── L3 inset (factory floor) ──────────────────── */
+.inset{position:absolute;inset:0;z-index:7;display:none}
+.inset.show{display:block}
+.inset.show .inset-frame{animation:zoomIn .5s cubic-bezier(.2,.7,.3,1)}
+@keyframes zoomIn{from{opacity:0;transform:scale(.82) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.inset-frame{position:absolute;inset:clamp(12px,2.2vw,30px);border:1px solid var(--hair);
+  border-radius:5px;overflow:hidden;background:#08141B;transform-origin:60% 45%}
+.inset-video{position:absolute;inset:0;
+  background:radial-gradient(150% 120% at 62% 8%,#22343D 0%,#101F27 45%,#070F14 100%)}
+.inset-video::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 90% at 50% 50%,transparent 55%,rgba(0,0,0,.5) 100%)}
+.scan{position:absolute;inset:0;opacity:.5;pointer-events:none;
+  background:repeating-linear-gradient(180deg,rgba(255,255,255,.04) 0 1px,transparent 1px 4px)}
+.playbtn{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);z-index:3;
+  width:62px;height:62px;border-radius:50%;border:1px solid rgba(255,255,255,.5);
+  background:rgba(10,26,34,.4);cursor:pointer;transition:.2s}
+.playbtn::before{content:"";position:absolute;left:54%;top:50%;transform:translate(-50%,-50%);
+  border-left:16px solid rgba(255,255,255,.85);border-top:10px solid transparent;border-bottom:10px solid transparent}
+.playbtn:hover{background:rgba(95,168,204,.25);border-color:#fff}
+.ph-cap{position:absolute;left:50%;bottom:54px;transform:translateX(-50%);z-index:3;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:rgba(255,255,255,.4);white-space:nowrap}
+.inset-hud{position:absolute;inset:0;z-index:4;pointer-events:none}
+.rec{position:absolute;top:14px;left:16px;z-index:5;display:flex;align-items:center;gap:7px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:#FF8A7A}
+.rec .dot{width:7px;height:7px;border-radius:50%;background:#FF6B57;box-shadow:0 0 8px #FF6B57;animation:bk 1.3s infinite}
+.tc{position:absolute;top:14px;right:54px;z-index:5;font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.6);letter-spacing:.1em}
+.inset-close{position:absolute;top:11px;right:12px;z-index:6;width:30px;height:30px;border-radius:4px;
+  border:1px solid var(--hair);background:rgba(8,20,27,.6);color:var(--dim);cursor:pointer;font-size:13px;transition:.2s}
+.inset-close:hover{color:#fff;border-color:var(--teal-lift)}
+.inset-tb{position:absolute;left:0;bottom:0;z-index:5;display:flex;flex-wrap:wrap;
+  font-family:var(--mono);font-size:9.5px;background:rgba(6,16,22,.72);backdrop-filter:blur(3px);border-top:1px solid var(--hair2)}
+.inset-tb .c{padding:8px 14px;border-right:1px solid var(--hair2);color:var(--dim);white-space:nowrap}
+.inset-tb .c b{color:var(--faint);font-weight:400;letter-spacing:.12em;margin-right:7px;font-size:8px}
+.inset-tb .c.tag{color:var(--teal-lite);letter-spacing:.16em}
+.inset-tb .c.teal{color:var(--teal-lite)}
+
+/* ── rail (LEGO instruction stepper) ───────────── */
+.rail{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:22px}
+.step{position:relative;text-align:left;background:transparent;border:1px solid var(--hair2);
+  border-radius:6px;padding:12px 13px 13px;cursor:pointer;color:inherit;font-family:inherit;
+  transition:border-color .25s,background .25s;overflow:hidden}
+.step:hover{border-color:var(--hair)}
+.step .topbar{position:absolute;top:0;left:0;height:2px;width:0;background:var(--teal-lift);transition:width .35s}
+.step.on{background:rgba(95,168,204,.07);border-color:rgba(95,168,204,.4)}
+.step.on .topbar{width:100%}
+.step .sn{font-family:var(--mono);font-size:10px;color:var(--faint);letter-spacing:.06em}
+.step.on .sn{color:var(--teal-lite)}
+.step .sl{display:block;margin-top:8px;font-size:13.5px;font-weight:600;letter-spacing:.01em;color:var(--dim);transition:color .25s}
+.step.on .sl{color:var(--ink)}
+.step .ss{display:block;margin-top:3px;font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--faint)}
+.step.on .ss{color:var(--teal-lite)}
+.step .conn{position:absolute;right:-10px;top:50%;width:10px;height:1px;background:var(--hair2);z-index:2}
+.step:last-child .conn{display:none}
+
+/* ── BOM readout + controls ────────────────────── */
+.footer{display:flex;flex-wrap:wrap;align-items:center;gap:clamp(20px,4vw,48px);margin-top:24px}
+.bom{display:flex;flex-wrap:wrap;gap:clamp(20px,3.4vw,44px)}
+.bom .cell{min-width:64px}
+.bom .k{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
+.bom .v{font-family:var(--mono);font-size:clamp(16px,2vw,22px);color:var(--ink);letter-spacing:.01em;line-height:1}
+.bom .v.teal{color:var(--teal-lite)}
+.bom .v .u{font-size:11px;color:var(--dim);margin-left:3px}
+.ctrls{margin-left:auto;display:flex;align-items:center;gap:8px}
+.ctrl{font-family:var(--mono);font-size:12px;color:var(--dim);background:transparent;
+  border:1px solid var(--hair);border-radius:5px;width:38px;height:36px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:.2s}
+.ctrl:hover{color:var(--ink);border-color:var(--teal-lift)}
+.ctrl.play{width:auto;padding:0 16px;gap:8px;letter-spacing:.08em;font-size:10.5px;text-transform:uppercase}
+.ctrl.play .ico{width:7px;height:8px;background:currentColor;clip-path:polygon(0 0,100% 50%,0 100%)}
+.ctrl.play.playing .ico{clip-path:none;background:transparent;box-shadow:inset 3px 0 currentColor,inset -3px 0 currentColor;width:8px}
+
+/* note */
+.note{margin-top:30px;padding:14px 18px;border-left:2px solid var(--teal-lift);
+  font-size:12.5px;line-height:1.6;color:var(--faint);max-width:80ch;background:rgba(95,168,204,.04)}
+.note b{color:var(--dim);font-weight:600}
+
+@media(max-width:860px){
+  .mags{grid-template-columns:1fr}
+  .rail{grid-template-columns:repeat(2,1fr)}
+  .step .conn{display:none}
+  .ctrls{margin-left:0;width:100%;justify-content:flex-end}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.001s!important;transition-duration:.08s!important}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <header>
+    <div class="eyebrow"><span class="n">06</span> THE BLUEPRINT
+      <span class="datum" style="margin-left:4px"><span></span><span></span></span>
+    </div>
+    <h1><span class="a">Competitors ship parts.</span><br><span class="b">Aether ships the factory.</span></h1>
+    <p class="lead">One blueprint resolves at every scale — a cell, a factory, a network — using the same drawing.
+       Step through a deployment and watch the unit repeat without re-engineering.</p>
+  </header>
+
+  <!-- magnitude bands -->
+  <div class="mags" id="mags">
+    <div class="mag" data-mag="cell"><span class="mk">A</span><span class="ml">Cell</span><span class="mr">540 sq ft unit</span></div>
+    <div class="mag" data-mag="factory"><span class="mk">B</span><span class="ml">Factory</span><span class="mr">12 cells / node</span></div>
+    <div class="mag" data-mag="network"><span class="mk">C</span><span class="ml">Network</span><span class="mr">N nodes / 1 OS</span></div>
+  </div>
+
+  <!-- drawing board -->
+  <div class="board">
+    <div class="board-grid"></div>
+    <span class="corner tl"></span><span class="corner tr"></span>
+    <span class="corner bl"></span><span class="corner br"></span>
+    <span class="hint" id="hint">SCALE TO REQUIREMENT</span>
+    <div class="stage" id="stage">
+      <svg viewBox="0 0 1000 540" preserveAspectRatio="xMidYMid meet" id="svg">
+        <g id="scene"></g>
+        <g id="overlay"></g>
+      </svg>
+    </div>
+    <button class="livebadge" id="livebadge" style="display:none">LIVE · PRODUCING<span class="lb-open">▸ open floor</span></button>
+
+    <!-- L3 ↔ L4 bridge: the live tile opens into the real factory floor -->
+    <div class="inset" id="inset" aria-hidden="true">
+      <div class="inset-frame">
+        <div class="inset-video">
+          <div class="scan"></div>
+          <button class="playbtn" id="playbtn" aria-label="Play factory footage"></button>
+          <div class="ph-cap">PLACEHOLDER · PA FACTORY FLOOR FOOTAGE GOES HERE</div>
+        </div>
+        <svg class="inset-hud" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet" id="hud"></svg>
+        <div class="rec"><span class="dot"></span>LIVE · FAIRVIEW PA</div>
+        <div class="tc" id="tc">00:00:00</div>
+        <button class="inset-close" id="insetClose" aria-label="Close">✕</button>
+        <div class="inset-tb">
+          <span class="c tag">L3 · THE FLOOR</span>
+          <span class="c"><b>NODE</b> PENNSYLVANIA</span>
+          <span class="c"><b>OS</b> FacOS ONLINE</span>
+          <span class="c"><b>CELLS</b> 12 · PRODUCING</span>
+          <span class="c teal"><b>STATE</b> blueprint → built</span>
+        </div>
+      </div>
+    </div>
+    <div class="tblock">
+      <div class="c tb-mark"><span class="bars"><span></span><span></span></span><span class="lbl">AETHER</span></div>
+      <div class="c"><span class="k">DRAWING</span><span class="v" id="tb-draw">AE-CELL-01</span></div>
+      <div class="c"><span class="k">SCALE</span><span class="v teal" id="tb-scale">1 : 1</span></div>
+      <div class="c"><span class="k">PROJECTION</span><span class="v">ISO · DIMETRIC</span></div>
+      <div class="c"><span class="k">REV</span><span class="v">C</span></div>
+    </div>
+  </div>
+
+  <!-- instruction rail -->
+  <nav class="rail" id="rail">
+    <button class="step on" data-i="0"><span class="topbar"></span><span class="sn">01</span><span class="sl">×1 Cell</span><span class="ss">Prototype</span><span class="conn"></span></button>
+    <button class="step" data-i="1"><span class="topbar"></span><span class="sn">02</span><span class="sl">×4 Cells</span><span class="ss">Production</span><span class="conn"></span></button>
+    <button class="step" data-i="2"><span class="topbar"></span><span class="sn">03</span><span class="sl">×12 Cells</span><span class="ss">High-volume</span><span class="conn"></span></button>
+    <button class="step" data-i="3"><span class="topbar"></span><span class="sn">04</span><span class="sl">Pennsylvania</span><span class="ss">Live node</span><span class="conn"></span></button>
+    <button class="step" data-i="4"><span class="topbar"></span><span class="sn">05</span><span class="sl">Texas</span><span class="ss">2027 · planned</span><span class="conn"></span></button>
+    <button class="step" data-i="5"><span class="topbar"></span><span class="sn">06</span><span class="sl">Franchise</span><span class="ss">Partner OS</span><span class="conn"></span></button>
+  </nav>
+
+  <!-- BOM + controls -->
+  <div class="footer">
+    <div class="bom" id="bom">
+      <div class="cell"><div class="k" id="b0k">Units</div><div class="v" id="b0v">1<span class="u">cell</span></div></div>
+      <div class="cell"><div class="k" id="b1k">Footprint</div><div class="v" id="b1v">540<span class="u">sq ft</span></div></div>
+      <div class="cell"><div class="k" id="b2k">Capacity</div><div class="v teal" id="b2v">×1</div></div>
+      <div class="cell"><div class="k" id="b3k">Deploy</div><div class="v" id="b3v">30<span class="u">days</span></div></div>
+      <div class="cell"><div class="k" id="b4k">Status</div><div class="v" id="b4v">PROTOTYPE</div></div>
+    </div>
+    <div class="ctrls">
+      <button class="ctrl open" id="openlive" style="display:none"><span class="od"></span>Live node</button>
+      <button class="ctrl" id="prev" aria-label="Previous step">‹</button>
+      <button class="ctrl play" id="play"><span class="ico"></span><span id="playlbl">Run</span></button>
+      <button class="ctrl" id="next" aria-label="Next step">›</button>
+    </div>
+  </div>
+
+  
+
+</main>
+
+<script>
+const SVGNS="http://www.w3.org/2000/svg";
+const scene=document.getElementById('scene');
+const overlay=document.getElementById('overlay');
+const stage=document.getElementById('stage');
+
+/* ── isometric primitives ─────────────────────────────── */
+function iso(gx,gy,TW,TH){ return [(gx-gy)*TW/2,(gx+gy)*TH/2]; }
+function el(tag,attrs){ const e=document.createElementNS(SVGNS,tag); for(const k in attrs)e.setAttribute(k,attrs[k]); return e; }
+function pts(arr){ return arr.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" "); }
+
+/* clay palette — solid white machined render, lit top-down */
+const CLAY={top:'#EEF3F6',left:'#C4D2DB',right:'#9CB0BC',edge:'rgba(24,44,58,.30)',
+            topA:'#DCEAF2',leftA:'#9FC6DC',rightA:'#6FA3C0',edgeA:'rgba(19,91,124,.55)'}; // A = teal-accented
+
+// iso box → returns {g, faces:{top,left,right}} so callers can decorate faces.
+// mode: 'clay' (solid shaded) | 'wire' (ghost outline, for un-built/planned)
+function drawBox(ox,oy,gx,gy,sx,sy,h,TW,TH,mode,opt={}){
+  const g=el('g',{class:'box'});
+  if(opt.delay) g.style.animationDelay=opt.delay+'ms';
+  const T=(a,b)=>{const p=iso(a,b,TW,TH);return [ox+p[0],oy+p[1]];};
+  const A=T(gx,gy),B=T(gx+sx,gy),C=T(gx+sx,gy+sy),D=T(gx,gy+sy);
+  const At=[A[0],A[1]-h],Bt=[B[0],B[1]-h],Ct=[C[0],C[1]-h],Dt=[D[0],D[1]-h];
+  const right=[D,C,Ct,Dt], left=[B,C,Ct,Bt], top=[At,Bt,Ct,Dt];
+  const sw=opt.sw||1;
+  if(mode==='wire'){
+    const st=opt.stroke||'rgba(255,255,255,.42)';
+    [right,left].forEach(f=>g.appendChild(el('polygon',{points:pts(f),fill:'rgba(255,255,255,.022)',stroke:st,'stroke-width':sw,'stroke-opacity':.55,'stroke-dasharray':opt.dash||'none'})));
+    g.appendChild(el('polygon',{points:pts(top),fill:'rgba(255,255,255,.05)',stroke:st,'stroke-width':sw,'stroke-dasharray':opt.dash||'none'}));
+  }else{
+    const c=opt.accent?CLAY:CLAY, P=opt.accent
+        ?{top:CLAY.topA,left:CLAY.leftA,right:CLAY.rightA,edge:CLAY.edgeA}
+        :{top:CLAY.top,left:CLAY.left,right:CLAY.right,edge:CLAY.edge};
+    g.appendChild(el('polygon',{points:pts(right),fill:P.right,stroke:P.edge,'stroke-width':sw,'stroke-linejoin':'round'}));
+    g.appendChild(el('polygon',{points:pts(left),fill:P.left,stroke:P.edge,'stroke-width':sw,'stroke-linejoin':'round'}));
+    g.appendChild(el('polygon',{points:pts(top),fill:P.top,stroke:P.edge,'stroke-width':sw,'stroke-linejoin':'round'}));
+  }
+  return {g,faces:{right,left,top}};
+}
+// inset a face quad toward its centroid by t (0..0.5) — for recessed windows/screens
+function insetQuad(face,t){
+  const cx=(face[0][0]+face[1][0]+face[2][0]+face[3][0])/4;
+  const cy=(face[0][1]+face[1][1]+face[2][1]+face[3][1])/4;
+  return face.map(p=>[p[0]+(cx-p[0])*t,p[1]+(cy-p[1])*t]);
+}
+// flat plate (the cell/site floor) — diamond outline
+function drawPlate(ox,oy,gx,gy,sx,sy,TW,TH,opt={}){
+  const T=(a,b)=>{const p=iso(a,b,TW,TH);return [ox+p[0],oy+p[1]];};
+  const A=T(gx,gy),B=T(gx+sx,gy),C=T(gx+sx,gy+sy),D=T(gx,gy+sy);
+  const g=el('g',{class:'box'});
+  if(opt.delay)g.style.animationDelay=opt.delay+'ms';
+  g.appendChild(el('polygon',{points:pts([A,B,C,D]),
+    fill:opt.fill||'rgba(255,255,255,.03)',stroke:opt.stroke||'rgba(255,255,255,.28)','stroke-width':opt.sw||1}));
+  // inner datum lines
+  if(opt.datum){
+    for(let i=1;i<sx;i++){const a=T(gx+i,gy),b=T(gx+i,gy+sy);
+      g.appendChild(el('line',{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:'rgba(255,255,255,.10)','stroke-width':.7}));}
+    for(let j=1;j<sy;j++){const a=T(gx,gy+j),b=T(gx+sx,gy+j);
+      g.appendChild(el('line',{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:'rgba(255,255,255,.10)','stroke-width':.7}));}
+  }
+  return g;
+}
+
+/* one Aether CELL — a detailed clay fabricator. Same primitive used at every magnitude. */
+function drawUnit(ox,oy,gx,gy,TW,TH,mode,opt={}){
+  const g=el('g');
+  const T=(a,b)=>{const p=iso(a,b,TW,TH);return [ox+p[0],oy+p[1]];};
+  const hi = TW>78;                       // high-detail only when the cell is large on screen
+  const acc = !!opt.accent;
+  const d  = opt.delay||0;
+
+  if(mode==='wire'){
+    // un-built / planned: ghost enclosure outlines
+    const st=opt.stroke||'rgba(255,255,255,.4)';
+    g.appendChild(drawPlate(ox,oy,gx,gy,1,1,TW,TH,{stroke:st,sw:.9,fill:'rgba(255,255,255,.02)',delay:d}));
+    g.appendChild(drawBox(ox,oy,gx+.08,gy+.10,.38,.44,TH*1.4,TW,TH,'wire',{stroke:st,sw:.9,dash:'3 3',delay:d}).g);
+    g.appendChild(drawBox(ox,oy,gx+.56,gy+.10,.38,.44,TH*1.4,TW,TH,'wire',{stroke:st,sw:.9,dash:'3 3',delay:d+40}).g);
+    g.appendChild(drawBox(ox,oy,gx+.30,gy+.62,.40,.24,TH*.7,TW,TH,'wire',{stroke:st,sw:.9,dash:'3 3',delay:d+70}).g);
+    return g;
+  }
+
+  // ── clay (solid white) ──
+  // contact shadow
+  const sh=el('g',{class:'box'}); sh.style.animationDelay=d+'ms';
+  sh.appendChild(drawPlate(ox,oy+TH*.10,gx+.05,gy+.05,.95,.95,TW,TH,{stroke:'none',fill:'rgba(6,28,40,.30)'}));
+  g.appendChild(sh);
+  // floor plate
+  g.appendChild(drawPlate(ox,oy,gx,gy,1,1,TW,TH,{
+     stroke:acc?'rgba(19,91,124,.5)':'rgba(60,84,98,.45)',sw:.9,
+     fill:acc?'rgba(95,168,204,.18)':'rgba(214,226,233,.55)',delay:d}));
+
+  const hM=TH*1.42;
+  // machine A (back-left)
+  const mA=drawBox(ox,oy,gx+.08,gy+.10,.38,.44,hM,TW,TH,'clay',{accent:acc,sw:.9,delay:d});
+  g.appendChild(mA.g);
+  // machine B (back-right)
+  const mB=drawBox(ox,oy,gx+.56,gy+.10,.38,.44,hM,TW,TH,'clay',{accent:acc,sw:.9,delay:d+45});
+  g.appendChild(mB.g);
+
+  if(hi){
+    // recessed door windows on the front faces of each machine
+    [mA,mB].forEach((m,k)=>{
+      const win=insetQuad(m.faces.left,.34);
+      const w=el('g',{class:'box'}); w.style.animationDelay=(d+90+k*45)+'ms';
+      w.appendChild(el('polygon',{points:pts(win),fill:'rgba(40,66,82,.55)',stroke:'rgba(20,40,55,.4)','stroke-width':.6}));
+      g.appendChild(w);
+    });
+    // workpiece-storage shelf lines on machine A's right face
+    const rf=mA.faces.right, sg=el('g',{class:'box'}); sg.style.animationDelay=(d+110)+'ms';
+    for(let s=1;s<4;s++){const a=[rf[0][0]+(rf[3][0]-rf[0][0])*s/4, rf[0][1]+(rf[3][1]-rf[0][1])*s/4],
+                              b=[rf[1][0]+(rf[2][0]-rf[1][0])*s/4, rf[1][1]+(rf[2][1]-rf[1][1])*s/4];
+      sg.appendChild(el('line',{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:'rgba(60,84,98,.35)','stroke-width':.6}));}
+    g.appendChild(sg);
+  }
+
+  // robot arm (center-front) — base + articulated boom suggested in iso
+  const base=drawBox(ox,oy,gx+.42,gy+.56,.18,.18,hM*.30,TW,TH,'clay',{accent:acc,sw:.8,delay:d+120});
+  g.appendChild(base.g);
+  const j=T(gx+.51,gy+.65); j[1]-=hM*.30;          // joint top
+  const arm=el('g',{class:'box'}); arm.style.animationDelay=(d+150)+'ms';
+  const reach=T(gx+.30,gy+.30); reach[1]-=hM*.62;   // elbow up-back
+  const tip=T(gx+.22,gy+.20);  tip[1]-=hM*.30;       // gripper down-back
+  const armSt=acc?'rgba(19,91,124,.7)':'rgba(120,142,156,.85)';
+  arm.appendChild(el('polyline',{points:pts([j,reach,tip]),fill:'none',stroke:armSt,'stroke-width':Math.max(1.4,TW*.018),'stroke-linecap':'round','stroke-linejoin':'round'}));
+  arm.appendChild(el('circle',{cx:reach[0],cy:reach[1],r:Math.max(1.6,TW*.015),fill:acc?'#5FA8CC':'#D6E2E9',stroke:'rgba(40,60,75,.4)','stroke-width':.6}));
+  const gr=Math.max(1.2,TW*.012);
+  arm.appendChild(el('rect',{x:tip[0]-gr,y:tip[1]-gr,width:gr*2,height:gr*2,fill:acc?'rgba(19,91,124,.7)':'#B9C8D1',stroke:'rgba(40,60,75,.45)','stroke-width':.6}));
+  g.appendChild(arm);
+
+  if(hi){
+    // HMI pedestal (front-left) + tilted screen
+    const hmi=drawBox(ox,oy,gx+.06,gy+.66,.16,.16,hM*.34,TW,TH,'clay',{accent:acc,sw:.8,delay:d+130});
+    g.appendChild(hmi.g);
+    const sc=hmi.faces.top, screen=insetQuad(sc,.12);
+    g.appendChild(el('polygon',{points:pts(screen),fill:acc?'rgba(19,91,124,.6)':'rgba(50,76,92,.6)',class:'box','stroke':'rgba(20,40,55,.3)','stroke-width':.5,style:`animation-delay:${d+160}ms`}));
+    // safety-fence mesh along the open front edge (datum to reference drawing)
+    const fg=el('g',{class:'anno'}); fg.style.animationDelay=(d+180)+'ms';
+    const fh=TH*.46, posts=[];
+    for(let s=0;s<=4;s++){const p=T(gx+.06+s*.22, gy+.97); posts.push(p);
+      fg.appendChild(el('line',{x1:p[0],y1:p[1],x2:p[0],y2:p[1]-fh,stroke:'rgba(150,176,190,.55)','stroke-width':.8}));}
+    const r0=posts[0], r4=posts[4];
+    [0,.5,1].forEach(t=>fg.appendChild(el('line',{x1:r0[0],y1:r0[1]-fh*t,x2:r4[0],y2:r4[1]-fh*t,stroke:'rgba(150,176,190,.5)','stroke-width':.8})));
+    // mesh cross-hatch between posts
+    for(let s=0;s<4;s++){const a=posts[s],b=posts[s+1];
+      fg.appendChild(el('line',{x1:a[0],y1:a[1],x2:b[0],y2:b[1]-fh,stroke:'rgba(150,176,190,.22)','stroke-width':.5}));
+      fg.appendChild(el('line',{x1:a[0],y1:a[1]-fh,x2:b[0],y2:b[1],stroke:'rgba(150,176,190,.22)','stroke-width':.5}));}
+    g.appendChild(fg);
+  }
+  return g;
+}
+
+/* ── scene builders ───────────────────────────────────── */
+const CX=500, CY=250;            // scene origin (screen)
+function clear(){ scene.replaceChildren(); overlay.replaceChildren(); }
+
+// MAGNITUDE A — cells on one factory plate
+function sceneCells(n){
+  clear();
+  const TW=128,TH=64;
+  // layout: 1 -> 1x1, 4 -> 2x2, 12 -> 4x3
+  let cols,rows;
+  if(n===1){cols=1;rows=1;} else if(n===4){cols=2;rows=2;} else {cols=4;rows=3;}
+  const ox=CX, oy=CY-(cols+rows)*TH/4 + 20;
+  // base factory plate (slightly larger than cell block) for ×4/×12
+  if(n>1){
+    scene.appendChild(drawPlate(ox,oy,-0.25,-0.25,cols+0.5,rows+0.5,TW,TH,{stroke:'rgba(255,255,255,.2)',sw:1,fill:'rgba(12,58,80,.18)',datum:true}));
+  }
+  let i=0;
+  const order=[];
+  for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){order.push([c,r,i++]);}
+  order.sort((a,b)=>(a[0]+a[1])-(b[0]+b[1]));   // painter's: back-to-front
+  order.forEach(([c,r,idx])=>{
+    const active=(idx===0&&n>1);                 // first cell carries the brand accent
+    scene.appendChild(drawUnit(ox,oy,c,r,TW,TH,'render',{delay:90+idx*60,accent:active}));
+  });
+  // dimension annotation across the block
+  if(n>1){
+    const a=iso(0,rows,TW,TH), b=iso(cols,rows,TW,TH);
+    const y=oy+Math.max(a[1],b[1])+34;
+    const x1=ox+iso(0,rows,TW,TH)[0], x2=ox+iso(cols,0,TW,TH)[0];
+    const dim=el('g',{class:'anno'});
+    dim.appendChild(el('line',{x1:x1,y1:y,x2:x2,y2:y,stroke:'rgba(95,168,204,.6)','stroke-width':1}));
+    dim.appendChild(el('line',{x1:x1,y1:y-5,x2:x1,y2:y+5,stroke:'rgba(95,168,204,.6)','stroke-width':1}));
+    dim.appendChild(el('line',{x1:x2,y1:y-5,x2:x2,y2:y+5,stroke:'rgba(95,168,204,.6)','stroke-width':1}));
+    const t=el('text',{x:(x1+x2)/2,y:y+16,fill:'rgba(95,168,204,.85)','font-family':'var(--mono)','font-size':11,'text-anchor':'middle','letter-spacing':'.08em'});
+    t.textContent=(n===4?'2,160':'6,480')+' SQ FT';
+    dim.appendChild(t);
+    overlay.appendChild(dim);
+  }
+}
+
+// MAGNITUDE B/C — factories as tiles on a wide site plane
+// nodes: [{gx,gy,state,label,sub,live}]
+function sceneNetwork(nodes){
+  clear();
+  const TW=150,TH=75;       // site-tile footprint
+  const ox=CX, oy=CY-90;
+  // wide ground plane datum
+  const spanX=4, spanY=3;
+  scene.appendChild(drawPlate(ox,oy,-1.4,-1.0,spanX,spanY,TW,TH,{stroke:'rgba(255,255,255,.14)',sw:1,fill:'rgba(12,58,80,.12)',datum:true}));
+  nodes.forEach((nd,k)=>{
+    const stroke = nd.state==='render'?'rgba(170,215,240,.85)':'rgba(255,255,255,.42)';
+    // each factory tile = a small 4x3 of cells drawn tiny (fractal: same unit, smaller)
+    const sub=el('g');
+    const ctw=TW/4.6, cth=TH/4.6;
+    const bx=ox+iso(nd.gx,nd.gy,TW,TH)[0]-( (4-3)*ctw/2 );
+    const by=oy+iso(nd.gx,nd.gy,TW,TH)[0]*0; // placeholder
+    const baseScreen=iso(nd.gx,nd.gy,TW,TH);
+    const bxo=ox+baseScreen[0]-ctw*0.5, byo=oy+baseScreen[1]-cth*1.6;
+    // factory pad
+    sub.appendChild(drawPlate(bxo,byo,-0.3,-0.3,4.6,3.6,ctw,cth,{
+      stroke: nd.state==='render'?'rgba(60,84,98,.5)':stroke,sw:1.1,
+      fill: nd.state==='render'?'rgba(196,210,219,.4)':'rgba(255,255,255,.025)',delay:120+k*90}));
+    const cells=[];
+    for(let r=0;r<3;r++)for(let c=0;c<4;c++)cells.push([c,r]);
+    cells.sort((a,b)=>(a[0]+a[1])-(b[0]+b[1]));
+    cells.forEach(([c,r],idx)=>{
+      sub.appendChild(drawUnit(bxo,byo,c,r,ctw,cth,nd.state,{delay:160+k*90+idx*9,stroke:stroke}));
+    });
+    scene.appendChild(sub);
+    // label callout
+    const lp=iso(nd.gx,nd.gy,TW,TH);
+    const lx=ox+lp[0], ly=oy+lp[1]+TH*0.9;
+    const lab=el('g',{class:'anno'});
+    lab.style.animationDelay=(200+k*90)+'ms';
+    lab.appendChild(el('line',{x1:lx,y1:ly-TH*0.5,x2:lx,y2:ly,stroke:'rgba(95,168,204,.5)','stroke-width':1}));
+    lab.appendChild(el('circle',{cx:lx,cy:ly,r:2.5,fill: nd.live?'#6FE0A6':'rgba(95,168,204,.9)'}));
+    const t1=el('text',{x:lx,y:ly+20,fill:'#fff','font-family':"'Montserrat'",'font-size':14,'font-weight':600,'text-anchor':'middle'});
+    t1.textContent=nd.label;
+    const t2=el('text',{x:lx,y:ly+37,fill: nd.live?'#8FE3B4':'rgba(95,168,204,.85)','font-family':'var(--mono)','font-size':10,'text-anchor':'middle','letter-spacing':'.08em'});
+    t2.textContent=nd.sub;
+    lab.appendChild(t1);lab.appendChild(t2);
+    overlay.appendChild(lab);
+  });
+}
+
+/* ── step state machine ───────────────────────────────── */
+const STEPS=[
+  {mag:'cell',  scene:()=>sceneCells(1),  hint:'SCALE TO REQUIREMENT',
+   tb:{draw:'AE-CELL-01',scale:'1 : 1'},
+   bom:[['Units','1','cell'],['Footprint','540','sq ft'],['Capacity','×1','',1],['Deploy','30','days'],['Status','PROTOTYPE','']]},
+  {mag:'cell',  scene:()=>sceneCells(4),  hint:'SCALE TO REQUIREMENT',
+   tb:{draw:'AE-CELL-04',scale:'1 : 4'},
+   bom:[['Units','4','cells'],['Footprint','2,160','sq ft'],['Capacity','×4','',1],['Deploy','30','days'],['Status','PRODUCTION','']]},
+  {mag:'cell',  scene:()=>sceneCells(12), hint:'SCALE TO REQUIREMENT',
+   tb:{draw:'AE-CELL-12',scale:'1 : 12'},
+   bom:[['Units','12','cells'],['Footprint','6,480','sq ft'],['Capacity','×12','',1],['Deploy','30','days'],['Status','HIGH-VOLUME','']]},
+  {mag:'factory',scene:()=>sceneNetwork([{gx:0,gy:0,state:'render',label:'Pennsylvania',sub:'FAIRVIEW PA · LIVE',live:true}]),
+   hint:'1 FACTORY = 12 CELLS · 1 OS', live:true,
+   tb:{draw:'AE-NODE-PA',scale:'1 : 12'},
+   bom:[['Node','PA','',0,'Node'],['Cells','12','',0,'Cells'],['Certs','ISO·AS9100','',1,'Certs'],['Deploy','Live','',0,'Status'],['Output','Producing','',0,'State']]},
+  {mag:'network',scene:()=>sceneNetwork([
+      {gx:0,gy:0,state:'render',label:'Pennsylvania',sub:'LIVE',live:true},
+      {gx:2.2,gy:.4,state:'wire',label:'Texas',sub:'2027 · PLANNED'}]),
+   hint:'SAME DRAWING · NEXT SITE', live:true,
+   tb:{draw:'AE-NET-02',scale:'1 : N'},
+   bom:[['Nodes','2','',0,'Nodes'],['Live','1','',1,'Live'],['Planned','1','',0,'Planned'],['Variation','None','',0,'Variation'],['Status','SCALING','',0,'Status']]},
+  {mag:'network',scene:()=>sceneNetwork([
+      {gx:-.2,gy:-.3,state:'render',label:'Pennsylvania',sub:'LIVE',live:true},
+      {gx:2,gy:.2,state:'wire',label:'Texas',sub:'2027'},
+      {gx:1,gy:1.7,state:'wire',label:'Franchise',sub:'PARTNER OS'}]),
+   hint:'PARTNERS RUN THE IDENTICAL STACK', live:true,
+   tb:{draw:'AE-NET-FR',scale:'1 : N'},
+   bom:[['Nodes','N','',0,'Nodes'],['On-site team','0','',0,'Aether team'],['OS','Identical','',1,'OS'],['Re-eng','None','',0,'Re-eng'],['Status','REPLICATING','',0,'Status']]},
+];
+
+let cur=-1, playing=false, timer=null;
+const railBtns=[...document.querySelectorAll('.step')];
+const mags=[...document.querySelectorAll('.mag')];
+function setText(id,t){document.getElementById(id).textContent=t;}
+
+function render(i){
+  const s=STEPS[i];
+  // warp transition
+  stage.classList.add('warp');
+  setTimeout(()=>{
+    s.scene();
+    stage.classList.remove('warp');
+  },300);
+  // hint + titleblock
+  document.getElementById('hint').textContent=s.hint;
+  setText('tb-draw',s.tb.draw); setText('tb-scale',s.tb.scale);
+  document.getElementById('livebadge').style.display=s.live?'flex':'none';
+  document.getElementById('openlive').style.display=s.live?'flex':'none';
+  if(s.live){ // place badge near PA tile
+    const b=document.getElementById('livebadge');
+    b.style.left='52%'; b.style.top='30%';
+  }
+  // bom (5 cells)
+  s.bom.forEach((row,k)=>{
+    const label=row[4]!==undefined?row[4]:row[0];
+    document.getElementById('b'+k+'k').textContent=label;
+    const v=document.getElementById('b'+k+'v');
+    v.innerHTML=row[1]+(row[2]?'<span class="u">'+row[2]+'</span>':'');
+    v.classList.toggle('teal',!!row[3]);
+  });
+  // rail + mags active
+  railBtns.forEach((b,k)=>b.classList.toggle('on',k===i));
+  mags.forEach(m=>m.classList.toggle('on',m.dataset.mag===s.mag));
+  cur=i;
+}
+
+function go(i){ if(i<0)i=STEPS.length-1; if(i>=STEPS.length)i=0; render(i); }
+railBtns.forEach(b=>b.addEventListener('click',()=>{stop();go(+b.dataset.i);}));
+document.getElementById('next').addEventListener('click',()=>{stop();go(cur+1);});
+document.getElementById('prev').addEventListener('click',()=>{stop();go(cur-1);});
+
+const playBtn=document.getElementById('play');
+function play(){ playing=true; playBtn.classList.add('playing'); document.getElementById('playlbl').textContent='Pause';
+  timer=setInterval(()=>{ go((cur+1)%STEPS.length); },2600); }
+function stop(){ playing=false; playBtn.classList.remove('playing'); document.getElementById('playlbl').textContent='Run'; clearInterval(timer); }
+playBtn.addEventListener('click',()=>{ playing?stop():play(); });
+
+// keyboard
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&insetOpen){closeInset();return;}
+  if(e.key==='ArrowRight'){stop();go(cur+1);}
+  if(e.key==='ArrowLeft'){stop();go(cur-1);}
+});
+
+/* ── L3 inset (factory floor) ─────────────────────────── */
+const inset=document.getElementById('inset');
+const hud=document.getElementById('hud');
+let insetOpen=false, tcTimer=null, tcSec=0;
+
+function H(tag,a){return el(tag,a);}
+function buildHUD(){
+  hud.replaceChildren();
+  // corner ticks
+  [['12','12','h'],['988','12','h2'],['12','548','h3'],['988','548','h4']].forEach(()=>{});
+  const ck=(x,y,dx,dy)=>{const g=H('g',{stroke:'rgba(255,255,255,.5)','stroke-width':1.2,fill:'none'});
+    g.appendChild(H('line',{x1:x,y1:y,x2:x+dx,y2:y})); g.appendChild(H('line',{x1:x,y1:y,x2:x,y2:y+dy})); return g;};
+  hud.appendChild(ck(20,20,26,26)); hud.appendChild(ck(980,20,-26,26));
+  hud.appendChild(ck(20,540,26,-26)); hud.appendChild(ck(980,540,-26,-26));
+
+  // leader callout helper: anchor point → label box
+  function callout(ax,ay,tx,ty,title,sub,teal){
+    const g=H('g',{class:'anno'});
+    const col=teal?'rgba(95,168,204,.9)':'rgba(255,255,255,.7)';
+    g.appendChild(H('circle',{cx:ax,cy:ay,r:3,fill:'none',stroke:col,'stroke-width':1.2}));
+    g.appendChild(H('circle',{cx:ax,cy:ay,r:1,fill:col}));
+    g.appendChild(H('polyline',{points:`${ax},${ay} ${tx},${ay} ${tx+(tx>ax?14:-14)},${ty}`,fill:'none',stroke:col,'stroke-width':1}));
+    const anchor=tx>ax?'start':'end', xx=tx+(tx>ax?20:-20);
+    const t1=H('text',{x:xx,y:ty+4,fill:'#fff','font-family':"'Montserrat'",'font-size':13,'font-weight':600,'text-anchor':anchor}); t1.textContent=title;
+    const t2=H('text',{x:xx,y:ty+19,fill:col,'font-family':'var(--mono)','font-size':10,'text-anchor':anchor,'letter-spacing':'.06em'}); t2.textContent=sub;
+    g.appendChild(t1);g.appendChild(t2); return g;
+  }
+  hud.appendChild(callout(560,210,720,150,'5-axis machining','OP 01 · 35 MIN',true));
+  hud.appendChild(callout(430,330,250,300,'Robot arm','TENDING · CELL 01'));
+  hud.appendChild(callout(640,400,800,440,'In-line CMM','QMS · 100% TRACEABLE',true));
+
+  // dimension bar across floor
+  const y=500;
+  const dim=H('g',{class:'anno',stroke:'rgba(95,168,204,.6)','stroke-width':1});
+  dim.appendChild(H('line',{x1:120,y1:y,x2:560,y2:y}));
+  dim.appendChild(H('line',{x1:120,y1:y-5,x2:120,y2:y+5}));
+  dim.appendChild(H('line',{x1:560,y1:y-5,x2:560,y2:y+5}));
+  const dt=H('text',{x:340,y:y-9,fill:'rgba(95,168,204,.9)','font-family':'var(--mono)','font-size':11,'text-anchor':'middle','letter-spacing':'.08em'});
+  dt.textContent='CELL 01 · 540 SQ FT'; dim.appendChild(dt);
+  hud.appendChild(dim);
+}
+
+function tick(){ tcSec++; const h=String(Math.floor(tcSec/3600)).padStart(2,'0'),
+  m=String(Math.floor(tcSec/60)%60).padStart(2,'0'), s=String(tcSec%60).padStart(2,'0');
+  document.getElementById('tc').textContent=`${h}:${m}:${s}`; }
+
+function openInset(){
+  stop(); insetOpen=true; buildHUD();
+  inset.classList.add('show'); inset.setAttribute('aria-hidden','false');
+  tcSec=0; tick(); tcTimer=setInterval(tick,1000);
+}
+function closeInset(){
+  insetOpen=false; inset.classList.remove('show'); inset.setAttribute('aria-hidden','true');
+  clearInterval(tcTimer);
+}
+document.getElementById('openlive').addEventListener('click',openInset);
+document.getElementById('livebadge').addEventListener('click',openInset);
+document.getElementById('insetClose').addEventListener('click',closeInset);
+document.getElementById('playbtn').addEventListener('click',function(){
+  this.style.display='none'; document.querySelector('.ph-cap').textContent='PLAYING · PA FACTORY FLOOR (placeholder)';
+});
+inset.addEventListener('click',e=>{ if(e.target===inset) closeInset(); });
+
+// close inset whenever the user navigates the board
+const _go=go;
+go=function(i){ if(insetOpen)closeInset(); _go(i); };
+railBtns.forEach(b=>b.addEventListener('click',()=>{ if(insetOpen)closeInset(); }));
+
+go(0);
+</script>
+<script>(function(){var ID='f5';function p(){try{parent.postMessage({aetherH:document.documentElement.scrollHeight,aetherId:ID},'*');}catch(e){}}window.addEventListener('load',p);window.addEventListener('resize',p);if(window.ResizeObserver){new ResizeObserver(p).observe(document.body);}setInterval(p,800);})();</script></body>
+</html>
