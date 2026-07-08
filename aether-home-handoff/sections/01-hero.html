@@ -1,28 +1,74 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Hero</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="../styles/tokens.css"/>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Aether — One Blueprint. Every Factory.</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
+:root{
+  --teal:#135B7C;--teal-lift:#2C86B0;--teal-lite:#5FA8CC;
+  --ink:#fff;--dim:rgba(255,255,255,.62);--faint:rgba(255,255,255,.4);--ghost:rgba(255,255,255,.22);
+  --hair:rgba(255,255,255,.15);--hair2:rgba(255,255,255,.08);
+  --mono:'SF Mono','JetBrains Mono','IBM Plex Mono',ui-monospace,monospace;--pad:clamp(20px,4vw,60px);
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:100vh;position:relative;overflow:hidden;padding:120px var(--pad) 200px}
-.stub{position:relative;z-index:2;max-width:1100px;display:flex;flex-direction:column;gap:28px}
-.eye{display:inline-flex;align-items:center;gap:14px;font-family:var(--mono);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--teal-lite)}
-.eye .rule{width:36px;height:1px;background:currentColor;opacity:.75}
-h1{font-weight:300;font-size:clamp(46px,7vw,96px);line-height:1.02;letter-spacing:-.015em;color:#fff;max-width:14ch;text-wrap:balance}
-h1 em{font-style:normal;color:var(--teal-lite)}
-.sub{font-size:clamp(14px,1.1vw,16px);line-height:1.6;color:var(--dim);max-width:56ch}
-.status{margin-top:8px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--faint);text-transform:uppercase;border-left:2px solid var(--teal);padding-left:12px}
-.watermark{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);font-weight:200;letter-spacing:.14em;font-size:clamp(140px,20vw,320px);color:rgba(255,255,255,.06);line-height:1;pointer-events:none;white-space:nowrap;z-index:0}
-</style></head>
+body{font-family:'Montserrat',system-ui,sans-serif;color:var(--ink);background:#0C1B24;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* ── dark cinematic hero ── */
+.hero{position:relative;min-height:clamp(600px,94vh,940px);display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.hero-photo{position:absolute;inset:0;background-size:cover;background-position:center 38%;filter:brightness(.42) saturate(.85);transform:scale(1.05);animation:zin 18s ease forwards}
+@keyframes zin{to{transform:scale(1)}}
+.hero-grad{position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(12,27,36,.7) 0%,rgba(12,27,36,.25) 30%,rgba(12,27,36,.45) 70%,rgba(12,27,36,.92) 100%),
+  linear-gradient(90deg,rgba(12,27,36,.7) 0%,transparent 55%)}
+.hero-teal{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 30% 55%,rgba(19,91,124,.20),transparent 70%)}
+.tblock{position:absolute;top:92px;right:var(--pad);display:flex;font-family:var(--mono);font-size:9px;letter-spacing:.08em;
+  color:var(--faint);border:1px solid var(--hair);background:rgba(8,20,27,.4);backdrop-filter:blur(3px);z-index:3}
+.tblock .c{padding:7px 13px;border-right:1px solid var(--hair2)}
+.tblock .c:last-child{border-right:none}
+.tblock .c b{color:var(--ghost);font-weight:400;display:block;font-size:8px;margin-bottom:3px}
+.hero-inner{position:relative;z-index:3;max-width:1320px;width:100%;margin:0 auto;padding:0 var(--pad)}
+.eyebrow{display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:12px;font-weight:400;letter-spacing:.28em;color:var(--teal-lite);margin-bottom:24px}
+.eyebrow .datum{display:flex;flex-direction:column;gap:3px}
+.eyebrow .datum span{height:2px;width:30px;background:var(--teal-lite);opacity:.8;display:block}
+.eyebrow .datum span:nth-child(2){width:16px;opacity:.45}
+h1{font-weight:300;font-size:clamp(40px,8vw,104px);line-height:.98;letter-spacing:-.025em}
+h1 .b{font-weight:700;display:block}
+.hero-lead{margin-top:26px;max-width:54ch;font-size:clamp(15px,1.7vw,19px);line-height:1.6;color:var(--dim)}
+.actions{margin-top:34px;display:flex;flex-wrap:wrap;gap:14px}
+.btn{font-size:14px;font-weight:600;text-decoration:none;border-radius:8px;padding:14px 26px;transition:.2s;display:inline-flex;align-items:center;gap:8px}
+.btn.pri{background:var(--teal);color:#fff}.btn.pri:hover{background:var(--teal-lift)}
+.btn.sec{border:1px solid var(--hair);color:var(--dim)}.btn.sec:hover{color:#fff;border-color:var(--teal-lift)}
+.scrollcue{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--mono);font-size:9px;letter-spacing:.22em;color:var(--faint)}
+.scrollcue .l{width:1px;height:34px;background:linear-gradient(var(--faint),transparent);position:relative;overflow:hidden}
+.scrollcue .l::after{content:"";position:absolute;left:0;top:0;width:1px;height:12px;background:var(--teal-lite);animation:drop 2s ease-in-out infinite}
+@keyframes drop{0%{transform:translateY(-12px)}70%,100%{transform:translateY(34px)}}
+
+@media(max-width:760px){.tblock{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important}}
+</style>
+</head>
 <body>
-<div class="watermark">AETHER</div>
-<div class="stub">
-  <div class="eye"><span class="rule"></span>01 — HERO · REFRAME</div>
-  <h1>One Blueprint.<br/><em>Every Factory.</em></h1>
-  <p class="sub">AI-native manufacturing infrastructure. Upload a STEP file, receive a transparent process-based quote, and get precision parts built on a factory that runs on software — not manual decisions.</p>
-  <div class="status">Section stub — cinematic hero from v0.4 will land here</div>
-</div>
+<section class="hero">
+  <div class="hero-photo" id="heroPhoto"></div>
+  <div class="hero-grad"></div><div class="hero-teal"></div>
+  <div class="tblock"><div class="c"><b>DRAWING</b>FACTORY BLUEPRINT</div><div class="c"><b>SHEET</b>01 · REV B</div><div class="c"><b>SCALE</b>NTS</div></div>
+  <div class="hero-inner">
+    <div class="eyebrow"><span class="datum"><span></span><span></span></span> TECHNOLOGY</div>
+    <h1>One Blueprint.<span class="b">Every Factory.</span></h1>
+    <p class="hero-lead">The same operating system orchestrates every Aether factory — from the moment a STEP file arrives
+       to the moment a certified part ships. Deployed by configuration, not by reconstruction.</p>
+    <div class="actions">
+      <a class="btn pri" href="https://quote.aethermfg.com/login" target="_blank" rel="noopener">Get an instant quote</a>
+      <a class="btn sec" href="#system" target="_parent">See how it works ↓</a>
+    </div>
+  </div>
+  <div class="scrollcue"><span>SCROLL</span><span class="l"></span></div>
+</section>
+<script>
+document.getElementById('heroPhoto').style.backgroundImage="url('../assets/images/01-why-01.jpg')";
+</script>
 <script>(function(){var ID='s1';function p(){try{parent.postMessage({aetherH:document.documentElement.scrollHeight,aetherId:ID},'*');}catch(e){}}window.addEventListener('load',p);window.addEventListener('resize',p);if(window.ResizeObserver){new ResizeObserver(p).observe(document.body);}setInterval(p,800);})();</script>
-</body></html>
+</body>
+</html>

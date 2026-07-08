@@ -1,30 +1,147 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Pedigree</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Aether — Where our team comes from</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="../styles/tokens.css"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--sans);background:var(--paper);color:var(--text-ink);padding:80px var(--pad);display:flex;flex-direction:column;gap:24px}
-.eye{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink2);display:inline-flex;align-items:center;gap:12px}
-.eye .rule{width:32px;height:1px;background:currentColor;opacity:.4}
-.logos{display:flex;flex-wrap:wrap;gap:44px;align-items:center;justify-content:space-between;padding:8px 0}
-.logo{font-family:var(--mono);font-size:13px;letter-spacing:.16em;color:var(--ink2);text-transform:uppercase;padding:8px 0;border-bottom:1px dashed var(--line);min-width:110px;text-align:center}
-.lede{font-size:clamp(14px,1.1vw,16px);line-height:1.6;color:var(--ink2);max-width:70ch}
-.status{margin-top:8px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--ink2);text-transform:uppercase;border-left:2px solid var(--teal);padding-left:12px}
-</style></head>
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.pedigree{display:flex;flex-direction:column;padding-bottom:40px}
+.topline{border-top:1px solid rgba(255,255,255,.07)}
+
+/* eyebrow band — top */
+.eyebrow-band{display:flex;justify-content:center;padding:40px 40px 24px}
+.eyebrow{display:inline-flex;align-items:center;gap:12px}
+.eyebrow .rule{width:28px;height:1px;background:rgba(95,168,204,.5)}
+.eyebrow .txt{font-family:'JetBrains Mono',var(--mono);font-size:10px;font-weight:400;line-height:15px;letter-spacing:2.2px;text-transform:uppercase;color:rgba(255,255,255,.38);white-space:nowrap}
+
+/* marquee band */
+.marquee{width:100%;overflow:hidden;padding-bottom:40px;-webkit-mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marquee-track{display:flex;align-items:center;gap:72px;width:max-content;animation:scroll 42s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(calc(-1 * (var(--set-w) + 72px)))}}
+.marquee img{display:block;opacity:.55;object-fit:contain;flex-shrink:0;transition:opacity .25s ease}
+.marquee img:hover{opacity:.9}
+/* display sizes match Figma spec */
+.marquee img.mit{width:110px;height:26px}
+.marquee img.spacex{width:140px;height:22px}
+.marquee img.amazon{width:90px;height:28px}
+.marquee img.toyota{width:110px;height:18px}
+.marquee img.magicleap{width:120px;height:44px}
+.marquee img.formlabs{width:120px;height:18px}
+
+/* story band — two column */
+.story{display:flex;justify-content:center;padding:48px clamp(24px,11vw,160px) 56px}
+.story-row{display:flex;align-items:center;gap:120px;width:100%;max-width:1200px}
+.story-left{flex:1 1 386px;max-width:400px;display:flex;flex-direction:column;gap:20px}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(44,134,176,.1);border:1px solid rgba(44,134,176,.28);border-radius:3px;padding:5px 11px;align-self:flex-start}
+.badge .dot{width:5px;height:5px;border-radius:50%;background:var(--teal-lift);box-shadow:0 0 6px var(--teal-lift);flex-shrink:0}
+.badge .txt{font-family:'JetBrains Mono',var(--mono);font-size:9px;font-weight:400;line-height:13.5px;letter-spacing:1.62px;text-transform:uppercase;color:var(--teal-lite)}
+.lead{font-family:'Montserrat',var(--sans);font-weight:300;font-size:20px;line-height:33px;color:rgba(255,255,255,.82)}
+.lead b{font-weight:500;color:#fff}
+
+/* story card — right */
+.story-card{position:relative;width:520px;max-width:100%;aspect-ratio:520/293;border:1px solid rgba(255,255,255,.1);border-radius:8px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.5);flex-shrink:0}
+.story-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.story-card .overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,.45) 100%)}
+.story-btn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:40px;padding:10px 20px 10px 14px;backdrop-filter:blur(6px);cursor:pointer;transition:background .2s ease, border-color .2s ease;font-family:inherit}
+.story-btn:hover{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.4)}
+.story-btn .play{width:0;height:0;border-left:12px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent;margin-left:2px;flex-shrink:0}
+.story-btn .txt{font-family:'Montserrat',var(--sans);font-weight:500;font-size:12px;line-height:18px;letter-spacing:.48px;color:#fff;white-space:nowrap}
+
+/* responsive */
+@media(max-width:960px){
+  .story-row{flex-direction:column;gap:40px;align-items:stretch}
+  .story-left{max-width:none;flex:0 0 auto}
+  .story-card{width:100%}
+  .story{padding:40px 24px 48px}
+  .eyebrow-band{padding:32px 24px 20px}
+}
+@media(max-width:600px){
+  .marquee-track{gap:56px}
+  .marquee img{transform:scale(.85)}
+}
+@media(prefers-reduced-motion:reduce){.marquee-track{animation:none}}
+</style>
+</head>
 <body>
-<div class="eye"><span class="rule"></span>02 — WHERE OUR TEAM COMES FROM</div>
-<div class="logos">
-  <div class="logo">AMAZON</div>
-  <div class="logo">FORMLABS</div>
-  <div class="logo">MAGIC LEAP</div>
-  <div class="logo">MIT</div>
-  <div class="logo">SPACEX</div>
-  <div class="logo">TOYOTA</div>
-</div>
-<p class="lede">Founded by MIT engineers, built by veterans of the companies that set the modern manufacturing bar.</p>
-<div class="status">Section stub — pedigree band, preserved-elevated</div>
+<section class="pedigree">
+  <div class="topline"></div>
+
+  <div class="eyebrow-band">
+    <div class="eyebrow">
+      <span class="rule"></span>
+      <span class="txt">Where our team comes from</span>
+      <span class="rule"></span>
+    </div>
+  </div>
+
+  <div class="marquee" id="marquee">
+    <div class="marquee-track" id="track">
+      <!-- set 1 -->
+      <img class="mit"       src="../assets/images/logo-mit.png"       alt="MIT"/>
+      <img class="spacex"    src="../assets/images/logo-spacex.png"    alt="SpaceX"/>
+      <img class="amazon"    src="../assets/images/logo-amazon.png"    alt="Amazon"/>
+      <img class="toyota"    src="../assets/images/logo-toyota.png"    alt="Toyota"/>
+      <img class="magicleap" src="../assets/images/logo-magicleap.png" alt="Magic Leap"/>
+      <img class="formlabs"  src="../assets/images/logo-formlabs.png"  alt="Formlabs"/>
+      <!-- set 2 (identical, for seamless loop) -->
+      <img class="mit"       src="../assets/images/logo-mit.png"       alt="" aria-hidden="true"/>
+      <img class="spacex"    src="../assets/images/logo-spacex.png"    alt="" aria-hidden="true"/>
+      <img class="amazon"    src="../assets/images/logo-amazon.png"    alt="" aria-hidden="true"/>
+      <img class="toyota"    src="../assets/images/logo-toyota.png"    alt="" aria-hidden="true"/>
+      <img class="magicleap" src="../assets/images/logo-magicleap.png" alt="" aria-hidden="true"/>
+      <img class="formlabs"  src="../assets/images/logo-formlabs.png"  alt="" aria-hidden="true"/>
+    </div>
+  </div>
+
+  <div class="story">
+    <div class="story-row">
+      <div class="story-left">
+        <div class="badge">
+          <span class="dot"></span>
+          <span class="txt">MIT Engineers</span>
+        </div>
+        <p class="lead">Founded by MIT engineers specializing in <b>AI</b>, <b>advanced manufacturing</b>, and <b>intelligent automation</b>.</p>
+      </div>
+      <div class="story-card">
+        <img src="../assets/images/factory-story.png" alt="Aether factory floor"/>
+        <div class="overlay"></div>
+        <button class="story-btn" type="button" aria-label="Watch our story">
+          <span class="play"></span>
+          <span class="txt">Our story</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+// Marquee: measure one set's width and set as CSS variable so the animation
+// translates by exactly (set-width + gap). Ensures seamless loop regardless
+// of viewport or image loading state.
+(function(){
+  var track = document.getElementById('track');
+  function measure(){
+    // First 6 imgs form one set. Sum their widths + 5 inner gaps (72px each).
+    var imgs = track.querySelectorAll('img');
+    if (imgs.length < 6) return;
+    var w = 0;
+    for (var i = 0; i < 6; i++){ w += imgs[i].getBoundingClientRect().width; }
+    w += 72 * 5; // 5 gaps between 6 items in one set
+    track.style.setProperty('--set-w', w + 'px');
+  }
+  window.addEventListener('load', measure);
+  window.addEventListener('resize', measure);
+  // remeasure once images finish loading
+  var imgs = track.querySelectorAll('img');
+  imgs.forEach(function(im){ if(!im.complete) im.addEventListener('load', measure); });
+  measure();
+})();
+</script>
 <script>(function(){var ID='s2';function p(){try{parent.postMessage({aetherH:document.documentElement.scrollHeight,aetherId:ID},'*');}catch(e){}}window.addEventListener('load',p);window.addEventListener('resize',p);if(window.ResizeObserver){new ResizeObserver(p).observe(document.body);}setInterval(p,800);})();</script>
-</body></html>
+</body>
+</html>
