@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Aether — Manufacturing infrastructure. Software-defined.</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles/tokens.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:var(--nav)}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+/* NAV — transparent scrim over hero, solidifies on scroll */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  height:76px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(24px,4vw,48px);
+  background:linear-gradient(180deg,rgba(8,20,27,.55) 0%,rgba(8,20,27,.15) 60%,transparent 100%);
+  color:#fff;transition:background .3s ease, border-color .3s ease, backdrop-filter .3s ease
+}
+.nav.solid{background:rgba(12,27,36,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--hair2)}
+.nav[data-theme="light"]{color:var(--text-ink)}
+.nav[data-theme="light"].solid{background:rgba(239,242,243,.85);border-bottom-color:var(--line)}
+.brand{display:inline-flex;align-items:center;gap:11px;font-weight:400;letter-spacing:.36em;font-size:15px;color:inherit}
+.brand .bars{display:flex;flex-direction:column;gap:3px}
+.brand .bars span{height:2px;width:18px;background:currentColor;display:block}
+.brand .bars span:nth-child(2){width:11px;opacity:.55}
+.links{display:flex;align-items:center;gap:clamp(20px,2.8vw,40px);font-size:14px;letter-spacing:.02em}
+.links a{opacity:.85;transition:opacity .18s ease}
+.links a:hover{opacity:1}
+.links a.cta{
+  opacity:1;border:1px solid rgba(255,255,255,.55);color:#fff;
+  padding:10px 20px;border-radius:6px;font-size:13px;letter-spacing:.02em;
+  transition:border-color .18s ease, background .18s ease
+}
+.nav[data-theme="light"] .links a.cta{border-color:rgba(19,36,46,.45);color:var(--text-ink)}
+.links a.cta:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+.nav[data-theme="light"] .links a.cta:hover{border-color:var(--text-ink);background:rgba(19,36,46,.06)}
+@media (max-width:900px){
+  .links a:not(.cta){display:none}
+  .nav{height:64px}
+}
+
+/* SECTION iframes — no borders, height set by postMessage */
+.screen{display:block;line-height:0;background:var(--bg)}
+.screen iframe{width:100%;border:0;display:block;height:90vh;background:transparent}
+.screen[data-reg="light"]{background:var(--paper)}
+.screen[data-reg="brand"]{background:var(--teal)}
+.screen[data-reg="deep"]{background:var(--ink-950)}
+@media(max-width:920px){.screen iframe{height:auto;min-height:80vh}}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav" data-theme="dark">
+  <a class="brand" href="#s1"><span class="bars"><span></span><span></span></span>AETHER</a>
+  <div class="links">
+    <a href="#s4">Technology</a>
+    <a href="#s7">Services</a>
+    <a href="#s9">Contact</a>
+    <a class="cta" href="https://quote.aethermfg.com/login" target="_blank" rel="noopener">Get a quote</a>
+  </div>
+</nav>
+
+<section id="s1" class="screen" data-reg="dark"><iframe data-id="s1" scrolling="no" loading="eager" title="Hero" src="sections/01-hero.html"></iframe></section>
+<section id="s2" class="screen" data-reg="light"><iframe data-id="s2" scrolling="no" loading="lazy" title="Pedigree band" src="sections/02-pedigree.html"></iframe></section>
+<section id="s3" class="screen" data-reg="dark"><iframe data-id="s3" scrolling="no" loading="lazy" title="The shift" src="sections/03-shift.html"></iframe></section>
+<section id="s4" class="screen" data-reg="brand"><iframe data-id="s4" scrolling="no" loading="lazy" title="Blueprint" src="sections/04-blueprint.html"></iframe></section>
+<section id="s5" class="screen" data-reg="light"><iframe data-id="s5" scrolling="no" loading="lazy" title="Story map" src="sections/05-storymap.html"></iframe></section>
+<section id="s6" class="screen" data-reg="dark"><iframe data-id="s6" scrolling="no" loading="lazy" title="In production today" src="sections/06-inproduction.html"></iframe></section>
+<section id="s7" class="screen" data-reg="light"><iframe data-id="s7" scrolling="no" loading="lazy" title="Quote flow" src="sections/07-quoteflow.html"></iframe></section>
+<section id="s8" class="screen" data-reg="brand"><iframe data-id="s8" scrolling="no" loading="lazy" title="Testimonials" src="sections/08-testimonials.html"></iframe></section>
+<section id="s9" class="screen" data-reg="deep"><iframe data-id="s9" scrolling="no" loading="lazy" title="Segmented CTA" src="sections/09-cta.html"></iframe></section>
+
+<footer style="background:var(--ink-950);color:var(--faint);padding:28px clamp(24px,4vw,48px);font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid var(--hair2)">
+  <span>Aether Manufacturing · Precision. Software-defined.</span>
+  <span>Erie, PA · Austin, TX 2027</span>
+</footer>
+
+<script>
+// Iframe height sync — each section posts its rendered height, we resize the iframe.
+window.addEventListener('message', function(e){
+  var d = e.data || {};
+  if (d.aetherId && d.aetherH){
+    var f = document.querySelector('iframe[data-id="'+d.aetherId+'"]');
+    if (f){
+      var h = Math.max(d.aetherH + 2, 320);
+      if (Math.abs(parseInt(f.style.height || 0) - h) > 2) f.style.height = h + 'px';
+    }
+  }
+});
+
+// Nav theme switcher — reads data-reg on each section, updates nav on scroll.
+var nav = document.getElementById('nav');
+var screens = [].slice.call(document.querySelectorAll('.screen'));
+var ticking = false;
+function upd(){
+  ticking = false;
+  var y = nav.offsetHeight + 2;
+  var cur = 'dark';
+  for (var i = 0; i < screens.length; i++){
+    var r = screens[i].getBoundingClientRect();
+    if (r.top <= y && r.bottom > y){
+      cur = screens[i].getAttribute('data-reg');
+      break;
+    }
+  }
+  // brand + deep both read as dark-styled nav
+  nav.setAttribute('data-theme', cur === 'light' ? 'light' : 'dark');
+  // solidify nav once we've scrolled past hero
+  if (window.scrollY > 40) nav.classList.add('solid');
+  else nav.classList.remove('solid');
+}
+window.addEventListener('scroll', function(){
+  if (!ticking){ requestAnimationFrame(upd); ticking = true; }
+});
+window.addEventListener('resize', upd);
+window.addEventListener('load', upd);
+upd();
+</script>
+</body>
+</html>

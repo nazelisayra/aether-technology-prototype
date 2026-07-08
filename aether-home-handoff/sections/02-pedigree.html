@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Pedigree</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../styles/tokens.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--paper);color:var(--text-ink);padding:80px var(--pad);display:flex;flex-direction:column;gap:24px}
+.eye{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink2);display:inline-flex;align-items:center;gap:12px}
+.eye .rule{width:32px;height:1px;background:currentColor;opacity:.4}
+.logos{display:flex;flex-wrap:wrap;gap:44px;align-items:center;justify-content:space-between;padding:8px 0}
+.logo{font-family:var(--mono);font-size:13px;letter-spacing:.16em;color:var(--ink2);text-transform:uppercase;padding:8px 0;border-bottom:1px dashed var(--line);min-width:110px;text-align:center}
+.lede{font-size:clamp(14px,1.1vw,16px);line-height:1.6;color:var(--ink2);max-width:70ch}
+.status{margin-top:8px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--ink2);text-transform:uppercase;border-left:2px solid var(--teal);padding-left:12px}
+</style></head>
+<body>
+<div class="eye"><span class="rule"></span>02 — WHERE OUR TEAM COMES FROM</div>
+<div class="logos">
+  <div class="logo">AMAZON</div>
+  <div class="logo">FORMLABS</div>
+  <div class="logo">MAGIC LEAP</div>
+  <div class="logo">MIT</div>
+  <div class="logo">SPACEX</div>
+  <div class="logo">TOYOTA</div>
+</div>
+<p class="lede">Founded by MIT engineers, built by veterans of the companies that set the modern manufacturing bar.</p>
+<div class="status">Section stub — pedigree band, preserved-elevated</div>
+<script>(function(){var ID='s2';function p(){try{parent.postMessage({aetherH:document.documentElement.scrollHeight,aetherId:ID},'*');}catch(e){}}window.addEventListener('load',p);window.addEventListener('resize',p);if(window.ResizeObserver){new ResizeObserver(p).observe(document.body);}setInterval(p,800);})();</script>
+</body></html>

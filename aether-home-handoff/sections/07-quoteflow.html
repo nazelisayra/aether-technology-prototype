@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Quote flow</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../styles/tokens.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--paper);color:var(--text-ink);padding:100px var(--pad)}
+.head{display:flex;flex-direction:column;gap:16px;max-width:60ch;margin-bottom:36px}
+.eye{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink2);display:inline-flex;align-items:center;gap:12px}
+.eye .rule{width:32px;height:1px;background:currentColor;opacity:.4}
+.eye .role{color:var(--teal-mid);letter-spacing:.28em}
+h2{font-weight:400;font-size:clamp(30px,3.6vw,48px);line-height:1.08;letter-spacing:-.01em;text-wrap:balance;margin:0;color:var(--text-ink)}
+.lede{font-size:clamp(14px,1.1vw,16px);line-height:1.6;color:var(--ink2);max-width:60ch}
+.status{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--ink2);text-transform:uppercase;border-left:2px solid var(--teal);padding-left:12px}
+</style></head>
+<body>
+<div class="head">
+  <div class="eye"><span class="rule"></span>07 — FROM QUOTE TO DELIVERY<span class="role">Sourcing engineer's moment</span></div>
+  <h2>Upload. Understand. Order.</h2>
+  <p class="lede">A transparent process-based quote in minutes — engineering review included.</p>
+  <div class="status">Section stub — Formlabs-style 3-step walkthrough</div>
+</div>
+<script>(function(){var ID='s7';function p(){try{parent.postMessage({aetherH:document.documentElement.scrollHeight,aetherId:ID},'*');}catch(e){}}window.addEventListener('load',p);window.addEventListener('resize',p);if(window.ResizeObserver){new ResizeObserver(p).observe(document.body);}setInterval(p,800);})();</script>
+</body></html>

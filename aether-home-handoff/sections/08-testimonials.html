@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Testimonials</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../styles/tokens.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--teal);color:var(--ink);padding:96px var(--pad);position:relative;overflow:hidden}
+body::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(700px 400px at 20% 10%,rgba(95,168,204,.18),transparent 65%),
+  radial-gradient(500px 300px at 90% 90%,rgba(12,58,80,.4),transparent 60%);pointer-events:none}
+.head{position:relative;display:flex;flex-direction:column;gap:16px;margin-bottom:36px}
+.eye{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.72);display:inline-flex;align-items:center;gap:12px}
+.eye .rule{width:32px;height:1px;background:currentColor;opacity:.4}
+.eye .role{color:var(--mint);letter-spacing:.28em}
+h2{color:#fff;font-weight:400;font-size:clamp(30px,3.6vw,44px);line-height:1.08;letter-spacing:-.01em;text-wrap:balance;margin:0}
+.status{position:relative;font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--mint);text-transform:uppercase;border-left:2px solid var(--mint);padding-left:12px}
+</style></head>
+<body>
+<div class="head">
+  <div class="eye"><span class="rule"></span>08 — TESTIMONIALS<span class="role">Brand voice · engineer proof</span></div>
+  <h2>Trusted by Engineering Teams.</h2>
+  <div class="status">Section stub — brand-teal spotlight, dark cards + orb avatars</div>
+</div>
+<script>(function(){var ID='s8';function p(){try{parent.postMessage({aetherH:document.documentElement.scrollHeight,aetherId:ID},'*');}catch(e){}}window.addEventListener('load',p);window.addEventListener('resize',p);if(window.ResizeObserver){new ResizeObserver(p).observe(document.body);}setInterval(p,800);})();</script>
+</body></html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>The shift</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../styles/tokens.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);padding:110px var(--pad);display:grid;grid-template-columns:auto 1fr;gap:64px;min-height:60vh;align-items:start}
+.idx{font-family:var(--mono);font-size:11px;letter-spacing:.24em;color:var(--faint);display:flex;flex-direction:column;gap:12px}
+.idx .n{font-size:56px;font-weight:300;letter-spacing:-.02em;color:var(--ink);line-height:1;font-family:var(--sans)}
+.idx .rule{width:1px;height:120px;background:var(--hair);margin-left:14px}
+.body{display:flex;flex-direction:column;gap:32px;max-width:70ch}
+h2{color:var(--ink);font-weight:300;font-size:clamp(30px,4vw,52px);letter-spacing:-.015em;line-height:1.15;text-wrap:balance;margin:0}
+h2 .sw{display:block;color:var(--teal-lite);margin-top:16px;border-top:1px solid var(--hair);padding-top:22px}
+.status{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--faint);text-transform:uppercase;border-left:2px solid var(--teal);padding-left:12px}
+@media(max-width:900px){body{grid-template-columns:1fr;gap:28px}.idx .rule{display:none}}
+</style></head>
+<body>
+<div class="idx">
+  <div class="n">01</div>
+  <div>WHY&nbsp;THIS<br/>EXISTS</div>
+  <div class="rule"></div>
+</div>
+<div class="body">
+  <h2>The industry runs on manual decisions.<span class="sw">Aether runs on software.</span></h2>
+  <div class="status">Section stub — editorial minimal (option A)</div>
+</div>
+<script>(function(){var ID='s3';function p(){try{parent.postMessage({aetherH:document.documentElement.scrollHeight,aetherId:ID},'*');}catch(e){}}window.addEventListener('load',p);window.addEventListener('resize',p);if(window.ResizeObserver){new ResizeObserver(p).observe(document.body);}setInterval(p,800);})();</script>
+</body></html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Blueprint</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../styles/tokens.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--teal);color:var(--ink);padding:96px var(--pad);position:relative;overflow:hidden}
+body::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(700px 400px at 90% 15%,rgba(95,168,204,.22),transparent 60%),
+  radial-gradient(500px 320px at 8% 90%,rgba(12,58,80,.35),transparent 60%);pointer-events:none}
+.wrap{position:relative;z-index:1;display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center;max-width:1200px;margin:0 auto}
+.head{display:flex;flex-direction:column;gap:20px}
+.eye{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.72);display:inline-flex;align-items:center;gap:12px}
+.eye .rule{width:32px;height:1px;background:currentColor;opacity:.4}
+.eye .role{color:var(--mint);letter-spacing:.28em}
+h2{color:#fff;font-weight:400;font-size:clamp(30px,3.6vw,48px);line-height:1.08;letter-spacing:-.01em;text-wrap:balance;margin:0}
+.lede{font-size:clamp(14px,1.1vw,16px);line-height:1.6;color:rgba(255,255,255,.78);max-width:52ch}
+.link{margin-top:8px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--mint);text-transform:uppercase}
+.stack{display:flex;flex-direction:column;gap:14px;padding:26px;border:1px solid rgba(255,255,255,.16);border-radius:10px;background:rgba(8,20,27,.35);backdrop-filter:blur(6px)}
+.layer{display:grid;grid-template-columns:78px 1fr;gap:16px;align-items:center;padding:14px 16px;border:1px solid rgba(255,255,255,.14);border-radius:6px;background:rgba(23,50,67,.42)}
+.layer:nth-child(1){transform:translateX(0px);border-color:rgba(143,227,180,.5)}
+.layer:nth-child(2){transform:translateX(12px)}
+.layer:nth-child(3){transform:translateX(24px)}
+.layer:nth-child(4){transform:translateX(36px);border-color:rgba(95,168,204,.5)}
+.code{font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:rgba(255,255,255,.6);text-transform:uppercase}
+.name{font-size:14px;color:#fff;letter-spacing:.02em}
+.status{grid-column:1/-1;margin-top:16px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--mint);text-transform:uppercase;border-left:2px solid var(--mint);padding-left:12px}
+@media(max-width:900px){.wrap{grid-template-columns:1fr;gap:32px}}
+</style></head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div class="eye"><span class="rule"></span>04 — BLUEPRINT<span class="role">Vision announcement</span></div>
+    <h2>A stack, not a shop.</h2>
+    <p class="lede">Four coordinated layers that let one factory blueprint replicate. Announced here; explored on the Technology page.</p>
+    <div class="link">See the full stack →</div>
+  </div>
+  <div class="stack">
+    <div class="layer"><div class="code">L1</div><div class="name">APG — Autonomous Process Generator</div></div>
+    <div class="layer"><div class="code">L2</div><div class="name">FacOS — Factory Operating System</div></div>
+    <div class="layer"><div class="code">L3</div><div class="name">QMS — Quality Management System</div></div>
+    <div class="layer"><div class="code">L4</div><div class="name">Automation Cell — closed-loop execution</div></div>
+  </div>
+  <div class="status">Section stub — brand-teal vision moment (Brand/700)</div>
+</div>
+<script>(function(){var ID='s4';function p(){try{parent.postMessage({aetherH:document.documentElement.scrollHeight,aetherId:ID},'*');}catch(e){}}window.addEventListener('load',p);window.addEventListener('resize',p);if(window.ResizeObserver){new ResizeObserver(p).observe(document.body);}setInterval(p,800);})();</script>
+</body></html>

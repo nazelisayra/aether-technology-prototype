@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Story map</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../styles/tokens.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--paper);color:var(--text-ink)}
+.top{padding:96px var(--pad) 88px}
+.top-inner{max-width:78ch;display:flex;flex-direction:column;gap:20px}
+.eye{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink2);display:inline-flex;align-items:center;gap:12px}
+.eye .rule{width:32px;height:1px;background:currentColor;opacity:.4}
+.eye .role{color:var(--teal);letter-spacing:.28em}
+h2{font-weight:400;font-size:clamp(30px,3.6vw,48px);line-height:1.1;letter-spacing:-.01em;text-wrap:balance;margin:0;color:var(--text-ink)}
+h2 em{font-style:normal;color:var(--teal)}
+.lede{font-size:clamp(14px,1.1vw,16px);line-height:1.6;color:var(--ink2);max-width:64ch}
+.status{margin-top:8px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--ink2);text-transform:uppercase;border-left:2px solid var(--teal);padding-left:12px}
+</style></head>
+<body>
+<div class="top">
+  <div class="top-inner">
+    <div class="eye"><span class="rule"></span>05 — STORY MAP<span class="role">★ Signature moment</span></div>
+    <h2>From global supply <em>to a US-first blueprint that scales.</em></h2>
+    <p class="lede">Aether began sourcing precision parts through partner factories in China and Mexico. Today the primary production floor runs in Erie, Pennsylvania — with Texas planned for 2027 and a franchise-replicated network beyond.</p>
+    <div class="status">Section stub — animated wireframe world map arrives last (built as own sprint)</div>
+  </div>
+</div>
+<script>(function(){var ID='s5';function p(){try{parent.postMessage({aetherH:document.documentElement.scrollHeight,aetherId:ID},'*');}catch(e){}}window.addEventListener('load',p);window.addEventListener('resize',p);if(window.ResizeObserver){new ResizeObserver(p).observe(document.body);}setInterval(p,800);})();</script>
+</body></html>

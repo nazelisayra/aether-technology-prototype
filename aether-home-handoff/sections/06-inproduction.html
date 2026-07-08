@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>In production today</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../styles/tokens.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);padding:96px var(--pad);position:relative;overflow:hidden}
+body::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(700px 400px at 85% 15%,rgba(19,91,124,.28),transparent 65%),
+  radial-gradient(500px 300px at 10% 60%,rgba(44,134,176,.14),transparent 65%);pointer-events:none}
+.head{position:relative;display:flex;flex-direction:column;gap:20px;max-width:66ch;margin-bottom:36px}
+.eye{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);display:inline-flex;align-items:center;gap:12px}
+.eye .rule{width:32px;height:1px;background:currentColor;opacity:.4}
+.eye .role{color:var(--teal-lite);letter-spacing:.28em}
+h2{color:var(--ink);font-weight:400;font-size:clamp(30px,3.6vw,48px);line-height:1.08;letter-spacing:-.01em;text-wrap:balance;margin:0}
+h2 em{font-style:normal;color:var(--teal-lite)}
+.lede{font-size:clamp(14px,1.1vw,16px);line-height:1.6;color:var(--dim);max-width:60ch}
+.status{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--faint);text-transform:uppercase;border-left:2px solid var(--teal-lite);padding-left:12px}
+</style></head>
+<body>
+<div class="head">
+  <div class="eye"><span class="rule"></span>06 — IN PRODUCTION TODAY<span class="role">Proof · sector output</span></div>
+  <h2>Not a concept. <em>A running factory.</em></h2>
+  <p class="lede">Built across industries — see the parts our floor delivers.</p>
+  <div class="status">Section stub — sector selector + part grid + ambient factory loop</div>
+</div>
+<script>(function(){var ID='s6';function p(){try{parent.postMessage({aetherH:document.documentElement.scrollHeight,aetherId:ID},'*');}catch(e){}}window.addEventListener('load',p);window.addEventListener('resize',p);if(window.ResizeObserver){new ResizeObserver(p).observe(document.body);}setInterval(p,800);})();</script>
+</body></html>

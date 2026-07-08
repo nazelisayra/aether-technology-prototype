@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Hero</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../styles/tokens.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:100vh;position:relative;overflow:hidden;padding:120px var(--pad) 200px}
+.stub{position:relative;z-index:2;max-width:1100px;display:flex;flex-direction:column;gap:28px}
+.eye{display:inline-flex;align-items:center;gap:14px;font-family:var(--mono);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--teal-lite)}
+.eye .rule{width:36px;height:1px;background:currentColor;opacity:.75}
+h1{font-weight:300;font-size:clamp(46px,7vw,96px);line-height:1.02;letter-spacing:-.015em;color:#fff;max-width:14ch;text-wrap:balance}
+h1 em{font-style:normal;color:var(--teal-lite)}
+.sub{font-size:clamp(14px,1.1vw,16px);line-height:1.6;color:var(--dim);max-width:56ch}
+.status{margin-top:8px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--faint);text-transform:uppercase;border-left:2px solid var(--teal);padding-left:12px}
+.watermark{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);font-weight:200;letter-spacing:.14em;font-size:clamp(140px,20vw,320px);color:rgba(255,255,255,.06);line-height:1;pointer-events:none;white-space:nowrap;z-index:0}
+</style></head>
+<body>
+<div class="watermark">AETHER</div>
+<div class="stub">
+  <div class="eye"><span class="rule"></span>01 — HERO · REFRAME</div>
+  <h1>One Blueprint.<br/><em>Every Factory.</em></h1>
+  <p class="sub">AI-native manufacturing infrastructure. Upload a STEP file, receive a transparent process-based quote, and get precision parts built on a factory that runs on software — not manual decisions.</p>
+  <div class="status">Section stub — cinematic hero from v0.4 will land here</div>
+</div>
+<script>(function(){var ID='s1';function p(){try{parent.postMessage({aetherH:document.documentElement.scrollHeight,aetherId:ID},'*');}catch(e){}}window.addEventListener('load',p);window.addEventListener('resize',p);if(window.ResizeObserver){new ResizeObserver(p).observe(document.body);}setInterval(p,800);})();</script>
+</body></html>
