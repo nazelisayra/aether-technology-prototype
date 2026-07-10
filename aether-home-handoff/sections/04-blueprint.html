@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Aether — The Operating System</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="../styles/tokens.css"/>
 <style>
 :root{
@@ -18,7 +18,7 @@
 body{
   font-family:'Montserrat',system-ui,sans-serif;color:var(--ink);
   background:radial-gradient(130% 80% at 50% 6%,var(--teal-mid) 0%,var(--teal) 40%,var(--teal-deep) 100%) fixed;
-  -webkit-font-smoothing:antialiased;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
 body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
   background-image:linear-gradient(var(--hair2) 1px,transparent 1px),linear-gradient(90deg,var(--hair2) 1px,transparent 1px);
@@ -142,11 +142,30 @@ h1 .b{font-weight:600}
 .note b{color:var(--dim);font-weight:600}
 
 @media(max-width:880px){
-  .grid{grid-template-columns:1fr}
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .stage{width:100%;max-width:100%}
   .bp .kpis{grid-template-columns:repeat(2,1fr)}
   .bp .panes{grid-template-columns:1fr}
 }
 @media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.08s!important}}
+
+/* metrics bar — below the diagram */
+.metrics{display:flex;flex-wrap:wrap;margin-top:clamp(34px,5vh,56px);
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.14);
+  border-radius:9px;overflow:hidden}
+.metrics .cell{flex:1 1 200px;min-width:170px;padding:25px 26px;display:flex;flex-direction:column;gap:9px;
+  border-right:1px solid rgba(255,255,255,.08)}
+.metrics .cell:last-child{border-right:none}
+.metrics .num{font-family:'JetBrains Mono',var(--mono);font-weight:400;font-size:clamp(30px,3vw,39px);
+  line-height:1;letter-spacing:-.02em;color:#fff}
+.metrics .num .u{color:var(--teal-lite)}
+.metrics .lbl{font-family:'JetBrains Mono',var(--mono);font-weight:400;font-size:10px;letter-spacing:.9px;
+  text-transform:uppercase;color:var(--dim)}
+@media(max-width:720px){
+  .metrics .cell{flex:1 1 45%}
+  .metrics .cell:nth-child(2n){border-right:none}
+  .metrics .cell:nth-child(-n+2){border-bottom:1px solid rgba(255,255,255,.08)}
+}
 </style>
 </head>
 <body>
@@ -179,7 +198,12 @@ h1 .b{font-weight:600}
     </div>
   </div>
 
-  
+  <div class="metrics" aria-label="Aether production metrics">
+    <div class="cell"><div class="num">500<span class="u">K+</span></div><div class="lbl">Parts in production dataset</div></div>
+    <div class="cell"><div class="num">100<span class="u">M+</span></div><div class="lbl">Process data points captured</div></div>
+    <div class="cell"><div class="num">500<span class="u">+</span></div><div class="lbl">CNC machines · global network</div></div>
+    <div class="cell"><div class="num">3<span class="u">day</span></div><div class="lbl">Fastest build from upload</div></div>
+  </div>
 </main>
 
 <script>

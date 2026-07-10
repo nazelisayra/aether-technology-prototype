@@ -44,7 +44,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-
 
 /* responsive */
 @media(max-width:960px){
-  .shift{padding:72px var(--section-pad)}
+  .shift{padding:clamp(48px,9vw,72px) var(--section-pad)}
   .compare{flex-direction:column;gap:16px}
   .card{width:100%}
   .title{font-size:30px;line-height:36px}

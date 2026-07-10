@@ -54,8 +54,8 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-
 
 /* responsive */
 @media(max-width:960px){
-  .story-row{flex-direction:column;gap:40px;align-items:stretch}
-  .story-left{max-width:none;flex:0 0 auto}
+  .story-row{grid-template-columns:1fr;gap:32px;align-items:stretch}
+  .story-left{max-width:none}
   .story-card{width:100%}
 }
 @media(max-width:600px){

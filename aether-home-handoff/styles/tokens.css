@@ -77,3 +77,15 @@
      Matches Figma desktop 160px, scales gracefully down. */
   --section-pad: clamp(24px, 11vw, 160px);
 }
+
+/* ── Responsive side padding ──────────────────────────────
+   Every section reads --section-pad, so these two breakpoints
+   retune horizontal padding for the whole page at once.
+   Full-bleed hero / video keep their own treatment (background
+   is edge-to-edge; only their text inner uses this).            */
+@media (max-width: 960px) {
+  :root { --section-pad: clamp(20px, 5vw, 48px); }   /* tablet */
+}
+@media (max-width: 600px) {
+  :root { --section-pad: 16px; }                     /* mobile */
+}
