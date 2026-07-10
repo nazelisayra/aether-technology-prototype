@@ -70,6 +70,10 @@
   /* SIZE */
   --nav: 64px;
 
-  /* Responsive pad — clamp(20px, 4vw, 60px) */
+  /* Legacy small pad (used by hero decorations) */
   --pad: clamp(20px, 4vw, 60px);
+
+  /* CANONICAL section side padding — every section aligns at this edge.
+     Matches Figma desktop 160px, scales gracefully down. */
+  --section-pad: clamp(24px, 11vw, 160px);
 }

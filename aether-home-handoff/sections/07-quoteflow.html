@@ -1,26 +1,136 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Quote flow</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Aether — From quote to delivery</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="../styles/tokens.css"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--sans);background:var(--paper);color:var(--text-ink);padding:100px var(--pad)}
-.head{display:flex;flex-direction:column;gap:16px;max-width:60ch;margin-bottom:36px}
-.eye{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink2);display:inline-flex;align-items:center;gap:12px}
-.eye .rule{width:32px;height:1px;background:currentColor;opacity:.4}
-.eye .role{color:var(--teal-mid);letter-spacing:.28em}
-h2{font-weight:400;font-size:clamp(30px,3.6vw,48px);line-height:1.08;letter-spacing:-.01em;text-wrap:balance;margin:0;color:var(--text-ink)}
-.lede{font-size:clamp(14px,1.1vw,16px);line-height:1.6;color:var(--ink2);max-width:60ch}
-.status{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--ink2);text-transform:uppercase;border-left:2px solid var(--teal);padding-left:12px}
-</style></head>
+body{font-family:var(--sans);background:var(--paper);color:var(--text-ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.quoteflow{padding:96px var(--section-pad);display:flex;flex-direction:column;gap:56px}
+
+/* HEADER */
+.head{display:flex;flex-direction:column;gap:18px;max-width:680px}
+.idx{display:flex;align-items:center;gap:12px}
+.idx .n{font-family:'JetBrains Mono',var(--mono);font-weight:700;font-size:11px;letter-spacing:2.2px;text-transform:uppercase;color:var(--teal);line-height:1}
+.idx .lbl{font-family:'Montserrat',var(--sans);font-weight:700;font-size:11px;letter-spacing:2.2px;text-transform:uppercase;color:var(--teal);line-height:1}
+h2{font-family:'Montserrat',var(--sans);font-weight:300;font-size:40px;line-height:48px;letter-spacing:-.01em;color:var(--text-ink)}
+h2 b{font-weight:600}
+.lede{font-size:16px;line-height:1.6;color:var(--ink2);max-width:60ch}
+
+/* SHOWCASE — real APG portal in a light browser frame */
+.showcase{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 24px 60px rgba(19,36,46,.10)}
+.browser-bar{display:flex;align-items:center;gap:14px;padding:12px 18px;border-bottom:1px solid var(--line);background:#F7F9FA}
+.dots{display:flex;gap:7px}
+.dots i{width:11px;height:11px;border-radius:50%;background:var(--line);display:block}
+.url{flex:1;display:flex;align-items:center;gap:9px;max-width:420px;padding:7px 14px;border:1px solid var(--line);border-radius:7px;background:#fff;font-family:'JetBrains Mono',var(--mono);font-size:11px;letter-spacing:.02em;color:var(--text-muted)}
+.url .lock{width:9px;height:9px;border:1.5px solid var(--teal);border-radius:2px;position:relative;flex-shrink:0}
+.url .lock::before{content:"";position:absolute;top:-4px;left:1.5px;width:4px;height:4px;border:1.5px solid var(--teal);border-bottom:none;border-radius:3px 3px 0 0}
+.url b{color:var(--text-ink);font-weight:500}
+.showcase .shot{display:block;width:100%;height:auto}
+.showcase .tags{display:flex;flex-wrap:wrap;gap:10px;padding:16px 20px;border-top:1px solid var(--line);background:#FBFCFC}
+.showcase .tag{display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+.showcase .tag .d{width:6px;height:6px;border-radius:50%;background:var(--teal-lift)}
+.showcase .tag.live .d{background:var(--green-deep);box-shadow:0 0 6px rgba(63,174,114,.6)}
+
+/* STEPS — three white cards */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.step{position:relative;display:flex;flex-direction:column;gap:14px;padding:30px 28px 32px;background:#fff;border:1px solid var(--line);border-radius:10px;transition:border-color .2s ease, box-shadow .2s ease}
+.step:hover{border-color:rgba(19,91,124,.35);box-shadow:0 12px 32px rgba(19,36,46,.08)}
+.step .n{font-family:'JetBrains Mono',var(--mono);font-weight:500;font-size:11px;letter-spacing:2px;color:var(--teal)}
+.step .ic{width:40px;height:40px;border:1px solid var(--line);border-radius:9px;display:flex;align-items:center;justify-content:center;background:var(--surface-sunken)}
+.step .ic svg{width:20px;height:20px;stroke:var(--teal);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.step h3{font-family:'Montserrat',var(--sans);font-weight:500;font-size:18px;line-height:1.3;color:var(--text-ink)}
+.step p{font-size:13.5px;line-height:1.6;color:var(--ink2)}
+.step .arrow{position:absolute;top:38px;right:-22px;width:24px;height:12px;color:var(--line);z-index:2}
+.step .arrow svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:1.4}
+.step:last-child .arrow{display:none}
+
+/* CLOSING CTA */
+.cta{display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;
+  padding:36px 40px;border-radius:12px;
+  background:linear-gradient(135deg,var(--teal) 0%,var(--teal-mid) 100%);
+  box-shadow:0 16px 44px rgba(19,91,124,.24)}
+.cta .l{display:flex;flex-direction:column;gap:8px;max-width:52ch}
+.cta .l h4{font-family:'Montserrat',var(--sans);font-weight:500;font-size:22px;line-height:1.25;color:#fff}
+.cta .l p{font-size:14px;line-height:1.55;color:rgba(255,255,255,.82)}
+.cta .btn{flex-shrink:0;display:inline-flex;align-items:center;gap:9px;background:#fff;color:var(--teal);
+  font-family:'Montserrat',var(--sans);font-weight:600;font-size:14px;letter-spacing:.01em;
+  padding:15px 28px;border-radius:8px;text-decoration:none;transition:transform .18s ease, box-shadow .18s ease;
+  box-shadow:0 4px 14px rgba(0,0,0,.15)}
+.cta .btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+.cta .btn .a{font-size:16px;line-height:1}
+
+/* responsive */
+@media(max-width:960px){
+  .quoteflow{padding:72px var(--section-pad);gap:44px}
+  .steps{grid-template-columns:1fr}
+  .step .arrow{display:none}
+  h2{font-size:30px;line-height:36px}
+  .cta{padding:28px 28px;flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
 <body>
-<div class="head">
-  <div class="eye"><span class="rule"></span>07 — FROM QUOTE TO DELIVERY<span class="role">Sourcing engineer's moment</span></div>
-  <h2>Upload. Understand. Order.</h2>
-  <p class="lede">A transparent process-based quote in minutes — engineering review included.</p>
-  <div class="status">Section stub — Formlabs-style 3-step walkthrough</div>
-</div>
+<section class="quoteflow">
+
+  <div class="head">
+    <div class="idx"><span class="n">07</span><span class="lbl">FROM QUOTE TO DELIVERY</span></div>
+    <h2>Upload. Understand. <b>Order.</b></h2>
+    <p class="lede">A transparent, process-based quote in minutes — engineering review included. No estimation, no black box. The same portal that opens your quote follows the part all the way to delivery.</p>
+  </div>
+
+  <!-- real APG portal -->
+  <div class="showcase">
+    <div class="browser-bar">
+      <div class="dots"><i></i><i></i><i></i></div>
+      <div class="url"><span class="lock"></span>quote.aethermfg.com&nbsp;·&nbsp;<b>APG · White-box quote</b></div>
+    </div>
+    <img class="shot" src="../assets/images/02-system-06.png" alt="Aether APG portal — upload a STEP file and generate an instant quote"/>
+    <div class="tags">
+      <span class="tag live"><span class="d"></span>Live portal</span>
+      <span class="tag"><span class="d"></span>STEP file in</span>
+      <span class="tag"><span class="d"></span>Process · cost · runtime out</span>
+      <span class="tag"><span class="d"></span>Engineering review included</span>
+    </div>
+  </div>
+
+  <!-- three steps -->
+  <div class="steps">
+    <div class="step">
+      <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 16V4M12 4l-4 4M12 4l4 4"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg></div>
+      <div class="n">STEP 01</div>
+      <h3>Upload your STEP file</h3>
+      <p>Drag a CAD file into the portal. Aether's APG reads geometry, features, tolerances, and materials — no CAM programmer in the loop.</p>
+      <div class="arrow"><svg viewBox="0 0 24 12"><path d="M0 6h22M17 1l5 5-5 5"/></svg></div>
+    </div>
+    <div class="step">
+      <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 13h6M8 16h4"/></svg></div>
+      <div class="n">STEP 02</div>
+      <h3>See the process, not just the price</h3>
+      <p>A transparent breakdown — process logic, tooling, runtime, and cost. Manufacturability feedback comes back with the quote, in minutes.</p>
+      <div class="arrow"><svg viewBox="0 0 24 12"><path d="M0 6h22M17 1l5 5-5 5"/></svg></div>
+    </div>
+    <div class="step">
+      <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg></div>
+      <div class="n">STEP 03</div>
+      <h3>Order — delivered with its record</h3>
+      <p>Automated production and in-line QC. The part ships from the nearest qualified node with its full certification record traveling alongside it.</p>
+    </div>
+  </div>
+
+  <!-- closing CTA -->
+  <div class="cta">
+    <div class="l">
+      <h4>See our process work on your part.</h4>
+      <p>Upload a STEP file and receive a transparent, process-based quote in minutes.</p>
+    </div>
+    <a class="btn" href="https://quote.aethermfg.com/login" target="_blank" rel="noopener">Get an instant quote <span class="a">→</span></a>
+  </div>
+
+</section>
 <script>(function(){var ID='s7';function p(){try{parent.postMessage({aetherH:document.documentElement.scrollHeight,aetherId:ID},'*');}catch(e){}}window.addEventListener('load',p);window.addEventListener('resize',p);if(window.ResizeObserver){new ResizeObserver(p).observe(document.body);}setInterval(p,800);})();</script>
-</body></html>
+</body>
+</html>

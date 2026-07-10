@@ -1,30 +1,197 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>In production today</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Aether — In production today</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="../styles/tokens.css"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--sans);background:var(--bg);color:var(--ink);padding:96px var(--pad);position:relative;overflow:hidden}
-body::before{content:"";position:absolute;inset:0;background:
-  radial-gradient(700px 400px at 85% 15%,rgba(19,91,124,.28),transparent 65%),
-  radial-gradient(500px 300px at 10% 60%,rgba(44,134,176,.14),transparent 65%);pointer-events:none}
-.head{position:relative;display:flex;flex-direction:column;gap:20px;max-width:66ch;margin-bottom:36px}
-.eye{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);display:inline-flex;align-items:center;gap:12px}
-.eye .rule{width:32px;height:1px;background:currentColor;opacity:.4}
-.eye .role{color:var(--teal-lite);letter-spacing:.28em}
-h2{color:var(--ink);font-weight:400;font-size:clamp(30px,3.6vw,48px);line-height:1.08;letter-spacing:-.01em;text-wrap:balance;margin:0}
-h2 em{font-style:normal;color:var(--teal-lite)}
-.lede{font-size:clamp(14px,1.1vw,16px);line-height:1.6;color:var(--dim);max-width:60ch}
-.status{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--faint);text-transform:uppercase;border-left:2px solid var(--teal-lite);padding-left:12px}
-</style></head>
+body{font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background:
+    linear-gradient(173.5deg, #173243 0%, rgba(18,40,53,.25) 40%, #0E222E 100%),
+    #102531}
+.inprod{padding:96px var(--section-pad);display:flex;flex-direction:column;gap:40px}
+
+/* HEAD */
+.head{display:flex;flex-direction:column;gap:11px}
+.idx{display:flex;align-items:center;gap:10px}
+.idx .n{font-family:'JetBrains Mono',var(--mono);font-weight:400;font-size:11px;letter-spacing:2.16px;color:var(--teal-lite);line-height:1}
+.idx .lbl{font-family:'Montserrat',var(--sans);font-weight:700;font-size:11px;letter-spacing:2.16px;color:rgba(255,255,255,.6);line-height:1}
+h2{font-family:'Montserrat',var(--sans);font-weight:300;font-size:40px;line-height:48px;letter-spacing:-.01em;color:#fff}
+h2 b{font-weight:600}
+
+/* sector selector */
+.sectors{display:flex;flex-direction:column;gap:15px}
+.sectors .sub{font-family:'Montserrat',var(--sans);font-weight:600;font-size:18px;color:#fff}
+.sectorbar{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.pills{display:flex;gap:7px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;justify-content:center;padding:8px 15px;border-radius:30px;
+  font-family:'Montserrat',var(--sans);font-weight:500;font-size:12px;letter-spacing:.01em;white-space:nowrap;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.6);
+  cursor:pointer;transition:background .18s ease,color .18s ease,border-color .18s ease}
+.pill:hover{color:#fff;border-color:rgba(95,168,204,.4)}
+.pill.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.select-note{font-family:'JetBrains Mono',var(--mono);font-weight:400;font-size:10px;letter-spacing:.9px;
+  text-transform:uppercase;color:rgba(255,255,255,.48);white-space:nowrap}
+
+/* showcase card */
+.showcase{display:grid;grid-template-columns:1fr 1.05fr;background:#fff;border:1px solid rgba(255,255,255,.14);
+  border-radius:14px;overflow:hidden;min-height:418px}
+.sc-left{display:flex;flex-direction:column;justify-content:space-between;gap:20px;padding:34px 36px 32px 50px}
+.sc-badges{display:flex;align-items:center;gap:9px}
+.sc-tag{display:inline-flex;align-items:center;background:rgba(95,168,204,.14);border:1px solid rgba(95,168,204,.3);
+  border-radius:4px;padding:6px 9px;font-family:'JetBrains Mono',var(--mono);font-weight:400;font-size:10px;
+  letter-spacing:1px;text-transform:uppercase;color:#19749f}
+.sc-live{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',var(--mono);font-weight:400;
+  font-size:10px;letter-spacing:.9px;text-transform:uppercase;color:var(--mint)}
+.sc-live .dot{width:6px;height:6px;border-radius:50%;background:var(--mint);box-shadow:0 0 7px var(--green)}
+.sc-h{font-family:'Montserrat',var(--sans);font-weight:600;font-size:24px;line-height:31px;letter-spacing:-.01em;
+  color:var(--teal);margin-top:16px}
+.sc-cats{font-family:'JetBrains Mono',var(--mono);font-weight:400;font-size:9px;letter-spacing:.9px;
+  text-transform:uppercase;color:var(--teal);margin-top:13px}
+.sc-parts{margin-top:18px;width:100%;max-width:460px;height:auto;display:block}
+.sc-quote{font-family:'JetBrains Mono',var(--mono);font-weight:400;font-size:11.25px;letter-spacing:.48px;
+  color:var(--teal-lite);text-decoration:none;transition:color .18s ease}
+.sc-quote:hover{color:var(--teal)}
+.sc-right{background:#F5F5F5;display:flex;align-items:center;justify-content:center;padding:17px}
+.sc-right img{width:100%;height:100%;max-height:380px;object-fit:cover;border-radius:9px;display:block}
+
+/* sector swap animation — content crossfades within the fixed frame */
+.sc-swap{transition:opacity .3s ease, transform .3s cubic-bezier(.2,.7,.3,1)}
+.showcase.swapping .sc-swap{opacity:0;transform:translateY(12px)}
+@media(prefers-reduced-motion:reduce){.sc-swap{transition:opacity .12s ease}.showcase.swapping .sc-swap{transform:none}}
+
+/* certifications bar */
+.certs{display:flex;flex-wrap:wrap;align-items:stretch;background:rgba(255,255,255,.02);
+  border:1px solid rgba(255,255,255,.14);border-radius:8px;overflow:hidden}
+.cert{padding:11px 17px;border-right:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;gap:3px;justify-content:center}
+.cert:last-child{border-right:none}
+.cert.lbl{justify-content:center}
+.cert.lbl span{font-family:'JetBrains Mono',var(--mono);font-weight:400;font-size:9px;letter-spacing:.95px;
+  text-transform:uppercase;color:rgba(255,255,255,.4)}
+.cert .nm{font-family:'Montserrat',var(--sans);font-weight:600;font-size:12px;letter-spacing:.02em;color:#fff}
+.cert .sub{font-family:'JetBrains Mono',var(--mono);font-weight:400;font-size:8px;letter-spacing:.5px;color:var(--teal-lite)}
+
+/* closing paragraph */
+.summary{max-width:715px;font-family:'Montserrat',var(--sans);font-weight:400;font-size:14px;line-height:1.62;
+  color:rgba(255,255,255,.6)}
+.summary b{font-weight:500;color:#fff}
+
+/* responsive */
+@media(max-width:960px){
+  .inprod{padding:72px var(--section-pad);gap:32px}
+  h2{font-size:30px;line-height:38px}
+  .showcase{grid-template-columns:1fr}
+  .sc-left{padding:32px 28px}
+  .sc-right{min-height:280px}
+  .sectorbar{align-items:flex-start}
+}
+</style>
+</head>
 <body>
-<div class="head">
-  <div class="eye"><span class="rule"></span>06 — IN PRODUCTION TODAY<span class="role">Proof · sector output</span></div>
-  <h2>Not a concept. <em>A running factory.</em></h2>
-  <p class="lede">Built across industries — see the parts our floor delivers.</p>
-  <div class="status">Section stub — sector selector + part grid + ambient factory loop</div>
-</div>
+<section class="inprod">
+
+  <div class="head">
+    <div class="idx"><span class="n">03</span><span class="lbl">IN PRODUCTION TODAY</span></div>
+    <h2>Not a concept. <b>A running factory.</b></h2>
+  </div>
+
+  <div class="sectors">
+    <div class="sub">Built across industries</div>
+    <div class="sectorbar">
+      <div class="pills">
+        <span class="pill on" data-sector="medical">Medical</span>
+        <span class="pill" data-sector="robotics">Robotics</span>
+        <span class="pill">Aerospace</span>
+        <span class="pill">Oil &amp; Gas</span>
+        <span class="pill">Semiconductor</span>
+        <span class="pill">Data Center</span>
+        <span class="pill">Energy</span>
+      </div>
+      <div class="select-note">Select a sector</div>
+    </div>
+
+    <div class="showcase">
+      <div class="sc-left">
+        <div class="sc-swap">
+          <div class="sc-badges">
+            <span class="sc-tag" id="scTag">Medical Devices</span>
+            <span class="sc-live"><span class="dot"></span>In production</span>
+          </div>
+          <h3 class="sc-h" id="scHeading">Advanced Surgical Systems</h3>
+          <div class="sc-cats" id="scCats">Medical Surgery&nbsp;&nbsp;|&nbsp;&nbsp;Radiology&nbsp;&nbsp;|&nbsp;&nbsp;Orthopedics</div>
+          <img class="sc-parts" id="scParts" src="../assets/images/06-inprod-parts.png" alt="Titanium surgical plates in production — Clavical Arc, Distal Radius, Olecranon Bone, and Tosteomy plates with materials, dimensions, and tolerances"/>
+        </div>
+        <a class="sc-quote" href="https://quote.aethermfg.com/login" target="_blank" rel="noopener">Get a similar quote →</a>
+      </div>
+      <div class="sc-right">
+        <img class="sc-swap" id="scRobot" src="../assets/images/06-inprod-robot.png" alt="Robotic surgical system on the operating floor"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="certs">
+    <div class="cert lbl"><span>Certified</span></div>
+    <div class="cert"><span class="nm">ISO 9001</span><span class="sub">Quality mgmt</span></div>
+    <div class="cert"><span class="nm">AS9100</span><span class="sub">Aerospace</span></div>
+    <div class="cert"><span class="nm">ISO 13485</span><span class="sub">Medical</span></div>
+    <div class="cert"><span class="nm">Nadcap</span><span class="sub">Special process</span></div>
+  </div>
+
+  <p class="summary">Aerospace-grade parts ship from our Pennsylvania factory today — to robotics companies, research labs, data-center teams, and medical-device manufacturers. <b>Every order includes a full CMM report.</b></p>
+
+</section>
+<script>
+// ── Sector selector — swaps the showcase content within the fixed frame ──
+(function(){
+  var SECTORS={
+    medical:{
+      tag:'Medical Devices', heading:'Advanced Surgical Systems',
+      cats:'Medical Surgery&nbsp;&nbsp;|&nbsp;&nbsp;Radiology&nbsp;&nbsp;|&nbsp;&nbsp;Orthopedics',
+      parts:'../assets/images/06-inprod-parts.png',
+      partsAlt:'Titanium surgical plates in production — Clavical Arc, Distal Radius, Olecranon Bone, and Tosteomy plates with materials, dimensions, and tolerances',
+      robot:'../assets/images/06-inprod-robot.png', robotAlt:'Robotic surgical system on the operating floor'
+    },
+    robotics:{
+      tag:'Robotic Parts', heading:'Humanoid Robots',
+      cats:'Precision Joints&nbsp;&nbsp;|&nbsp;&nbsp;Actuators&nbsp;&nbsp;|&nbsp;&nbsp;Structural Frames',
+      parts:'../assets/images/06-robotics-parts.png',
+      partsAlt:'Aluminum 7075 robotic parts in production — Shoulder Joint Base, Fork Foot End, Joint Shell, and Foot Sole with materials, dimensions, and tolerances',
+      robot:'../assets/images/06-robotics-robot.png', robotAlt:'Humanoid robot built from Aether precision parts'
+    }
+  };
+  // preload so the swap never flickers
+  Object.keys(SECTORS).forEach(function(k){[SECTORS[k].parts,SECTORS[k].robot].forEach(function(src){var im=new Image();im.src=src;});});
+
+  var showcase=document.querySelector('.showcase');
+  var scTag=document.getElementById('scTag'), scHeading=document.getElementById('scHeading'),
+      scCats=document.getElementById('scCats'), scParts=document.getElementById('scParts'),
+      scRobot=document.getElementById('scRobot');
+  var pills=[].slice.call(document.querySelectorAll('.pill'));
+  var current='medical', busy=false;
+
+  function apply(s){
+    scTag.textContent=s.tag; scHeading.textContent=s.heading; scCats.innerHTML=s.cats;
+    scParts.src=s.parts; scParts.alt=s.partsAlt;
+    scRobot.src=s.robot; scRobot.alt=s.robotAlt;
+  }
+  function setSector(key, pill){
+    if(busy || key===current || !SECTORS[key]) return;
+    busy=true; current=key;
+    pills.forEach(function(p){p.classList.toggle('on', p===pill);});
+    showcase.classList.add('swapping');
+    setTimeout(function(){ apply(SECTORS[key]); showcase.classList.remove('swapping'); busy=false; }, 300);
+  }
+  pills.forEach(function(p){
+    if(p.dataset.sector){ p.setAttribute('role','button'); p.setAttribute('tabindex','0');
+      p.addEventListener('click', function(){ setSector(p.dataset.sector, p); });
+      p.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); setSector(p.dataset.sector, p); } });
+    }
+  });
+})();
+</script>
 <script>(function(){var ID='s6';function p(){try{parent.postMessage({aetherH:document.documentElement.scrollHeight,aetherId:ID},'*');}catch(e){}}window.addEventListener('load',p);window.addEventListener('resize',p);if(window.ResizeObserver){new ResizeObserver(p).observe(document.body);}setInterval(p,800);})();</script>
-</body></html>
+</body>
+</html>

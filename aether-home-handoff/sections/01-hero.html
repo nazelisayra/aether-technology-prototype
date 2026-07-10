@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Aether — One Blueprint. Every Factory.</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../styles/tokens.css"/>
 <style>
 :root{
   --teal:#135B7C;--teal-lift:#2C86B0;--teal-lite:#5FA8CC;
@@ -23,12 +24,12 @@ body{font-family:'Montserrat',system-ui,sans-serif;color:var(--ink);background:#
   linear-gradient(180deg,rgba(12,27,36,.7) 0%,rgba(12,27,36,.25) 30%,rgba(12,27,36,.45) 70%,rgba(12,27,36,.92) 100%),
   linear-gradient(90deg,rgba(12,27,36,.7) 0%,transparent 55%)}
 .hero-teal{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 30% 55%,rgba(19,91,124,.20),transparent 70%)}
-.tblock{position:absolute;top:92px;right:var(--pad);display:flex;font-family:var(--mono);font-size:9px;letter-spacing:.08em;
+.tblock{position:absolute;top:92px;right:var(--section-pad);display:flex;font-family:var(--mono);font-size:9px;letter-spacing:.08em;
   color:var(--faint);border:1px solid var(--hair);background:rgba(8,20,27,.4);backdrop-filter:blur(3px);z-index:3}
 .tblock .c{padding:7px 13px;border-right:1px solid var(--hair2)}
 .tblock .c:last-child{border-right:none}
 .tblock .c b{color:var(--ghost);font-weight:400;display:block;font-size:8px;margin-bottom:3px}
-.hero-inner{position:relative;z-index:3;max-width:1320px;width:100%;margin:0 auto;padding:0 var(--pad)}
+.hero-inner{position:relative;z-index:3;width:100%;padding:0 var(--section-pad)}
 .eyebrow{display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:12px;font-weight:400;letter-spacing:.28em;color:var(--teal-lite);margin-bottom:24px}
 .eyebrow .datum{display:flex;flex-direction:column;gap:3px}
 .eyebrow .datum span{height:2px;width:30px;background:var(--teal-lite);opacity:.8;display:block}
