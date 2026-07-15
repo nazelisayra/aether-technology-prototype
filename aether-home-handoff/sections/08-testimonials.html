@@ -1,27 +1,121 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Testimonials</title>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Aether — Trusted by Engineering Teams</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="../styles/tokens.css"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--sans);background:var(--teal);color:var(--ink);padding:96px var(--pad);position:relative;overflow:hidden}
-body::before{content:"";position:absolute;inset:0;background:
-  radial-gradient(700px 400px at 20% 10%,rgba(95,168,204,.18),transparent 65%),
-  radial-gradient(500px 300px at 90% 90%,rgba(12,58,80,.4),transparent 60%);pointer-events:none}
-.head{position:relative;display:flex;flex-direction:column;gap:16px;margin-bottom:36px}
-.eye{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.72);display:inline-flex;align-items:center;gap:12px}
-.eye .rule{width:32px;height:1px;background:currentColor;opacity:.4}
-.eye .role{color:var(--mint);letter-spacing:.28em}
-h2{color:#fff;font-weight:400;font-size:clamp(30px,3.6vw,44px);line-height:1.08;letter-spacing:-.01em;text-wrap:balance;margin:0}
-.status{position:relative;font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--mint);text-transform:uppercase;border-left:2px solid var(--mint);padding-left:12px}
-</style></head>
+body{font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background:linear-gradient(180deg,var(--ink-800) 0%,var(--ink-950) 100%)}
+.testi{padding:clamp(56px,9vw,80px) 0}
+
+/* header (aligned at section padding) */
+.thead-wrap{padding:0 var(--section-pad);margin-bottom:clamp(32px,5vw,48px);display:flex;flex-direction:column;gap:16px}
+.eyebrow{font-family:'Montserrat',var(--sans);font-weight:700;font-size:11px;letter-spacing:1.65px;text-transform:uppercase;color:var(--dim)}
+h2{font-family:'Montserrat',var(--sans);font-weight:300;font-size:clamp(28px,3.2vw,34px);line-height:1.25;letter-spacing:-.01em;color:#fff}
+
+/* marquee band — full bleed, cards scroll right → left */
+.band{width:100%;overflow:hidden;
+  -webkit-mask:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+          mask:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.track{display:flex;align-items:stretch;width:max-content;padding:6px 0;animation:tscroll 55s linear infinite}
+.band:hover .track{animation-play-state:paused}
+@keyframes tscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* card */
+.tcard{flex-shrink:0;width:434px;min-height:243px;margin-right:40px;
+  background:rgba(19,91,124,.1);border:1px dashed rgba(95,168,204,.14);border-radius:12px;
+  padding:32px;display:flex;flex-direction:column;gap:16px}
+.thead{display:flex;gap:16px;align-items:flex-start}
+.tav{width:54px;height:54px;flex-shrink:0;border-radius:50%;overflow:hidden;display:block}
+.tav img{width:100%;height:100%;display:block}
+.twho{display:flex;flex-direction:column;gap:2px}
+.tname{font-family:'Montserrat',var(--sans);font-weight:600;font-size:16px;line-height:20px;color:#fff}
+.trole{font-family:'Montserrat',var(--sans);font-weight:400;font-size:12px;line-height:20px;color:#B7B7B8}
+.tquote{font-family:'Montserrat',var(--sans);font-weight:500;font-size:13px;line-height:22px;letter-spacing:.065px;color:#B7B7B8}
+
+@media(prefers-reduced-motion:reduce){.track{animation:none}}
+@media(max-width:560px){
+  .tcard{width:300px;margin-right:20px;padding:26px}
+  .track{animation-duration:42s}
+}
+</style>
+</head>
 <body>
-<div class="head">
-  <div class="eye"><span class="rule"></span>08 — TESTIMONIALS<span class="role">Brand voice · engineer proof</span></div>
-  <h2>Trusted by Engineering Teams.</h2>
-  <div class="status">Section stub — brand-teal spotlight, dark cards + orb avatars</div>
-</div>
+<section class="testi">
+
+  <div class="thead-wrap">
+    <div class="eyebrow"><span style="color:var(--teal-lite)">06</span>&nbsp;&nbsp;Testimonials</div>
+    <h2>Trusted by Engineering Teams</h2>
+  </div>
+
+  <div class="band">
+    <div class="track" id="track">
+      <!-- SET 1 -->
+      <div class="tcard">
+        <div class="thead">
+          <span class="tav"><img src="../assets/images/08-avatar.svg" alt=""/></span>
+          <div class="twho"><div class="tname">Leading U.S. Engineering Research Lab</div><div class="trole">Mechanical Engineering Researcher</div></div>
+        </div>
+        <p class="tquote">&ldquo;Aether&rsquo;s instant AI machining quote system is clean, intuitive, and easy to use. It makes sourcing precision machined parts significantly faster than traditional manufacturing workflows.&rdquo;</p>
+      </div>
+      <div class="tcard">
+        <div class="thead">
+          <span class="tav"><img src="../assets/images/08-avatar.svg" alt=""/></span>
+          <div class="twho"><div class="tname">Advanced Biomechatronics Research Lab</div><div class="trole">Research Engineer</div></div>
+        </div>
+        <p class="tquote">&ldquo;Working with Aether&rsquo;s team was smooth and responsive. Their platform made it easy to iterate on designs and manage machining quotes as our project evolved.&rdquo;</p>
+      </div>
+      <div class="tcard">
+        <div class="thead">
+          <span class="tav"><img src="../assets/images/08-avatar.svg" alt=""/></span>
+          <div class="twho"><div class="tname">Top U.S. Robotics Company</div><div class="trole">Lead Product Engineer</div></div>
+        </div>
+        <p class="tquote">&ldquo;Aether&rsquo;s team provided valuable GD&amp;T and manufacturability feedback during the machining process. Their AI-driven machining approach helped us refine our design decisions and will influence how we design future robotic components.&rdquo;</p>
+      </div>
+      <div class="tcard">
+        <div class="thead">
+          <span class="tav"><img src="../assets/images/08-avatar.svg" alt=""/></span>
+          <div class="twho"><div class="tname">Top Data Center Cooling Technology Company</div><div class="trole">Product Development Engineer</div></div>
+        </div>
+        <p class="tquote">&ldquo;The manifold samples looked great on arrival. Aether demonstrated strong execution in precision machining and manufacturing quality for complex thermal components.&rdquo;</p>
+      </div>
+      <!-- SET 2 (duplicate, aria-hidden — enables seamless -50% loop) -->
+      <div class="tcard" aria-hidden="true">
+        <div class="thead">
+          <span class="tav"><img src="../assets/images/08-avatar.svg" alt=""/></span>
+          <div class="twho"><div class="tname">Leading U.S. Engineering Research Lab</div><div class="trole">Mechanical Engineering Researcher</div></div>
+        </div>
+        <p class="tquote">&ldquo;Aether&rsquo;s instant AI machining quote system is clean, intuitive, and easy to use. It makes sourcing precision machined parts significantly faster than traditional manufacturing workflows.&rdquo;</p>
+      </div>
+      <div class="tcard" aria-hidden="true">
+        <div class="thead">
+          <span class="tav"><img src="../assets/images/08-avatar.svg" alt=""/></span>
+          <div class="twho"><div class="tname">Advanced Biomechatronics Research Lab</div><div class="trole">Research Engineer</div></div>
+        </div>
+        <p class="tquote">&ldquo;Working with Aether&rsquo;s team was smooth and responsive. Their platform made it easy to iterate on designs and manage machining quotes as our project evolved.&rdquo;</p>
+      </div>
+      <div class="tcard" aria-hidden="true">
+        <div class="thead">
+          <span class="tav"><img src="../assets/images/08-avatar.svg" alt=""/></span>
+          <div class="twho"><div class="tname">Top U.S. Robotics Company</div><div class="trole">Lead Product Engineer</div></div>
+        </div>
+        <p class="tquote">&ldquo;Aether&rsquo;s team provided valuable GD&amp;T and manufacturability feedback during the machining process. Their AI-driven machining approach helped us refine our design decisions and will influence how we design future robotic components.&rdquo;</p>
+      </div>
+      <div class="tcard" aria-hidden="true">
+        <div class="thead">
+          <span class="tav"><img src="../assets/images/08-avatar.svg" alt=""/></span>
+          <div class="twho"><div class="tname">Top Data Center Cooling Technology Company</div><div class="trole">Product Development Engineer</div></div>
+        </div>
+        <p class="tquote">&ldquo;The manifold samples looked great on arrival. Aether demonstrated strong execution in precision machining and manufacturing quality for complex thermal components.&rdquo;</p>
+      </div>
+    </div>
+  </div>
+
+</section>
 <script>(function(){var ID='s8';function p(){try{parent.postMessage({aetherH:document.documentElement.scrollHeight,aetherId:ID},'*');}catch(e){}}window.addEventListener('load',p);window.addEventListener('resize',p);if(window.ResizeObserver){new ResizeObserver(p).observe(document.body);}setInterval(p,800);})();</script>
-</body></html>
+</body>
+</html>

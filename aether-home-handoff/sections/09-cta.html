@@ -1,30 +1,33 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Segmented CTA</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<title>Aether — See our process work on your part</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="../styles/tokens.css"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--sans);background:var(--ink-950);color:var(--ink);padding:96px var(--pad)}
+body{font-family:var(--sans);background:var(--ink-950);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  padding:96px var(--section-pad)}
 .head{display:flex;flex-direction:column;gap:16px;max-width:60ch;margin-bottom:36px}
-.eye{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);display:inline-flex;align-items:center;gap:12px}
+.eye{font-family:'JetBrains Mono',var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);display:inline-flex;align-items:center;gap:12px;flex-wrap:wrap}
 .eye .rule{width:32px;height:1px;background:currentColor;opacity:.4}
 .eye .role{color:var(--teal-lite);letter-spacing:.28em}
-h2{color:var(--ink);font-weight:300;font-size:clamp(30px,3.6vw,48px);line-height:1.08;letter-spacing:-.01em;text-wrap:balance;margin:0}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1200px}
+h2{color:var(--ink);font-weight:300;font-size:clamp(28px,3.2vw,34px);line-height:1.25;letter-spacing:-.01em;text-wrap:balance;margin:0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .card{padding:26px 24px;border:1px solid var(--ghost);border-radius:8px;background:rgba(23,50,67,.35);display:flex;flex-direction:column;gap:14px;transition:border-color .18s ease, background .18s ease}
 .card:hover{border-color:var(--teal-lite);background:rgba(23,50,67,.55)}
-.k{font-family:var(--mono);font-size:10px;letter-spacing:.22em;color:var(--teal-lite);text-transform:uppercase}
+.k{font-family:'JetBrains Mono',var(--mono);font-size:10px;letter-spacing:.22em;color:var(--teal-lite);text-transform:uppercase}
 .card h3{color:#fff;font-weight:500;font-size:18px;line-height:1.25;margin:0}
 .card p{margin:0;font-size:13px;line-height:1.55;color:var(--dim)}
-.go{margin-top:auto;font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:#fff;text-transform:uppercase;padding-top:6px}
-.status{margin-top:20px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--faint);text-transform:uppercase;border-left:2px solid var(--teal-lite);padding-left:12px}
-@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.go{margin-top:auto;font-family:'JetBrains Mono',var(--mono);font-size:11px;letter-spacing:.18em;color:#fff;text-transform:uppercase;padding-top:6px}
+@media(max-width:960px){
+  body{padding:clamp(48px,9vw,72px) var(--section-pad)}
+  .grid{grid-template-columns:1fr}
+}
 </style></head>
 <body>
 <div class="head">
-  <div class="eye"><span class="rule"></span>09 — SEGMENTED CTA<span class="role">Three doors, one house</span></div>
+  <div class="eye"><span class="rule"></span>07 — SEGMENTED CTA<span class="role">Three doors, one house</span></div>
   <h2>See our process work on your part.</h2>
 </div>
 <div class="grid">
@@ -47,6 +50,5 @@ h2{color:var(--ink);font-weight:300;font-size:clamp(30px,3.6vw,48px);line-height
     <div class="go">Start a conversation →</div>
   </div>
 </div>
-<div class="status">Section stub — CTA card design ported from Technology page (loved by cofounders)</div>
 <script>(function(){var ID='s9';function p(){try{parent.postMessage({aetherH:document.documentElement.scrollHeight,aetherId:ID},'*');}catch(e){}}window.addEventListener('load',p);window.addEventListener('resize',p);if(window.ResizeObserver){new ResizeObserver(p).observe(document.body);}setInterval(p,800);})();</script>
 </body></html>

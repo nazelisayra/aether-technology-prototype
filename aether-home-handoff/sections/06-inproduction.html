@@ -19,7 +19,7 @@ body{font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased
 .idx{display:flex;align-items:center;gap:10px}
 .idx .n{font-family:'JetBrains Mono',var(--mono);font-weight:400;font-size:11px;letter-spacing:2.16px;color:var(--teal-lite);line-height:1}
 .idx .lbl{font-family:'Montserrat',var(--sans);font-weight:700;font-size:11px;letter-spacing:2.16px;color:rgba(255,255,255,.6);line-height:1}
-h2{font-family:'Montserrat',var(--sans);font-weight:300;font-size:40px;line-height:48px;letter-spacing:-.01em;color:#fff}
+h2{font-family:'Montserrat',var(--sans);font-weight:300;font-size:clamp(28px,3.2vw,34px);line-height:1.25;letter-spacing:-.01em;color:#fff}
 h2 b{font-weight:600}
 
 /* sector selector */
@@ -82,7 +82,6 @@ h2 b{font-weight:600}
 /* responsive */
 @media(max-width:960px){
   .inprod{padding:clamp(48px,9vw,72px) var(--section-pad);gap:32px}
-  h2{font-size:30px;line-height:38px}
   .showcase{grid-template-columns:1fr}
   .sc-left{padding:32px 28px}
   .sc-right{min-height:280px}
@@ -95,7 +94,7 @@ h2 b{font-weight:600}
 
   <div class="head">
     <div class="idx"><span class="n">03</span><span class="lbl">IN PRODUCTION TODAY</span></div>
-    <h2>Not a concept. <b>A running factory.</b></h2>
+    <h2>Not a concept.<br><b>A running factory.</b></h2>
   </div>
 
   <div class="sectors">
