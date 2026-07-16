@@ -36,11 +36,21 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-
 .card.aether .ttl{color:#fff}
 
 /* rows */
-.row{display:flex;align-items:baseline;gap:14px;padding:16px 24px;border-bottom:1px solid var(--hair)}
+.row{display:flex;align-items:baseline;gap:20px;padding:16px 24px;border-bottom:1px solid var(--hair)}
 .row.last{border-bottom:none}
 .row .rlbl{width:132px;flex-shrink:0;font-family:'JetBrains Mono',var(--mono);font-weight:400;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--faint);line-height:1.3}
 .row .rval{font-family:'Montserrat',var(--sans);font-weight:300;font-size:14px;line-height:20px;color:var(--dim)}
 .card.aether .row .rval{font-weight:500;color:var(--teal-lite)}
+
+/* scroll reveal — fade in on view; Aether card lifts to 1.1 */
+.card{opacity:0;transform:translateY(26px);transform-origin:center;
+  transition:opacity .7s ease, transform .85s cubic-bezier(.2,.7,.3,1), box-shadow .85s ease}
+.card.in{opacity:1;transform:translateY(0)}
+.card.aether.in{opacity:1;transform:translateY(0) scale(1.02);z-index:2;box-shadow:0 24px 60px rgba(8,20,27,.5)}
+@media(prefers-reduced-motion:reduce){
+  .card{opacity:1;transform:none;transition:none}
+  .card.aether,.card.aether.in{transform:scale(1.02);z-index:2}
+}
 
 /* responsive */
 @media(max-width:960px){
@@ -90,6 +100,26 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-
     </div>
   </div>
 </section>
+<script>
+(function(){
+  var comp=document.querySelector('.compare');
+  var done=false;
+  function reveal(){[].forEach.call(document.querySelectorAll('.card'),function(c){c.classList.add('in');});}
+  function check(){
+    if(done)return;
+    try{
+      var fe=window.frameElement, pw=window.parent;
+      if(!fe||!pw||pw===window)throw 0;
+      var vh=pw.innerHeight||document.documentElement.clientHeight;
+      var top=fe.getBoundingClientRect().top+comp.offsetTop;
+      if(top < vh*0.85){done=true;reveal();try{pw.removeEventListener('scroll',check);}catch(e){}}
+    }catch(e){done=true;reveal();}
+  }
+  try{window.parent.addEventListener('scroll',check,{passive:true});window.parent.addEventListener('resize',check);}catch(e){}
+  window.addEventListener('load',check);
+  setTimeout(check,80);
+})();
+</script>
 <script>(function(){var ID='s3';function p(){try{parent.postMessage({aetherH:document.documentElement.scrollHeight,aetherId:ID},'*');}catch(e){}}window.addEventListener('load',p);window.addEventListener('resize',p);if(window.ResizeObserver){new ResizeObserver(p).observe(document.body);}setInterval(p,800);})();</script>
 </body>
 </html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Aether — Scale &amp; Network</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../styles/tokens.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.net{padding:clamp(64px,8vw,96px) var(--section-pad);display:flex;flex-direction:column;gap:clamp(34px,4.4vw,50px)}
+
+/* header */
+.n-head{display:flex;flex-direction:column;gap:16px;max-width:660px}
+.n-eye{display:flex;align-items:center;gap:12px;font-family:'JetBrains Mono',var(--mono);font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--teal-lift)}
+.n-eye .rule{width:28px;height:1px;background:var(--teal-lift);opacity:.5}
+.n-lead{font-family:'Montserrat',var(--sans);font-weight:300;font-size:clamp(20px,2.3vw,26px);line-height:1.3;letter-spacing:-.01em;color:#fff}
+.n-lead b{font-weight:600}
+
+/* group label */
+.grp{display:flex;flex-direction:column;gap:20px}
+.grp.ruled{padding-top:clamp(30px,4vw,42px);border-top:1px solid var(--hair)}
+.grp-lbl{font-family:'Montserrat',var(--sans);font-weight:700;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+
+/* country code chip */
+.code{font-family:'JetBrains Mono',var(--mono);font-size:10px;font-weight:700;letter-spacing:.06em;line-height:1;
+  border-radius:5px;padding:6px 8px;flex-shrink:0}
+.code.us{color:var(--teal-lite);background:rgba(44,134,176,.15);border:1px solid rgba(44,134,176,.35)}
+.code.flex{color:var(--dim);background:rgba(255,255,255,.05);border:1px solid var(--hair)}
+
+/* factory locations */
+.locs{display:flex;gap:clamp(28px,4vw,60px);flex-wrap:wrap}
+.loc{display:flex;align-items:flex-start;gap:12px}
+.loc .lwho{display:flex;flex-direction:column;gap:4px}
+.loc .lname{font-family:'Montserrat',var(--sans);font-weight:600;font-size:16px;line-height:1;color:#fff}
+.loc .lsub{font-family:'JetBrains Mono',var(--mono);font-size:11px;letter-spacing:.04em;color:var(--faint)}
+
+/* global flex */
+.flexl{display:flex;gap:clamp(18px,2.6vw,34px);flex-wrap:wrap}
+.fc{display:flex;align-items:center;gap:10px}
+.fc .fname{font-family:'Montserrat',var(--sans);font-weight:500;font-size:15px;color:var(--dim)}
+
+/* stat strip */
+.stats{display:flex;flex-wrap:wrap;gap:22px clamp(36px,5vw,64px);align-items:baseline;
+  padding-top:clamp(30px,4vw,42px);border-top:1px solid var(--hair)}
+.stat{display:flex;align-items:baseline;gap:12px}
+.stat .k{font-family:'Montserrat',var(--sans);font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);white-space:nowrap}
+.stat .v{font-family:'Montserrat',var(--sans);font-weight:400;font-size:15px;color:#fff}
+.stat .v b{font-weight:600;color:var(--teal-lite)}
+.stat.brands{flex:1 1 100%}
+.stat.brands .v{color:var(--dim)}
+.stat.brands .v b{color:#fff;font-weight:500}
+
+/* scroll reveal — rows appear one by one, slow + smooth */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 1.6s ease, transform 2s cubic-bezier(.16,.68,.28,1)}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+@media(max-width:560px){
+  .net{padding:clamp(48px,9vw,64px) var(--section-pad)}
+  .locs{gap:22px}
+}
+</style>
+</head>
+<body>
+<section class="net">
+
+  <div class="n-head">
+    <div class="n-eye"><span class="rule"></span>At scale today</div>
+    <h2 class="n-lead">Two U.S. factories in production, a global flex network, and <b>500+ CNC machines</b> — the capacity already behind every quote.</h2>
+  </div>
+
+  <div class="grp reveal">
+    <div class="grp-lbl">Aether factory locations</div>
+    <div class="locs">
+      <div class="loc">
+        <span class="code us">US</span>
+        <div class="lwho"><span class="lname">Erie, PA</span><span class="lsub">ISO 9001 / AS9100D</span></div>
+      </div>
+      <div class="loc">
+        <span class="code us">US</span>
+        <div class="lwho"><span class="lname">Austin, TX</span><span class="lsub">Planned 2027</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grp ruled reveal">
+    <div class="grp-lbl">Global flex capacity</div>
+    <div class="flexl">
+      <div class="fc"><span class="code flex">MX</span><span class="fname">Mexico</span></div>
+      <div class="fc"><span class="code flex">VN</span><span class="fname">Vietnam</span></div>
+      <div class="fc"><span class="code flex">CN</span><span class="fname">China</span></div>
+    </div>
+  </div>
+
+  <div class="stats reveal">
+    <div class="stat"><span class="k">Part size range</span><span class="v"><b>1&nbsp;mm — 6&nbsp;m</b></span></div>
+    <div class="stat"><span class="k">CNC machines</span><span class="v"><b>500+</b></span></div>
+    <div class="stat brands"><span class="k">Machine brands</span><span class="v"><b>Haas</b> · <b>DN Solutions</b> · <b>Brother</b> · <b>Mazak</b> · <b>Mecof</b> · <b>Makino</b> · <b>Syil</b> · <b>Okuma</b></span></div>
+  </div>
+
+</section>
+<script>
+(function(){
+  var els=[].slice.call(document.querySelectorAll('.reveal'));
+  function revealAll(){els.forEach(function(el){el.classList.add('in');});}
+  function check(){
+    try{
+      var fe=window.frameElement, pw=window.parent;
+      if(!fe||!pw||pw===window)throw 0;
+      var vh=pw.innerHeight||document.documentElement.clientHeight;
+      var base=fe.getBoundingClientRect().top;
+      var remaining=false;
+      els.forEach(function(el){
+        if(el.classList.contains('in'))return;
+        if(base+el.offsetTop < vh*0.86) el.classList.add('in');
+        else remaining=true;
+      });
+      if(!remaining){try{pw.removeEventListener('scroll',check);}catch(e){}}
+    }catch(e){revealAll();}
+  }
+  try{window.parent.addEventListener('scroll',check,{passive:true});window.parent.addEventListener('resize',check);}catch(e){}
+  window.addEventListener('load',check);
+  setTimeout(check,80);
+})();
+</script>
+<script>(function(){var ID='s2b';function p(){try{parent.postMessage({aetherH:document.documentElement.scrollHeight,aetherId:ID},'*');}catch(e){}}window.addEventListener('load',p);window.addEventListener('resize',p);if(window.ResizeObserver){new ResizeObserver(p).observe(document.body);}setInterval(p,800);})();</script>
+</body>
+</html>
