@@ -1,0 +1,25 @@
+AETHER HOME v2 — Claude Design import notes
+============================================
+Source: claude.ai/design project a1e451c8-9a81-4c1e-bc4d-c5ce99b91a3e
+Imported as-is (no design changes). All referenced assets present and valid
+(20/20 references resolve).
+
+FORMAT
+------
+"*.dc.html" are Claude Design *container* files. They use <x-dc>/<helmet>
+templating and are rendered by support.js (a React runtime) inside the
+Claude Design environment. Opening a .dc.html directly with a plain static
+server / Live Server will NOT fully render it (support.js needs window.React
+from the Design host). Use them as editable source; render/preview in
+claude.ai/design. storymap.html renders standalone.
+
+STRUCTURE
+---------
+  Aether Home v2 Light.dc.html   light version
+  Aether Home v2.dc.html          dark version
+  support.js                      DC React runtime
+  storymap.html                   standalone (referenced by the dc.html)
+  assets/     tokens.css, logos, part/experience images, mobile.png,
+              world-dots.png, layer-01..05.png, + source leftovers
+  uploads/    Primary.png, Primary_Reversed.png (logos),
+              001/009/012/015/021-AetherMFG photos

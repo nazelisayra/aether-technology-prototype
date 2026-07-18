@@ -1,0 +1,91 @@
+/*
+ * AETHER TOKENS — canonical design language
+ * Synced with Figma variables in "Aether Tokens" collection
+ * (file Jgf4b6AiQLZns49vfGv2B4, collection 6141:361).
+ *
+ * Naming mirrors Figma exactly — Color/Brand/700 ↔ --teal, etc.
+ * Change tokens here; every section picks them up.
+ */
+
+:root {
+  /* BRAND — teal ramp (7 source teals consolidated to 5) */
+  --teal-deep:  #0C3A50;  /* Color/Brand/900 */
+  --teal:       #135B7C;  /* Color/Brand/700 — PRIMARY */
+  --teal-mid:   #16648A;  /* Color/Brand/500 */
+  --teal-lift:  #2C86B0;  /* Color/Brand/400 */
+  --teal-lite:  #5FA8CC;  /* Color/Brand/300 */
+
+  /* INK — dark surfaces (~12 near-blacks consolidated to 4) */
+  --ink-950:    #08141B;  /* deepest — CTA / footer */
+  --bg:         #0C1B24;  /* Ink/900 — base dark bg */
+  --ink-800:    #102531;  /* raised panels */
+  --ink-700:    #173243;  /* elevated cards */
+
+  /* SURFACE — light (near-whites consolidated to 3) */
+  --card:            #FFFFFF;  /* purest surface */
+  --paper:           #EFF2F3;  /* main light bg */
+  --surface-sunken:  #E7EFF2;  /* recessed / hover */
+
+  /* ACCENT — greens (AI/success) + coral (warning) */
+  --mint:        #8FE3B4;
+  --green:       #6FE0A6;
+  --green-deep:  #3FAE72;
+  --coral:       #FF8A7A;
+  --coral-deep:  #FF6B57;
+
+  /* TEXT — solid text colors */
+  --text-ink:     #13242E;
+  --text-muted:   #5B5B5D;
+  --text-subtle:  #838386;
+
+  /* WHITE alpha — text & hairlines on dark */
+  --ink:     #FFFFFF;
+  --dim:     rgba(255,255,255,.62);
+  --faint:   rgba(255,255,255,.40);
+  --ghost:   rgba(255,255,255,.22);
+  --hair:    rgba(255,255,255,.15);
+  --hair2:   rgba(255,255,255,.08);
+
+  /* INK alpha — dim text & hairlines on light */
+  --ink2:    rgba(19,36,46,.60);
+  --line:    rgba(19,36,46,.12);
+  --line2:   rgba(19,36,46,.06);
+
+  /* TYPE */
+  --sans: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'SF Mono', 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* SPACE — 4-based scale */
+  --space-4:   4px;
+  --space-8:   8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-60: 60px;
+
+  /* SIZE */
+  --nav: 64px;
+
+  /* Legacy small pad (used by hero decorations) */
+  --pad: clamp(20px, 4vw, 60px);
+
+  /* CANONICAL section side padding — every section aligns at this edge.
+     Matches Figma desktop 160px, scales gracefully down. */
+  --section-pad: clamp(24px, 11vw, 160px);
+}
+
+/* ── Responsive side padding ──────────────────────────────
+   Every section reads --section-pad, so these two breakpoints
+   retune horizontal padding for the whole page at once.
+   Full-bleed hero / video keep their own treatment (background
+   is edge-to-edge; only their text inner uses this).            */
+@media (max-width: 960px) {
+  :root { --section-pad: clamp(20px, 5vw, 48px); }   /* tablet */
+}
+@media (max-width: 600px) {
+  :root { --section-pad: 16px; }                     /* mobile */
+}
