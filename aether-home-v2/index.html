@@ -1,0 +1,1060 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aether — Manufacturing infrastructure. Software-defined.</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/tokens.css">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   AETHER HOME v2 — base styles, keyframes, responsive, interactive
+   Palette lives in assets/tokens.css (documented). Section markup
+   below uses literal hex inline; see README.md for the map.
+   ═══════════════════════════════════════════════════════════════ */
+html{scroll-behavior:smooth}
+body{margin:0;background:#F2F4F5;color:#13242E;font-family:'Montserrat',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#135B7C;text-decoration:none}
+a:hover{color:#2C86B0}
+
+/* ── keyframes ── */
+@keyframes kb{from{transform:scale(1.09)}to{transform:scale(1)}}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes drop{0%{transform:translateY(-12px)}70%,100%{transform:translateY(34px)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes ringp{0%{transform:scale(1);opacity:.5}100%{transform:scale(4.5);opacity:0}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important}}
+
+/* ═══════════ RESPONSIVE — mobile & tablet ═══════════
+   Page is inline-styled, so these rules target rendered inline
+   style strings via attribute selectors. All breakpoints here. */
+img{max-width:100%}
+@media(max-width:1024px){
+  [style*="repeat(4"],
+  [style*="1.6fr 1fr 1fr 1fr"]{grid-template-columns:1fr 1fr!important}
+}
+@media(max-width:768px){
+  [style*="grid-template-columns"]{grid-template-columns:1fr!important}
+}
+/* OS layer stack on small screens: label drops UNDER a near-full-width diagram */
+@media(max-width:640px){
+  .os-slab{flex-direction:column;align-items:flex-start;gap:6px;margin-top:22px!important}
+  .os-slabimg{width:88%!important}
+}
+@media(max-width:600px){
+  #nav-dark a[href="#os"],#nav-dark a[href="#quote"],#nav-dark a[href="#cta"],
+  #nav-light a[href="#os"],#nav-light a[href="#quote"],#nav-light a[href="#cta"]{display:none!important}
+  [style*="434px"]{width:82vw!important;max-width:360px!important}
+}
+
+/* ═══════════ INTERACTIVE — OS layer list (§05) ═══════════ */
+.os-item{border-bottom:1px solid rgba(19,36,46,.08)}
+.os-itembtn{display:block;width:100%;text-align:left;background:transparent;border:none;cursor:pointer;padding:14px 2px;color:inherit;font-family:'Montserrat',sans-serif;transition:.2s}
+.os-itembtn:hover{background:rgba(19,91,124,.03)}
+.os-bar{width:0;transition:width .3s}
+.os-item.active .os-bar{width:26px}
+.os-num{color:rgba(19,36,46,.4)}
+.os-item.active .os-num{color:#2C86B0}
+.os-name{color:rgba(19,36,46,.6);transition:color .2s}
+.os-item.active .os-name{color:#13242E}
+.os-item-detail{display:none}
+.os-item.active .os-item-detail{display:block}
+.os-tint{transition:opacity .3s ease}
+
+/* ═══════════ INTERACTIVE — sector pills (§06) ═══════════ */
+.sec-pill{cursor:pointer;transition:.18s}
+.sec-pill:hover{border-color:rgba(19,91,124,.5)!important}
+</style>
+</head>
+<body>
+
+<div style="min-height:100vh;background-color:#F2F4F5">
+
+<!-- ══════════════════════ NAV (dark ↔ light crossfade on scroll) ══════════════════════ -->
+<div style="position:fixed;top:0;left:0;right:0;z-index:1000;height:76px">
+  <!-- dark/transparent nav — shown over the hero -->
+  <div id="nav-dark" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(24px,8vw,120px);color:#13242E;background:transparent;opacity:1;pointer-events:auto;transition:opacity .35s ease">
+    <a href="#hero" style="display:inline-flex;align-items:center"><img src="uploads/Primary.png" alt="AETHER" style="height:15px;display:block"></a>
+    <div style="display:flex;align-items:center;gap:clamp(20px,2.8vw,40px);font-size:14px">
+      <a href="#os" style="color:rgba(19,36,46,.8)">Technology</a>
+      <a href="#quote" style="color:rgba(19,36,46,.8)">Services</a>
+      <a href="#cta" style="color:rgba(19,36,46,.8)">Contact</a>
+      <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="color:#fff;background:#135B7C;border:1px solid #135B7C;padding:10px 20px;border-radius:6px;font-size:13px;font-weight:600" data-hover="background:#2C86B0;border-color:#2C86B0">Get a quote</a>
+    </div>
+  </div>
+  <!-- solid/light nav — fades in once scrolled past the hero -->
+  <div id="nav-light" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(24px,8vw,120px);color:#13242E;background:rgba(239,242,243,.88);backdrop-filter:blur(14px);border-bottom:1px solid rgba(19,36,46,.12);opacity:0;pointer-events:none;transition:opacity .35s ease">
+    <a href="#hero" style="display:inline-flex;align-items:center"><img src="uploads/Primary.png" alt="AETHER" style="height:15px;display:block"></a>
+    <div style="display:flex;align-items:center;gap:clamp(20px,2.8vw,40px);font-size:14px">
+      <a href="#os" style="color:rgba(19,36,46,.8)">Technology</a>
+      <a href="#quote" style="color:rgba(19,36,46,.8)">Services</a>
+      <a href="#cta" style="color:rgba(19,36,46,.8)">Contact</a>
+      <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="color:#fff;background:#135B7C;border:1px solid #135B7C;padding:10px 20px;border-radius:6px;font-size:13px;font-weight:600" data-hover="background:#2C86B0;border-color:#2C86B0">Get a quote</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ 01 · HERO ══════════════════════ -->
+<section id="hero" style="position:relative;min-height:clamp(620px,94vh,940px);display:flex;flex-direction:column;justify-content:center;overflow:hidden;background-color:#EFF2F3">
+  <div style="position:absolute;inset:0;background-image:url('uploads/001-AetherMFG-shot02.jpg');background-size:cover;background-position:center 45%;filter:grayscale(.2) brightness(1.12) contrast(.94);animation:kb 16s ease forwards"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(90deg,#FAF9F559,#FAF9F5E1,#FAF9F55A,rgba(239,242,243,.22) 100%),linear-gradient(180deg,rgba(239,242,243,.55) 0%,transparent 28%,transparent 70%,rgba(239,242,243,.99) 100%)"></div>
+  <div style="position:absolute;inset:0;opacity:.35;background-image:linear-gradient(rgba(19,91,124,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(19,91,124,.06) 1px,transparent 1px);background-size:64px 64px;-webkit-mask-image:radial-gradient(110% 90% at 30% 55%,#000 30%,transparent 80%);mask-image:radial-gradient(110% 90% at 30% 55%,#000 30%,transparent 80%)"></div>
+  <div style="position:absolute;top:92px;right:clamp(24px,8vw,120px);z-index:3;display:flex;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.08em;color:rgba(19,36,46,.55);border:1px solid rgba(19,36,46,.16);backdrop-filter:blur(3px);border-radius:4px;overflow:hidden;border-width:0.7px;background-color:#13242E00">
+    <div style="padding:7px 13px;border-right:1px solid rgba(255,255,255,.08);background-color:#CCCCCC33"><b style="color:rgba(19,36,46,.4);font-weight:400;display:block;font-size:8px;margin-bottom:3px">DRAWING</b>FACTORY BLUEPRINT</div>
+    <div style="padding:7px 13px;border-right:1px solid rgba(255,255,255,.08);background-color:#CCCCCC33"><b style="color:rgba(19,36,46,.4);font-weight:400;display:block;font-size:8px;margin-bottom:3px">SHEET</b>01 · REV C</div>
+    <div style="padding:7px 13px;background-color:#CCCCCC33"><b style="color:rgba(19,36,46,.4);font-weight:400;display:block;font-size:8px;margin-bottom:3px">SCALE</b>NTS</div>
+  </div>
+  <span style="position:absolute;top:88px;left:clamp(16px,2vw,28px);width:14px;height:14px;border-top:1px solid rgba(19,36,46,.45);border-left:1px solid rgba(19,36,46,.45);z-index:3"></span>
+  <span style="position:absolute;bottom:16px;right:clamp(16px,2vw,28px);width:14px;height:14px;border-bottom:1px solid rgba(19,36,46,.45);border-right:1px solid rgba(19,36,46,.45);z-index:3"></span>
+  <div style="position:relative;z-index:3;width:100%;padding:0 clamp(24px,8vw,120px);top:12px">
+    <h1 style="margin:0;font-weight:300;font-size:clamp(40px,8vw,104px);line-height:.98;letter-spacing:-.025em;color:#13242E">One Blueprint.<span style="font-weight:700;display:block">Every Factory.</span></h1>
+    <p style="margin:26px 0 0;max-width:54ch;font-size:clamp(15px,1.7vw,19px);line-height:1.6;color:rgba(19,36,46,.65)">The same operating system orchestrates every Aether factory — from the moment a STEP file arrives to the moment a certified part ships. Deployed by configuration, not by reconstruction.</p>
+    <div style="margin-top:34px;display:flex;flex-wrap:wrap;gap:14px">
+      <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="font-size:14px;font-weight:600;color:#fff;background:#135B7C;border-radius:8px;padding:14px 26px;display:inline-flex;align-items:center;gap:8px;transition:background .2s" data-hover="background:#2C86B0">Get an instant quote</a>
+      <a href="#os" style="font-size:14px;font-weight:600;color:rgba(19,36,46,.7);border:1px solid rgba(19,36,46,.2);border-radius:8px;padding:14px 26px;display:inline-flex;align-items:center;gap:8px;transition:.2s" data-hover="color:#0C3A50;border-color:#2C86B0">See how it works ↓</a>
+    </div>
+  </div>
+  <div style="position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.22em;color:rgba(19,36,46,.45)">
+    <span>SCROLL</span>
+    <span style="width:1px;height:34px;background:linear-gradient(rgba(19,36,46,.45),transparent);position:relative;overflow:hidden;display:block"><span style="position:absolute;left:0;top:0;width:1px;height:12px;background:#135B7C;animation:drop 2s ease-in-out infinite;display:block"></span></span>
+  </div>
+</section>
+
+<!-- ══════════════════════ 02 · PEDIGREE ══════════════════════ -->
+<section style="background:#EFF2F3">
+  <div style="display:flex;justify-content:center;padding:44px clamp(24px,8vw,120px) 26px">
+    <div style="display:inline-flex;align-items:center;gap:12px">
+      <span style="width:28px;height:1px;background:rgba(19,91,124,.45)"></span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2.2px;text-transform:uppercase;color:rgba(19,36,46,.45);white-space:nowrap">Where our team comes from</span>
+      <span style="width:28px;height:1px;background:rgba(19,91,124,.45)"></span>
+    </div>
+  </div>
+  <div style="width:100%;overflow:hidden;padding-bottom:44px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)">
+    <div style="display:flex;align-items:center;width:max-content;animation:mq 42s linear infinite">
+      <img src="assets/logo-mit.png" alt="MIT" style="width:110px;height:26px;object-fit:contain;margin-right:72px;filter:brightness(0);opacity:.5">
+      <img src="assets/logo-spacex.png" alt="SpaceX" style="width:140px;height:22px;object-fit:contain;margin-right:72px;filter:brightness(0);opacity:.5">
+      <img src="assets/logo-amazon.png" alt="Amazon" style="width:90px;height:28px;object-fit:contain;margin-right:72px;filter:brightness(0);opacity:.5">
+      <img src="assets/logo-toyota.png" alt="Toyota" style="width:110px;height:18px;object-fit:contain;margin-right:72px;filter:brightness(0);opacity:.5">
+      <img src="assets/logo-magicleap.png" alt="Magic Leap" style="width:120px;height:44px;object-fit:contain;margin-right:72px;filter:brightness(0);opacity:.5">
+      <img src="assets/logo-formlabs.png" alt="Formlabs" style="width:120px;height:18px;object-fit:contain;margin-right:72px;filter:brightness(0);opacity:.5">
+      <img src="assets/logo-mit.png" alt="" aria-hidden="true" style="width:110px;height:26px;object-fit:contain;margin-right:72px;filter:brightness(0);opacity:.5">
+      <img src="assets/logo-spacex.png" alt="" aria-hidden="true" style="width:140px;height:22px;object-fit:contain;margin-right:72px;filter:brightness(0);opacity:.5">
+      <img src="assets/logo-amazon.png" alt="" aria-hidden="true" style="width:90px;height:28px;object-fit:contain;margin-right:72px;filter:brightness(0);opacity:.5">
+      <img src="assets/logo-toyota.png" alt="" aria-hidden="true" style="width:110px;height:18px;object-fit:contain;margin-right:72px;filter:brightness(0);opacity:.5">
+      <img src="assets/logo-magicleap.png" alt="" aria-hidden="true" style="width:120px;height:44px;object-fit:contain;margin-right:72px;filter:brightness(0);opacity:.5">
+      <img src="assets/logo-formlabs.png" alt="" aria-hidden="true" style="width:120px;height:18px;object-fit:contain;margin-right:72px;filter:brightness(0);opacity:.5">
+    </div>
+  </div>
+  <div style="padding:12px clamp(24px,8vw,120px) 80px">
+    <div data-reveal="1" style="display:grid;grid-template-columns:minmax(320px,520px) minmax(0,1fr);gap:clamp(40px,4.5vw,72px);align-items:center">
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(19,91,124,.07);border:1px solid rgba(19,91,124,.25);border-radius:3px;padding:5px 11px;align-self:flex-start">
+          <span style="width:5px;height:5px;border-radius:50%;background:#2C86B0;box-shadow:0 0 6px #2C86B0"></span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.62px;text-transform:uppercase;color:#135B7C">MIT Engineers</span>
+        </div>
+        <p style="margin:0;font-weight:300;font-size:20px;line-height:33px;color:rgba(19,36,46,.78)">Founded by MIT engineers specializing in <b style="font-weight:600;color:#13242E">AI</b>, <b style="font-weight:600;color:#13242E">advanced manufacturing</b>, and <b style="font-weight:600;color:#13242E">intelligent automation</b>.</p>
+      </div>
+      <div style="position:relative;width:100%;aspect-ratio:16/9;border:1px solid rgba(19,36,46,.14);border-radius:8px;overflow:hidden;box-shadow:0 24px 60px rgba(19,36,46,.18);background:#0C1B24">
+        <img src="assets/factory-story.png" alt="Aether factory floor" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform 6s ease" data-hover="transform:scale(1.04)">
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.12) 0%,rgba(0,0,0,.42) 100%)"></div>
+        <span style="position:absolute;top:10px;left:10px;width:12px;height:12px;border-top:1px solid rgba(255,255,255,.5);border-left:1px solid rgba(255,255,255,.5)"></span>
+        <span style="position:absolute;bottom:10px;right:10px;width:12px;height:12px;border-bottom:1px solid rgba(255,255,255,.5);border-right:1px solid rgba(255,255,255,.5)"></span>
+        <span style="position:absolute;bottom:12px;left:14px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;color:rgba(255,255,255,.65)">FIG 02 · ERIE PA FLOOR</span>
+        <button type="button" aria-label="Watch our story" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:40px;padding:10px 20px 10px 14px;backdrop-filter:blur(6px);cursor:pointer;transition:.2s" data-hover="background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.4)">
+          <span style="width:0;height:0;border-left:12px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent;margin-left:2px"></span>
+          <span style="font-weight:500;font-size:12px;letter-spacing:.48px;color:#fff;white-space:nowrap;font-family:'Montserrat',sans-serif">Our story</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ 03 · SCALE & NETWORK ══════════════════════ -->
+<section style="position:relative;background:#EFF2F3;padding:clamp(64px,8vw,96px) clamp(24px,8vw,120px);overflow:hidden">
+  <div style="position:absolute;inset:0;opacity:.5;background-image:linear-gradient(rgba(19,91,124,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(19,91,124,.05) 1px,transparent 1px);background-size:46px 46px;pointer-events:none"></div>
+  <div style="position:relative;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,1fr);gap:clamp(36px,5vw,72px);align-items:center">
+    <div style="display:flex;flex-direction:column;gap:clamp(30px,4vw,44px)">
+      <div style="display:flex;flex-direction:column;gap:16px;max-width:660px">
+        <div style="display:flex;align-items:center;gap:12px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#135B7C"><span style="width:28px;height:1px;background:#135B7C;opacity:.5"></span>At scale today</div>
+        <h2 style="margin:0;font-weight:300;font-size:clamp(20px,2.3vw,26px);line-height:1.35;letter-spacing:-.01em;color:#13242E">Two U.S. factories in production, a global flex network, and <b style="font-weight:600;color:#135B7C">500+ CNC machines</b> — the capacity already behind every quote.</h2>
+      </div>
+      <div data-reveal="1" style="display:flex;flex-direction:column;gap:18px">
+        <div style="font-weight:700;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(19,36,46,.55)">Aether factory locations</div>
+        <div style="display:flex;gap:clamp(28px,4vw,60px);flex-wrap:wrap">
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:#135B7C;background:rgba(19,91,124,.1);border:1px solid rgba(19,91,124,.35);border-radius:5px;padding:6px 8px;line-height:1">US</span>
+            <div style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600;font-size:16px;line-height:1;color:#13242E">Erie, PA</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.45)">ISO 9001 / AS9100D</span></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:#135B7C;background:rgba(19,91,124,.1);border:1px solid rgba(19,91,124,.35);border-radius:5px;padding:6px 8px;line-height:1">US</span>
+            <div style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600;font-size:16px;line-height:1;color:#13242E">Austin, TX</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.45)">Planned 2027</span></div>
+          </div>
+        </div>
+      </div>
+      <div data-reveal="1" style="display:flex;flex-direction:column;gap:18px;padding-top:clamp(24px,3vw,34px);border-top:1px solid rgba(19,36,46,.1)">
+        <div style="font-weight:700;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(19,36,46,.55)">Global flex capacity</div>
+        <div style="display:flex;gap:clamp(18px,2.6vw,34px);flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:10px"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:rgba(19,36,46,.55);background:rgba(19,36,46,.04);border:1px solid rgba(19,36,46,.14);border-radius:5px;padding:6px 8px;line-height:1">MX</span><span style="font-weight:500;font-size:15px;color:rgba(19,36,46,.7)">Mexico</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:rgba(19,36,46,.55);background:rgba(19,36,46,.04);border:1px solid rgba(19,36,46,.14);border-radius:5px;padding:6px 8px;line-height:1">VN</span><span style="font-weight:500;font-size:15px;color:rgba(19,36,46,.7)">Vietnam</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:rgba(19,36,46,.55);background:rgba(19,36,46,.04);border:1px solid rgba(19,36,46,.14);border-radius:5px;padding:6px 8px;line-height:1">CN</span><span style="font-weight:500;font-size:15px;color:rgba(19,36,46,.7)">China</span></div>
+        </div>
+      </div>
+      <div data-reveal="1" style="display:flex;flex-wrap:wrap;gap:22px clamp(36px,5vw,64px);align-items:baseline;padding-top:clamp(24px,3vw,34px);border-top:1px solid rgba(19,36,46,.1)">
+        <div style="display:flex;align-items:baseline;gap:12px"><span style="font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(19,36,46,.5);white-space:nowrap">Part size range</span><span style="font-weight:600;font-size:15px;color:#135B7C">1&nbsp;mm — 6&nbsp;m</span></div>
+        <div style="display:flex;align-items:baseline;gap:12px"><span style="font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(19,36,46,.5);white-space:nowrap">CNC machines</span><span style="font-weight:600;font-size:15px;color:#135B7C">500+</span></div>
+        <div style="display:flex;align-items:baseline;gap:12px;flex:1 1 100%"><span style="font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(19,36,46,.5);white-space:nowrap">Machine brands</span><span style="font-weight:400;font-size:14px;color:rgba(19,36,46,.65)"><b style="font-weight:600;color:#13242E">Haas</b> · <b style="font-weight:600;color:#13242E">DN Solutions</b> · <b style="font-weight:600;color:#13242E">Brother</b> · <b style="font-weight:600;color:#13242E">Mazak</b> · <b style="font-weight:600;color:#13242E">Mecof</b> · <b style="font-weight:600;color:#13242E">Makino</b> · <b style="font-weight:600;color:#13242E">Syil</b> · <b style="font-weight:600;color:#13242E">Okuma</b></span></div>
+      </div>
+    </div>
+    <div data-reveal="1" style="position:relative;border-radius:8px;overflow:hidden;border:1px solid rgba(19,36,46,.14);background:#0C1B24;box-shadow:0 24px 60px rgba(19,36,46,.16);aspect-ratio:4/5;min-height:320px">
+      <img src="uploads/012-AetherMFG-shot02.png" alt="Machined flange spacers, Erie PA" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 6s ease" data-hover="transform:scale(1.05)">
+      <span style="position:absolute;top:10px;left:10px;width:12px;height:12px;border-top:1px solid rgba(255,255,255,.5);border-left:1px solid rgba(255,255,255,.5)"></span>
+      <span style="position:absolute;top:10px;right:10px;width:12px;height:12px;border-top:1px solid rgba(255,255,255,.5);border-right:1px solid rgba(255,255,255,.5)"></span>
+      <div style="position:absolute;left:0;right:0;bottom:0;display:flex;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.08em;color:rgba(255,255,255,.6);background:rgba(8,20,27,.72);backdrop-filter:blur(4px);border-top:1px solid rgba(255,255,255,.12)">
+        <span style="padding:8px 12px;border-right:1px solid rgba(255,255,255,.08)">PART · WHEEL SPACER</span>
+        <span style="padding:8px 12px;border-right:1px solid rgba(255,255,255,.08)">MAT · AL 6061-T6</span>
+        <span style="padding:8px 12px;color:#8FE3B4">±0.005 mm</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ 04 · THE SHIFT ══════════════════════ -->
+<section style="background:#EFF2F3;padding:clamp(64px,8vw,96px) clamp(24px,8vw,120px)">
+  <div style="display:flex;flex-direction:column;gap:48px">
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11px;letter-spacing:2.2px;color:#2C86B0;line-height:1">01</span>
+        <span style="font-weight:700;font-size:11px;letter-spacing:2.2px;text-transform:uppercase;color:#135B7C;line-height:1">WHY THIS EXISTS</span>
+        <span style="flex:1;height:1px;background:rgba(19,36,46,.1)"></span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;color:rgba(19,36,46,.35)">DWG AE-HOME · SHT 02</span>
+      </div>
+      <h2 style="margin:0;max-width:700px;font-weight:300;font-size:clamp(28px,3.2vw,34px);line-height:1.25;letter-spacing:-.01em;color:#13242E">The industry runs on <b style="font-weight:600">manual decisions.</b><span style="display:block;color:#135B7C;font-weight:300">Aether runs on software.</span></h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(440px,100%),1fr));gap:20px;align-items:stretch">
+      <div data-reveal="1" style="border:1px solid rgba(19,36,46,.12);border-radius:8px;overflow:hidden;background:#fff">
+        <div style="display:flex;align-items:center;gap:10px;padding:16px 24px;border-bottom:1px solid rgba(19,36,46,.1)">
+          <span style="background:rgba(19,36,46,.06);border-radius:3px;padding:5px 10px;font-family:'JetBrains Mono',monospace;font-size:9px;line-height:1;letter-spacing:1.2px;text-transform:uppercase;color:rgba(19,36,46,.55)">TRADITIONAL</span>
+          <span style="font-weight:500;font-size:13px;color:rgba(19,36,46,.6)">Standard manufacturer</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:20px;padding:16px 24px;border-bottom:1px solid rgba(19,36,46,.08)"><span style="width:132px;flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:rgba(19,36,46,.42);line-height:1.3">Quote</span><span style="font-weight:300;font-size:14px;color:rgba(19,36,46,.65)">1–2 weeks</span></div>
+        <div style="display:flex;align-items:baseline;gap:20px;padding:16px 24px;border-bottom:1px solid rgba(19,36,46,.08)"><span style="width:132px;flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:rgba(19,36,46,.42);line-height:1.3">CAM setup</span><span style="font-weight:300;font-size:14px;color:rgba(19,36,46,.65)">2–4 weeks</span></div>
+        <div style="display:flex;align-items:baseline;gap:20px;padding:16px 24px;border-bottom:1px solid rgba(19,36,46,.08)"><span style="width:132px;flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:rgba(19,36,46,.42);line-height:1.3">Disruption re-plan</span><span style="font-weight:300;font-size:14px;color:rgba(19,36,46,.65)">Hours to days</span></div>
+        <div style="display:flex;align-items:baseline;gap:20px;padding:16px 24px;border-bottom:1px solid rgba(19,36,46,.08)"><span style="width:132px;flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:rgba(19,36,46,.42);line-height:1.3">Quality trace</span><span style="font-weight:300;font-size:14px;color:rgba(19,36,46,.65)">Manual PDF reports</span></div>
+        <div style="display:flex;align-items:baseline;gap:20px;padding:16px 24px"><span style="width:132px;flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:rgba(19,36,46,.42);line-height:1.3">Factory replication</span><span style="font-weight:300;font-size:14px;color:rgba(19,36,46,.65)">Start from scratch</span></div>
+      </div>
+      <div data-reveal="1" style="position:relative;border:1px solid rgba(19,91,124,.5);border-radius:8px;box-shadow:0 22px 50px rgba(19,91,124,.16);transform:scale(1.02);background-color:#FFFFFF">
+        <span style="position:absolute;top:-8px;right:-8px;width:16px;height:16px;border-top:1px solid #2C86B0;border-right:1px solid #2C86B0;pointer-events:none"></span>
+        <span style="position:absolute;bottom:-8px;left:-8px;width:16px;height:16px;border-bottom:1px solid #2C86B0;border-left:1px solid #2C86B0;pointer-events:none"></span>
+        <div style="position:relative">
+        <div style="display:flex;align-items:center;gap:10px;padding:16px 24px;border-bottom:1px solid rgba(19,91,124,.2)">
+          <span style="background:rgba(19,91,124,.12);border-radius:3px;padding:5px 10px;font-family:'JetBrains Mono',monospace;font-size:9px;line-height:1;letter-spacing:1.2px;text-transform:uppercase;color:#135B7C">AETHER</span>
+          <span style="font-weight:600;font-size:13px;color:#13242E">AI-native factory</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:20px;padding:16px 24px;border-bottom:1px solid rgba(19,91,124,.1)"><span style="width:132px;flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:rgba(19,36,46,.5);line-height:1.3">Quote</span><span style="font-weight:600;font-size:14px;color:#135B7C">Minutes</span></div>
+        <div style="display:flex;align-items:baseline;gap:20px;padding:16px 24px;border-bottom:1px solid rgba(19,91,124,.1)"><span style="width:132px;flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:rgba(19,36,46,.5);line-height:1.3">CAM setup</span><span style="font-weight:600;font-size:14px;color:#135B7C">Hours</span></div>
+        <div style="display:flex;align-items:baseline;gap:20px;padding:16px 24px;border-bottom:1px solid rgba(19,91,124,.1)"><span style="width:132px;flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:rgba(19,36,46,.5);line-height:1.3">Disruption re-plan</span><span style="font-weight:600;font-size:14px;color:#135B7C">&lt; 10 minutes</span></div>
+        <div style="display:flex;align-items:baseline;gap:20px;padding:16px 24px;border-bottom:1px solid rgba(19,91,124,.1)"><span style="width:132px;flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:rgba(19,36,46,.5);line-height:1.3">Quality trace</span><span style="font-weight:600;font-size:14px;color:#135B7C">Closed-loop, real-time</span></div>
+        <div style="display:flex;align-items:baseline;gap:20px;padding:16px 24px"><span style="width:132px;flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:rgba(19,36,46,.5);line-height:1.3">Factory replication</span><span style="font-weight:600;font-size:14px;color:#135B7C">By configuration</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ 05 · THE OPERATING SYSTEM (interactive) ══════════════════════
+     Left: layer list (hover to open, click to zoom).  Right: layer stack (hover to tint,
+     click to zoom) ↔ detail panel.  All wiring in the <script> at the foot (see osInit). -->
+<section id="os" style="position:relative;background:#EFF2F3;padding:clamp(64px,8vw,96px) clamp(24px,8vw,120px);overflow:hidden">
+  <div style="position:absolute;inset:0;opacity:.6;background-image:linear-gradient(rgba(19,91,124,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(19,91,124,.05) 1px,transparent 1px);background-size:46px 46px;-webkit-mask-image:radial-gradient(120% 90% at 50% 30%,#000 35%,transparent 85%);mask-image:radial-gradient(120% 90% at 50% 30%,#000 35%,transparent 85%);pointer-events:none"></div>
+  <div style="position:relative">
+    <div style="display:flex;align-items:center;gap:14px;font-size:12px;font-weight:700;letter-spacing:.24em;color:rgba(19,36,46,.55)">
+      <span style="font-family:'JetBrains Mono',monospace;color:#2C86B0;font-weight:400">02</span> THE OPERATING SYSTEM
+      <span style="flex:1;height:1px;background:rgba(19,36,46,.1)"></span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;color:rgba(19,36,46,.35);font-weight:400">DWG AE-OS-05 · REV C</span>
+    </div>
+    <h2 style="margin:20px 0 0;font-weight:300;font-size:clamp(28px,3.2vw,34px);line-height:1.25;letter-spacing:-.01em;color:#13242E">Software runs the factory.<br><b style="font-weight:600">Humans handle the exceptions.</b></h2>
+    <p style="margin:18px 0 0;max-width:52ch;font-size:clamp(14px,1.5vw,17px);line-height:1.6;color:rgba(19,36,46,.6)">Five layers — from the first quote to the final delivery — run every Aether node. The stack is the map; select a layer to open it.</p>
+
+    <div style="display:grid;grid-template-columns:minmax(min(420px,100%),520px) minmax(0,0.9fr);gap:clamp(40px,4.5vw,64px);margin-top:clamp(28px,4vh,44px);align-items:start">
+      <!-- ── layer list ── -->
+      <div id="os-list" style="border-top:1px solid rgba(19,36,46,.14)">
+        <div class="os-item active" data-idx="0">
+          <button class="os-itembtn">
+            <div style="display:flex;align-items:center;gap:12px">
+              <span class="os-num" style="font-family:'JetBrains Mono',monospace;font-size:10px;width:18px">01</span>
+              <span class="os-bar" style="height:3px;background:#2C86B0;display:block"></span>
+              <span class="os-name" style="font-size:15px;font-weight:500">APG</span>
+              <span style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:#2C86B0">SOFTWARE</span>
+            </div>
+          </button>
+          <div class="os-item-detail">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#135B7C;margin:2px 2px 12px">Autonomous Process Generator</div>
+            <p style="font-size:14px;line-height:1.62;color:rgba(19,36,46,.65);margin:0 2px 16px;max-width:42ch">Reads B-rep geometry from your STEP file and generates the complete machining process — tooling, fixtures, G-code, and a transparent cost breakdown — in minutes. No CAM programmer. No estimation.</p>
+            <div style="display:flex;flex-direction:column;gap:2px;padding-bottom:18px">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5);display:flex;gap:9px;align-items:baseline;padding:5px 2px"><span style="flex:0 0 auto;width:12px;height:1px;background:#2C86B0;transform:translateY(-3px)"></span>ISO &amp; ASME GD&amp;T auto-detection</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5);display:flex;gap:9px;align-items:baseline;padding:5px 2px"><span style="flex:0 0 auto;width:12px;height:1px;background:#2C86B0;transform:translateY(-3px)"></span>Quote and full toolpath in minutes</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5);display:flex;gap:9px;align-items:baseline;padding:5px 2px"><span style="flex:0 0 auto;width:12px;height:1px;background:#2C86B0;transform:translateY(-3px)"></span>Cost-driven DFM feedback, automatic</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5);display:flex;gap:9px;align-items:baseline;padding:5px 2px"><span style="flex:0 0 auto;width:12px;height:1px;background:#2C86B0;transform:translateY(-3px)"></span>Hybrid routing: CNC, EDM, AM, welding</div>
+            </div>
+          </div>
+        </div>
+        <div class="os-item" data-idx="1">
+          <button class="os-itembtn">
+            <div style="display:flex;align-items:center;gap:12px">
+              <span class="os-num" style="font-family:'JetBrains Mono',monospace;font-size:10px;width:18px">02</span>
+              <span class="os-bar" style="height:3px;background:#2C86B0;display:block"></span>
+              <span class="os-name" style="font-size:15px;font-weight:500">FacOS</span>
+              <span style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:#2C86B0">SOFTWARE</span>
+            </div>
+          </button>
+          <div class="os-item-detail">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#135B7C;margin:2px 2px 12px">Factory Operating System</div>
+            <p style="font-size:14px;line-height:1.62;color:rgba(19,36,46,.65);margin:0 2px 16px;max-width:42ch">The live shop-floor layer. Schedules jobs, tracks machine and order state across every cell, and runs production the same way at every node.</p>
+            <div style="display:flex;flex-direction:column;gap:2px;padding-bottom:18px">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5);display:flex;gap:9px;align-items:baseline;padding:5px 2px"><span style="flex:0 0 auto;width:12px;height:1px;background:#2C86B0;transform:translateY(-3px)"></span>Real-time scheduling &amp; dispatch</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5);display:flex;gap:9px;align-items:baseline;padding:5px 2px"><span style="flex:0 0 auto;width:12px;height:1px;background:#2C86B0;transform:translateY(-3px)"></span>Machine + job state across the floor</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5);display:flex;gap:9px;align-items:baseline;padding:5px 2px"><span style="flex:0 0 auto;width:12px;height:1px;background:#2C86B0;transform:translateY(-3px)"></span>OEE &amp; throughput analytics</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5);display:flex;gap:9px;align-items:baseline;padding:5px 2px"><span style="flex:0 0 auto;width:12px;height:1px;background:#2C86B0;transform:translateY(-3px)"></span>Identical OS at every node</div>
+            </div>
+          </div>
+        </div>
+        <div class="os-item" data-idx="2">
+          <button class="os-itembtn">
+            <div style="display:flex;align-items:center;gap:12px">
+              <span class="os-num" style="font-family:'JetBrains Mono',monospace;font-size:10px;width:18px">03</span>
+              <span class="os-bar" style="height:3px;background:#2C86B0;display:block"></span>
+              <span class="os-name" style="font-size:15px;font-weight:500">QMS</span>
+              <span style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:#2C86B0">SOFTWARE</span>
+            </div>
+          </button>
+          <div class="os-item-detail">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#135B7C;margin:2px 2px 12px">Quality Management System</div>
+            <p style="font-size:14px;line-height:1.62;color:rgba(19,36,46,.65);margin:0 2px 16px;max-width:42ch">Quality and traceability built into the line — not bolted on. Documents, audits, and corrective actions live in the same system that runs production.</p>
+            <div style="display:flex;flex-direction:column;gap:2px;padding-bottom:18px">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5);display:flex;gap:9px;align-items:baseline;padding:5px 2px"><span style="flex:0 0 auto;width:12px;height:1px;background:#2C86B0;transform:translateY(-3px)"></span>Document &amp; CAPA control</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5);display:flex;gap:9px;align-items:baseline;padding:5px 2px"><span style="flex:0 0 auto;width:12px;height:1px;background:#2C86B0;transform:translateY(-3px)"></span>Audit management</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5);display:flex;gap:9px;align-items:baseline;padding:5px 2px"><span style="flex:0 0 auto;width:12px;height:1px;background:#2C86B0;transform:translateY(-3px)"></span>In-line CMM &amp; full traceability</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5);display:flex;gap:9px;align-items:baseline;padding:5px 2px"><span style="flex:0 0 auto;width:12px;height:1px;background:#2C86B0;transform:translateY(-3px)"></span>Supplier quality</div>
+            </div>
+          </div>
+        </div>
+        <div class="os-item" data-idx="3">
+          <button class="os-itembtn">
+            <div style="display:flex;align-items:center;gap:12px">
+              <span class="os-num" style="font-family:'JetBrains Mono',monospace;font-size:10px;width:18px">04</span>
+              <span class="os-bar" style="height:3px;background:#2C86B0;display:block"></span>
+              <span class="os-name" style="font-size:15px;font-weight:500">Automation Cell</span>
+              <span style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:#3FAE72">FLOOR</span>
+            </div>
+          </button>
+          <div class="os-item-detail">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#135B7C;margin:2px 2px 12px">The physical envelope</div>
+            <p style="font-size:14px;line-height:1.62;color:rgba(19,36,46,.65);margin:0 2px 16px;max-width:42ch">The hardware the software drives — a self-contained, safety-fenced production cell that ships pre-configured and drops onto a slab.</p>
+            <div style="display:flex;flex-direction:column;gap:2px;padding-bottom:18px">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5);display:flex;gap:9px;align-items:baseline;padding:5px 2px"><span style="flex:0 0 auto;width:12px;height:1px;background:#2C86B0;transform:translateY(-3px)"></span>Two 5-axis CNC machines</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5);display:flex;gap:9px;align-items:baseline;padding:5px 2px"><span style="flex:0 0 auto;width:12px;height:1px;background:#2C86B0;transform:translateY(-3px)"></span>Robot tending &amp; part handling</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5);display:flex;gap:9px;align-items:baseline;padding:5px 2px"><span style="flex:0 0 auto;width:12px;height:1px;background:#2C86B0;transform:translateY(-3px)"></span>Tool &amp; workpiece storage</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5);display:flex;gap:9px;align-items:baseline;padding:5px 2px"><span style="flex:0 0 auto;width:12px;height:1px;background:#2C86B0;transform:translateY(-3px)"></span>Safety-fenced envelope</div>
+            </div>
+          </div>
+        </div>
+        <div class="os-item" data-idx="4">
+          <button class="os-itembtn">
+            <div style="display:flex;align-items:center;gap:12px">
+              <span class="os-num" style="font-family:'JetBrains Mono',monospace;font-size:10px;width:18px">05</span>
+              <span class="os-bar" style="height:3px;background:#2C86B0;display:block"></span>
+              <span class="os-name" style="font-size:15px;font-weight:500">Logistics</span>
+              <span style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:#2C86B0">DELIVERY</span>
+            </div>
+          </button>
+          <div class="os-item-detail">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#135B7C;margin:2px 2px 12px">Dispatch &amp; distribution</div>
+            <p style="font-size:14px;line-height:1.62;color:rgba(19,36,46,.65);margin:0 2px 16px;max-width:42ch">The final stage of the operating system. Once a part clears inspection it ships from the nearest qualified node — its full certification record traveling alongside it — closing the loop that began the moment a STEP file arrived.</p>
+            <div style="display:flex;flex-direction:column;gap:2px;padding-bottom:18px">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5);display:flex;gap:9px;align-items:baseline;padding:5px 2px"><span style="flex:0 0 auto;width:12px;height:1px;background:#2C86B0;transform:translateY(-3px)"></span>Routes from the nearest qualified node</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5);display:flex;gap:9px;align-items:baseline;padding:5px 2px"><span style="flex:0 0 auto;width:12px;height:1px;background:#2C86B0;transform:translateY(-3px)"></span>Inspection record ships with every part</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5);display:flex;gap:9px;align-items:baseline;padding:5px 2px"><span style="flex:0 0 auto;width:12px;height:1px;background:#2C86B0;transform:translateY(-3px)"></span>End-to-end order &amp; shipment tracking</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5);display:flex;gap:9px;align-items:baseline;padding:5px 2px"><span style="flex:0 0 auto;width:12px;height:1px;background:#2C86B0;transform:translateY(-3px)"></span>One logistics workflow at every node</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── stack / detail panel ── -->
+      <div style="position:relative;border:1px solid rgba(19,36,46,.14);border-radius:8px;overflow:hidden;background:linear-gradient(180deg,#FAFCFD,#F0F5F7);min-height:420px">
+        <span style="position:absolute;top:12px;left:12px;width:13px;height:13px;border-top:1px solid rgba(19,36,46,.35);border-left:1px solid rgba(19,36,46,.35);z-index:4;pointer-events:none"></span>
+        <span style="position:absolute;top:12px;right:12px;width:13px;height:13px;border-top:1px solid rgba(19,36,46,.35);border-right:1px solid rgba(19,36,46,.35);z-index:4;pointer-events:none"></span>
+        <span style="position:absolute;bottom:12px;left:12px;width:13px;height:13px;border-bottom:1px solid rgba(19,36,46,.35);border-left:1px solid rgba(19,36,46,.35);z-index:4;pointer-events:none"></span>
+        <span style="position:absolute;bottom:12px;right:12px;width:13px;height:13px;border-bottom:1px solid rgba(19,36,46,.35);border-right:1px solid rgba(19,36,46,.35);z-index:4;pointer-events:none"></span>
+
+        <!-- stack view -->
+        <div id="os-stack" style="position:relative;padding:44px clamp(24px,4vw,56px) 30px">
+          <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:rgba(19,36,46,.4);text-transform:uppercase;white-space:nowrap">LAYER STACK · SELECT A LAYER</div>
+          <div class="os-slab" data-idx="0" style="position:relative;z-index:5;cursor:pointer;margin-top:0;transition:opacity .25s ease;display:flex;align-items:center;gap:10px">
+            <div class="os-slabimg" style="position:relative;width:min(52%,270px);flex:0 0 auto"><img src="assets/layer-01.png" alt="APG" style="display:block;width:100%;filter:drop-shadow(0 10px 22px rgba(19,36,46,.18))"><div class="os-tint" style="position:absolute;inset:0;background:#2C86B0;opacity:0;-webkit-mask:url('assets/layer-01.png') center/contain no-repeat;mask:url('assets/layer-01.png') center/contain no-repeat;pointer-events:none"></div></div>
+            <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+              <span style="flex:0 0 auto;width:18px;height:1px;background:rgba(19,36,46,.3)"></span>
+              <div style="display:flex;flex-direction:column;gap:2px;white-space:nowrap">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(19,36,46,.4)">01</span>
+                <span style="font-weight:600;font-size:13px;color:#13242E">APG</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:rgba(44,134,176,.9)">SOFTWARE</span>
+              </div>
+            </div>
+          </div>
+          <div class="os-slab" data-idx="1" style="position:relative;z-index:4;cursor:pointer;margin-top:-5%;transition:opacity .25s ease;display:flex;align-items:center;gap:10px">
+            <div class="os-slabimg" style="position:relative;width:min(52%,270px);flex:0 0 auto"><img src="assets/layer-02.png" alt="FacOS" style="display:block;width:100%;filter:drop-shadow(0 10px 22px rgba(19,36,46,.18))"><div class="os-tint" style="position:absolute;inset:0;background:#2C86B0;opacity:0;-webkit-mask:url('assets/layer-02.png') center/contain no-repeat;mask:url('assets/layer-02.png') center/contain no-repeat;pointer-events:none"></div></div>
+            <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+              <span style="flex:0 0 auto;width:18px;height:1px;background:rgba(19,36,46,.3)"></span>
+              <div style="display:flex;flex-direction:column;gap:2px;white-space:nowrap">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(19,36,46,.4)">02</span>
+                <span style="font-weight:600;font-size:13px;color:#13242E">FacOS</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:rgba(44,134,176,.9)">SOFTWARE</span>
+              </div>
+            </div>
+          </div>
+          <div class="os-slab" data-idx="2" style="position:relative;z-index:3;cursor:pointer;margin-top:-5%;transition:opacity .25s ease;display:flex;align-items:center;gap:10px">
+            <div class="os-slabimg" style="position:relative;width:min(52%,270px);flex:0 0 auto"><img src="assets/layer-03.png" alt="QMS" style="display:block;width:100%;filter:drop-shadow(0 10px 22px rgba(19,36,46,.18))"><div class="os-tint" style="position:absolute;inset:0;background:#2C86B0;opacity:0;-webkit-mask:url('assets/layer-03.png') center/contain no-repeat;mask:url('assets/layer-03.png') center/contain no-repeat;pointer-events:none"></div></div>
+            <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+              <span style="flex:0 0 auto;width:18px;height:1px;background:rgba(19,36,46,.3)"></span>
+              <div style="display:flex;flex-direction:column;gap:2px;white-space:nowrap">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(19,36,46,.4)">03</span>
+                <span style="font-weight:600;font-size:13px;color:#13242E">QMS</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:rgba(44,134,176,.9)">SOFTWARE</span>
+              </div>
+            </div>
+          </div>
+          <div class="os-slab" data-idx="3" style="position:relative;z-index:2;cursor:pointer;margin-top:-5%;transition:opacity .25s ease;display:flex;align-items:center;gap:10px">
+            <div class="os-slabimg" style="position:relative;width:min(52%,270px);flex:0 0 auto"><img src="assets/layer-04.png" alt="Automation Cell" style="display:block;width:100%;filter:drop-shadow(0 10px 22px rgba(19,36,46,.18))"><div class="os-tint" style="position:absolute;inset:0;background:#2C86B0;opacity:0;-webkit-mask:url('assets/layer-04.png') center/contain no-repeat;mask:url('assets/layer-04.png') center/contain no-repeat;pointer-events:none"></div></div>
+            <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+              <span style="flex:0 0 auto;width:18px;height:1px;background:rgba(19,36,46,.3)"></span>
+              <div style="display:flex;flex-direction:column;gap:2px;white-space:nowrap">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(19,36,46,.4)">04</span>
+                <span style="font-weight:600;font-size:13px;color:#13242E">Automation Cell</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:#3FAE72">FLOOR</span>
+              </div>
+            </div>
+          </div>
+          <div class="os-slab" data-idx="4" style="position:relative;z-index:1;cursor:pointer;margin-top:-5%;transition:opacity .25s ease;display:flex;align-items:center;gap:10px">
+            <div class="os-slabimg" style="position:relative;width:min(52%,270px);flex:0 0 auto"><img src="assets/layer-05.png" alt="Logistics" style="display:block;width:100%;filter:drop-shadow(0 10px 22px rgba(19,36,46,.18))"><div class="os-tint" style="position:absolute;inset:0;background:#2C86B0;opacity:0;-webkit-mask:url('assets/layer-05.png') center/contain no-repeat;mask:url('assets/layer-05.png') center/contain no-repeat;pointer-events:none"></div></div>
+            <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+              <span style="flex:0 0 auto;width:18px;height:1px;background:rgba(19,36,46,.3)"></span>
+              <div style="display:flex;flex-direction:column;gap:2px;white-space:nowrap">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(19,36,46,.4)">05</span>
+                <span style="font-weight:600;font-size:13px;color:#13242E">Logistics</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:rgba(44,134,176,.9)">DELIVERY</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- detail view (filled by osShowDetail) -->
+        <div id="os-detail" style="display:none;position:relative;min-height:420px"></div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;margin-top:clamp(34px,5vh,56px);background:#fff;border:1px solid rgba(19,36,46,.14);border-radius:9px;overflow:hidden">
+      <div style="flex:1 1 200px;min-width:170px;padding:25px 26px;display:flex;flex-direction:column;gap:9px;border-right:1px solid rgba(19,36,46,.08)"><div style="font-family:'JetBrains Mono',monospace;font-size:clamp(30px,3vw,39px);line-height:1;letter-spacing:-.02em;color:#13242E">500<span style="color:#2C86B0">K+</span></div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.9px;text-transform:uppercase;color:rgba(19,36,46,.5)">Parts in production dataset</div></div>
+      <div style="flex:1 1 200px;min-width:170px;padding:25px 26px;display:flex;flex-direction:column;gap:9px;border-right:1px solid rgba(19,36,46,.08)"><div style="font-family:'JetBrains Mono',monospace;font-size:clamp(30px,3vw,39px);line-height:1;letter-spacing:-.02em;color:#13242E">100<span style="color:#2C86B0">M+</span></div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.9px;text-transform:uppercase;color:rgba(19,36,46,.5)">Process data points captured</div></div>
+      <div style="flex:1 1 200px;min-width:170px;padding:25px 26px;display:flex;flex-direction:column;gap:9px;border-right:1px solid rgba(19,36,46,.08)"><div style="font-family:'JetBrains Mono',monospace;font-size:clamp(30px,3vw,39px);line-height:1;letter-spacing:-.02em;color:#13242E">500<span style="color:#2C86B0">+</span></div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.9px;text-transform:uppercase;color:rgba(19,36,46,.5)">CNC machines · global network</div></div>
+      <div style="flex:1 1 200px;min-width:170px;padding:25px 26px;display:flex;flex-direction:column;gap:9px"><div style="font-family:'JetBrains Mono',monospace;font-size:clamp(30px,3vw,39px);line-height:1;letter-spacing:-.02em;color:#13242E">3<span style="color:#2C86B0">day</span></div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.9px;text-transform:uppercase;color:rgba(19,36,46,.5)">Fastest build from upload</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ 06 · IN PRODUCTION TODAY (interactive sectors) ══════════════════════
+     Pills switch the featured sector. Only Medical & Robotics carry data (data-sector);
+     the rest are inert placeholders. Swap wiring: secInit in the <script>. -->
+<section style="background:#EFF2F3;padding:clamp(64px,8vw,96px) clamp(24px,8vw,120px)">
+  <div style="display:flex;flex-direction:column;gap:36px">
+    <div style="display:flex;flex-direction:column;gap:11px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.16px;color:#2C86B0;line-height:1">03</span>
+        <span style="font-weight:700;font-size:11px;letter-spacing:2.16px;text-transform:uppercase;color:rgba(19,36,46,.6);line-height:1">IN PRODUCTION TODAY</span>
+        <span style="flex:1;height:1px;background:rgba(19,36,46,.1)"></span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;color:rgba(19,36,46,.35)">DWG AE-HOME · SHT 04</span>
+      </div>
+      <h2 style="margin:0;font-weight:300;font-size:clamp(28px,3.2vw,34px);line-height:1.25;letter-spacing:-.01em;color:#13242E">Not a concept.<br><b style="font-weight:600">A running factory.</b></h2>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:15px">
+      <div style="font-weight:600;font-size:18px;color:#13242E">Built across industries</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+        <div style="display:flex;gap:7px;flex-wrap:wrap">
+          <button class="sec-pill" data-sector="medical" style="display:inline-flex;align-items:center;justify-content:center;padding:8px 15px;border-radius:30px;font-family:'Montserrat',sans-serif;font-weight:500;font-size:12px;white-space:nowrap;background:#135B7C;border:1px solid #135B7C;color:#fff">Medical</button>
+          <button class="sec-pill" data-sector="robotics" style="display:inline-flex;align-items:center;justify-content:center;padding:8px 15px;border-radius:30px;font-family:'Montserrat',sans-serif;font-weight:500;font-size:12px;white-space:nowrap;background:#fff;border:1px solid rgba(19,36,46,.14);color:rgba(19,36,46,.6)">Robotics</button>
+          <button class="sec-pill" style="display:inline-flex;align-items:center;justify-content:center;padding:8px 15px;border-radius:30px;font-family:'Montserrat',sans-serif;font-weight:500;font-size:12px;white-space:nowrap;background:#fff;border:1px solid rgba(19,36,46,.14);color:rgba(19,36,46,.6)">Aerospace</button>
+          <button class="sec-pill" style="display:inline-flex;align-items:center;justify-content:center;padding:8px 15px;border-radius:30px;font-family:'Montserrat',sans-serif;font-weight:500;font-size:12px;white-space:nowrap;background:#fff;border:1px solid rgba(19,36,46,.14);color:rgba(19,36,46,.6)">Oil &amp; Gas</button>
+          <button class="sec-pill" style="display:inline-flex;align-items:center;justify-content:center;padding:8px 15px;border-radius:30px;font-family:'Montserrat',sans-serif;font-weight:500;font-size:12px;white-space:nowrap;background:#fff;border:1px solid rgba(19,36,46,.14);color:rgba(19,36,46,.6)">Semiconductor</button>
+          <button class="sec-pill" style="display:inline-flex;align-items:center;justify-content:center;padding:8px 15px;border-radius:30px;font-family:'Montserrat',sans-serif;font-weight:500;font-size:12px;white-space:nowrap;background:#fff;border:1px solid rgba(19,36,46,.14);color:rgba(19,36,46,.6)">Data Center</button>
+          <button class="sec-pill" style="display:inline-flex;align-items:center;justify-content:center;padding:8px 15px;border-radius:30px;font-family:'Montserrat',sans-serif;font-weight:500;font-size:12px;white-space:nowrap;background:#fff;border:1px solid rgba(19,36,46,.14);color:rgba(19,36,46,.6)">Energy</button>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.9px;text-transform:uppercase;color:rgba(19,36,46,.45);white-space:nowrap">Select a sector</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1.05fr;background:#fff;border:1px solid rgba(19,36,46,.12);border-radius:14px;overflow:hidden;min-height:418px;box-shadow:0 18px 48px rgba(19,36,46,.08)">
+        <div style="display:flex;flex-direction:column;justify-content:space-between;gap:20px;padding:34px 36px 32px clamp(28px,3vw,50px)">
+          <div id="sec-left" style="opacity:1;transform:translateY(0);transition:opacity .3s ease,transform .3s ease">
+            <div style="display:flex;align-items:center;gap:9px">
+              <span id="sec-tag" style="display:inline-flex;align-items:center;background:rgba(95,168,204,.14);border:1px solid rgba(95,168,204,.35);border-radius:4px;padding:6px 9px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#19749F">Medical Devices</span>
+              <span style="display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.9px;text-transform:uppercase;color:#3FAE72"><span style="width:6px;height:6px;border-radius:50%;background:#3FAE72;box-shadow:0 0 7px #6FE0A6;animation:pulse 2s ease-in-out infinite"></span>In production</span>
+            </div>
+            <h3 id="sec-heading" style="margin:16px 0 0;font-weight:600;font-size:24px;line-height:31px;letter-spacing:-.01em;color:#135B7C">Advanced Surgical Systems</h3>
+            <div id="sec-cats" style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.9px;text-transform:uppercase;color:#135B7C;margin-top:13px">MEDICAL SURGERY  |  RADIOLOGY  |  ORTHOPEDICS</div>
+            <img id="sec-parts" src="assets/06-inprod-parts.png" alt="Titanium surgical plates in production with materials, dimensions, and tolerances" style="margin-top:18px;width:100%;max-width:460px;height:auto;display:block">
+          </div>
+          <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="font-family:'JetBrains Mono',monospace;font-size:11.25px;letter-spacing:.48px;color:#2C86B0;transition:color .18s" data-hover="color:#135B7C">Get a similar quote →</a>
+        </div>
+        <div style="background:#0E222E;display:flex;align-items:center;justify-content:center;padding:17px;position:relative">
+          <img id="sec-robot" src="assets/06-inprod-robot.png" alt="Robotic surgical system on the operating floor" style="width:100%;height:100%;max-height:380px;object-fit:cover;border-radius:9px;display:block;opacity:1;transition:opacity .3s ease">
+          <span style="position:absolute;top:26px;right:28px;width:12px;height:12px;border-top:1px solid rgba(255,255,255,.5);border-right:1px solid rgba(255,255,255,.5)"></span>
+          <span style="position:absolute;bottom:26px;left:28px;width:12px;height:12px;border-bottom:1px solid rgba(255,255,255,.5);border-left:1px solid rgba(255,255,255,.5)"></span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;align-items:stretch;background:#fff;border:1px solid rgba(19,36,46,.12);border-radius:8px;overflow:hidden">
+      <div style="padding:11px 17px;border-right:1px solid rgba(19,36,46,.08);display:flex;align-items:center"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.95px;text-transform:uppercase;color:rgba(19,36,46,.4)">Certified</span></div>
+      <div style="padding:11px 17px;border-right:1px solid rgba(19,36,46,.08);display:flex;flex-direction:column;gap:3px;justify-content:center"><span style="font-weight:600;font-size:12px;letter-spacing:.02em;color:#13242E">ISO 9001</span><span style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.5px;color:#2C86B0">Quality mgmt</span></div>
+      <div style="padding:11px 17px;border-right:1px solid rgba(19,36,46,.08);display:flex;flex-direction:column;gap:3px;justify-content:center"><span style="font-weight:600;font-size:12px;letter-spacing:.02em;color:#13242E">AS9100</span><span style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.5px;color:#2C86B0">Aerospace</span></div>
+      <div style="padding:11px 17px;border-right:1px solid rgba(19,36,46,.08);display:flex;flex-direction:column;gap:3px;justify-content:center"><span style="font-weight:600;font-size:12px;letter-spacing:.02em;color:#13242E">ISO 13485</span><span style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.5px;color:#2C86B0">Medical</span></div>
+      <div style="padding:11px 17px;display:flex;flex-direction:column;gap:3px;justify-content:center"><span style="font-weight:600;font-size:12px;letter-spacing:.02em;color:#13242E">Nadcap</span><span style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.5px;color:#2C86B0">Special process</span></div>
+    </div>
+    <p style="margin:0;max-width:715px;font-size:14px;line-height:1.62;color:rgba(19,36,46,.62)">Aerospace-grade parts ship from our Pennsylvania factory today — to robotics companies, research labs, data-center teams, and medical-device manufacturers. <b style="font-weight:500;color:#13242E">Every order includes a full CMM report.</b></p>
+  </div>
+</section>
+
+<!-- ══════════════════════ 07 · QUOTE FLOW (interactive carousel) ══════════════════════
+     Six static steps, then a 2-stage carousel (web quote ↔ live tracking) that auto-cycles
+     and can be jumped with the dots. Wiring: quoteInit in the <script>. -->
+<section id="quote" style="background:#EFF2F3;padding:clamp(64px,8vw,96px) clamp(24px,8vw,120px)">
+  <div style="display:flex;flex-direction:column;gap:52px">
+    <div style="display:flex;flex-direction:column;gap:18px;max-width:680px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11px;letter-spacing:2.2px;text-transform:uppercase;color:#135B7C;line-height:1">04</span>
+        <span style="font-weight:700;font-size:11px;letter-spacing:2.2px;text-transform:uppercase;color:#135B7C;line-height:1">FROM QUOTE TO DELIVERY</span>
+      </div>
+      <h2 style="margin:0;font-weight:300;font-size:clamp(28px,3.2vw,34px);line-height:1.25;letter-spacing:-.01em;color:#13242E">Upload. Understand. <b style="font-weight:600">Order.</b></h2>
+      <p style="margin:0;font-size:16px;line-height:1.6;color:rgba(19,36,46,.6);max-width:60ch">A transparent, process-based quote in minutes — engineering review included. No estimation, no black box. The same portal that opens your quote follows the part all the way to delivery.</p>
+    </div>
+
+    <div data-reveal="1" style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px">
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:9px">
+        <div style="width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid rgba(19,36,46,.14);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(19,36,46,.07)"><svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:#135B7C;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"><path d="M12 15V4M12 4l-4 4M12 4l4 4"></path><path d="M5 15v3a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3"></path></svg></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;color:#135B7C">01</div>
+        <h4 style="margin:0;font-weight:600;font-size:14px;line-height:1.25;color:#13242E">Upload</h4>
+        <p style="margin:0;font-size:12px;line-height:1.5;color:rgba(19,36,46,.6);max-width:22ch">Drag in a STEP file — geometry read automatically.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:9px">
+        <div style="width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid rgba(19,36,46,.14);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(19,36,46,.07)"><svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:#135B7C;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;color:#135B7C">02</div>
+        <h4 style="margin:0;font-weight:600;font-size:14px;line-height:1.25;color:#13242E">Quote</h4>
+        <p style="margin:0;font-size:12px;line-height:1.5;color:rgba(19,36,46,.6);max-width:22ch">Transparent price, lead time, and process breakdown in minutes.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:9px">
+        <div style="width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid rgba(19,36,46,.14);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(19,36,46,.07)"><svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:#135B7C;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"><rect x="6" y="6" width="12" height="12" rx="1"></rect><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"></path></svg></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;color:#135B7C">03</div>
+        <h4 style="margin:0;font-weight:600;font-size:14px;line-height:1.25;color:#13242E">Production</h4>
+        <p style="margin:0;font-size:12px;line-height:1.5;color:rgba(19,36,46,.6);max-width:22ch">Scheduled and machined at the nearest qualified node.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:9px">
+        <div style="width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid rgba(19,36,46,.14);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(19,36,46,.07)"><svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:#135B7C;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="9"></circle><path d="M8 12l3 3 5-6"></path></svg></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;color:#135B7C">04</div>
+        <h4 style="margin:0;font-weight:600;font-size:14px;line-height:1.25;color:#13242E">Inspection</h4>
+        <p style="margin:0;font-size:12px;line-height:1.5;color:rgba(19,36,46,.6);max-width:22ch">In-line CMM verifies every critical dimension.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:9px">
+        <div style="width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid rgba(19,36,46,.14);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(19,36,46,.07)"><svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:#135B7C;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"><rect x="1" y="6" width="12" height="10" rx="1"></rect><path d="M13 9h4l3 3v4h-7z"></path><circle cx="5.5" cy="17.5" r="1.6"></circle><circle cx="16.5" cy="17.5" r="1.6"></circle></svg></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;color:#135B7C">05</div>
+        <h4 style="margin:0;font-weight:600;font-size:14px;line-height:1.25;color:#13242E">Shipment</h4>
+        <p style="margin:0;font-size:12px;line-height:1.5;color:rgba(19,36,46,.6);max-width:22ch">Packed and dispatched with a live tracking link.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:9px">
+        <div style="width:48px;height:48px;border-radius:50%;background:#135B7C;border:1px solid #135B7C;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(19,36,46,.12)"><svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"><path d="M12 3l8 4v10l-8 4-8-4V7z"></path><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;color:#135B7C">06</div>
+        <h4 style="margin:0;font-weight:600;font-size:14px;line-height:1.25;color:#13242E">Delivered</h4>
+        <p style="margin:0;font-size:12px;line-height:1.5;color:rgba(19,36,46,.6);max-width:22ch">Finished, inspected parts on your dock — record included.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:30px;padding-top:48px;border-top:1px solid rgba(19,36,46,.1)">
+      <div style="display:flex;flex-direction:column;gap:14px;max-width:640px">
+        <span style="font-weight:700;font-size:11px;letter-spacing:2.2px;text-transform:uppercase;color:#135B7C">ON EVERY SCREEN</span>
+        <h3 style="margin:0;font-weight:300;font-size:clamp(22px,2.4vw,27px);line-height:1.3;letter-spacing:-.01em;color:#13242E">Quote in minutes. <b style="font-weight:600">Track to your door.</b></h3>
+        <p style="margin:0;font-size:15px;line-height:1.6;color:rgba(19,36,46,.6);max-width:62ch">Upload a STEP file and get a transparent, process-based quote — no account needed. Confirm it, and the same portal tracks your order all the way to delivery. The whole flow works identically on web and mobile.</p>
+      </div>
+
+      <div style="position:relative;display:grid;grid-template-columns:minmax(240px,30%) 1fr;gap:clamp(24px,3.5vw,52px);align-items:start">
+        <div id="q-text" style="opacity:1;transform:translateY(0);transition:opacity .7s ease,transform .7s cubic-bezier(.16,.68,.28,1);display:flex;flex-direction:column;gap:13px">
+          <div id="q-tag" style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#135B7C">01 · Upload &amp; quote</div>
+          <h3 id="q-head" style="margin:0;font-weight:400;font-size:clamp(20px,2.1vw,25px);line-height:1.2;letter-spacing:-.01em;color:#13242E">Drag in a STEP file. Get a price.</h3>
+          <p id="q-body" style="margin:0;font-size:14px;line-height:1.6;color:rgba(19,36,46,.6)">APG reads the geometry — features, tolerances, material — and returns a transparent, process-based quote in minutes. No CAM programmer, no account.</p>
+          <div id="q-bullets" style="display:flex;flex-direction:column;gap:9px;margin-top:3px">
+            <div style="position:relative;padding-left:20px;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.6);line-height:1.4"><span style="position:absolute;left:0;top:4px;width:6px;height:6px;border-radius:50%;background:#135B7C"></span>STEP file in</div>
+            <div style="position:relative;padding-left:20px;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.6);line-height:1.4"><span style="position:absolute;left:0;top:4px;width:6px;height:6px;border-radius:50%;background:#135B7C"></span>Process · cost · runtime out</div>
+            <div style="position:relative;padding-left:20px;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.6);line-height:1.4"><span style="position:absolute;left:0;top:4px;width:6px;height:6px;border-radius:50%;background:#135B7C"></span>Instant — no back-and-forth</div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <button class="q-dot" data-stage="0" aria-label="01 · Upload & quote" style="width:30px;height:4px;border:none;border-radius:2px;padding:0;cursor:pointer;background:#135B7C;transition:background .3s"></button>
+            <button class="q-dot" data-stage="1" aria-label="02 · Confirm & track" style="width:30px;height:4px;border:none;border-radius:2px;padding:0;cursor:pointer;background:rgba(19,36,46,.2);transition:background .3s"></button>
+          </div>
+        </div>
+        <div style="position:relative;padding-top:26px;min-height:clamp(320px,34vw,420px)">
+          <div id="q-screen0" style="position:absolute;top:26px;left:0;right:0;opacity:1;pointer-events:auto;transition:opacity .7s ease">
+            <div style="width:87%;border:1px solid rgba(19,36,46,.12);border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 26px 60px rgba(19,36,46,.14)">
+              <div style="display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid rgba(19,36,46,.1);background:#E7EFF2">
+                <span style="display:flex;gap:6px"><span style="width:9px;height:9px;border-radius:50%;background:rgba(19,36,46,.15);display:block"></span><span style="width:9px;height:9px;border-radius:50%;background:rgba(19,36,46,.15);display:block"></span><span style="width:9px;height:9px;border-radius:50%;background:rgba(19,36,46,.15);display:block"></span></span>
+                <span style="flex:1;max-width:320px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(19,36,46,.55);padding:6px 12px;border:1px solid rgba(19,36,46,.1);border-radius:6px;background:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">quote.aethermfg.com</span>
+              </div>
+              <img src="assets/04-experience-03.jpg" alt="Aether APG — instant quote for part AE-2207-A on web" style="display:block;width:100%;height:clamp(224px,25vw,330px);object-fit:cover;object-position:center top">
+            </div>
+            <div style="position:absolute;right:0;top:-22px;width:clamp(116px,14vw,158px);aspect-ratio:390/844;border:8px solid #1B2A33;border-radius:26px;overflow:hidden;background:#0F1920;box-shadow:0 22px 44px rgba(19,36,46,.30);z-index:3">
+              <span style="position:absolute;top:7px;left:50%;transform:translateX(-50%);width:58px;height:5px;border-radius:4px;background:#000;opacity:.5;z-index:2"></span>
+              <img src="assets/04-experience-04.jpg" alt="Aether APG — the same quote on mobile" style="display:block;width:100%;height:100%;object-fit:cover">
+            </div>
+          </div>
+          <div id="q-screen1" style="position:absolute;top:26px;left:0;right:0;opacity:0;pointer-events:none;transition:opacity .7s ease">
+            <div style="width:87%;border:1px solid rgba(19,36,46,.12);border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 26px 60px rgba(19,36,46,.14)">
+              <div style="display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid rgba(19,36,46,.1);background:#E7EFF2">
+                <span style="display:flex;gap:6px"><span style="width:9px;height:9px;border-radius:50%;background:rgba(19,36,46,.15);display:block"></span><span style="width:9px;height:9px;border-radius:50%;background:rgba(19,36,46,.15);display:block"></span><span style="width:9px;height:9px;border-radius:50%;background:rgba(19,36,46,.15);display:block"></span></span>
+                <span style="flex:1;max-width:320px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(19,36,46,.55);padding:6px 12px;border:1px solid rgba(19,36,46,.1);border-radius:6px;background:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">quote.aethermfg.com/orders/AE-2207-A</span>
+              </div>
+              <div style="display:flex;flex-direction:column;height:clamp(224px,25vw,330px);background:#fff">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid rgba(19,36,46,.1);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(19,36,46,.55)">
+                  <span>Live tracking · AE-2207-A</span>
+                  <span style="display:inline-flex;align-items:center;gap:6px;color:#3FAE72"><span style="width:6px;height:6px;border-radius:50%;background:#3FAE72;box-shadow:0 0 7px rgba(63,174,114,.7);animation:pulse 2s ease-in-out infinite"></span>Live</span>
+                </div>
+                <div style="position:relative;flex:1;padding:40px 26px 22px;background:linear-gradient(180deg,#F1F5F6,#E7EEF0);display:flex;align-items:center">
+                  <div style="position:absolute;top:12px;right:16px;background:#fff;border:1px solid rgba(19,36,46,.1);border-radius:8px;padding:7px 12px;text-align:center;font-family:'JetBrains Mono',monospace;box-shadow:0 8px 18px rgba(19,36,46,.12)"><b style="display:block;font-size:7px;letter-spacing:.1em;color:rgba(19,36,46,.45);font-weight:400;margin-bottom:3px">EST. DELIVERY</b><span style="font-size:10.5px;font-weight:700;color:#13242E">Jul 22 · 14:00</span></div>
+                  <div style="position:relative;width:100%;height:2px;background:rgba(19,36,46,.12)">
+                    <span style="position:absolute;left:0;top:0;height:100%;width:42%;background:#135B7C;display:block"></span>
+                    <span style="position:absolute;left:4%;top:50%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;background:#135B7C;border:2px solid #135B7C;box-sizing:border-box;display:block"></span><span style="position:absolute;left:4%;top:15px;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(19,36,46,.45);white-space:nowrap">FAIRVIEW</span>
+                    <span style="position:absolute;left:26%;top:50%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;background:#135B7C;border:2px solid #135B7C;box-sizing:border-box;display:block"></span><span style="position:absolute;left:26%;top:15px;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(19,36,46,.45);white-space:nowrap">ERIE</span>
+                    <span style="position:absolute;left:42%;top:50%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid #135B7C;box-shadow:0 0 0 4px rgba(19,91,124,.18);box-sizing:border-box;display:block"></span>
+                    <span style="position:absolute;left:42%;top:-30px;transform:translateX(-50%);background:#135B7C;color:#fff;font-family:'JetBrains Mono',monospace;font-size:8.5px;padding:5px 9px;border-radius:6px;white-space:nowrap">CLEVELAND, OH · 68%</span>
+                    <span style="position:absolute;left:74%;top:50%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid rgba(19,36,46,.35);box-sizing:border-box;display:block"></span><span style="position:absolute;left:74%;top:15px;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(19,36,46,.45);white-space:nowrap">PITTSBURGH</span>
+                    <span style="position:absolute;left:96%;top:50%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid rgba(19,36,46,.35);box-sizing:border-box;display:block"></span><span style="position:absolute;left:96%;top:15px;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(19,36,46,.45);white-space:nowrap">NEW YORK</span>
+                  </div>
+                </div>
+                <div style="display:flex;border-top:1px solid rgba(19,36,46,.1)">
+                  <div style="flex:1;padding:9px 14px;font-family:'JetBrains Mono',monospace;border-right:1px solid rgba(19,36,46,.08)"><b style="display:block;font-size:7px;letter-spacing:.1em;color:rgba(19,36,46,.45);font-weight:400;margin-bottom:3px">CARRIER</b><span style="font-size:10px;font-weight:700;color:#13242E">FedEx Freight</span></div>
+                  <div style="flex:1;padding:9px 14px;font-family:'JetBrains Mono',monospace;border-right:1px solid rgba(19,36,46,.08)"><b style="display:block;font-size:7px;letter-spacing:.1em;color:rgba(19,36,46,.45);font-weight:400;margin-bottom:3px">DISTANCE</b><span style="font-size:10px;font-weight:700;color:#13242E">588 mi</span></div>
+                  <div style="flex:1;padding:9px 14px;font-family:'JetBrains Mono',monospace;border-right:1px solid rgba(19,36,46,.08)"><b style="display:block;font-size:7px;letter-spacing:.1em;color:rgba(19,36,46,.45);font-weight:400;margin-bottom:3px">ETA</b><span style="font-size:10px;font-weight:700;color:#13242E">Jul 22</span></div>
+                  <div style="flex:1;padding:9px 14px;font-family:'JetBrains Mono',monospace"><b style="display:block;font-size:7px;letter-spacing:.1em;color:rgba(19,36,46,.45);font-weight:400;margin-bottom:3px">PARCELS</b><span style="font-size:10px;font-weight:700;color:#13242E">50 pcs</span></div>
+                </div>
+              </div>
+            </div>
+            <div style="position:absolute;right:-4px;top:-30px;width:clamp(126px,15vw,170px);z-index:3">
+              <img src="assets/mobile.png" alt="Aether — the same order tracking on mobile" style="display:block;width:100%;height:auto;filter:drop-shadow(0 22px 40px rgba(19,36,46,.32))">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="https://youtu.be/YKWQ-ogiVJo?si=cRJkjHrKAB9ykNAJ" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:24px 28px;border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#fff;transition:border-color .2s,box-shadow .2s;color:inherit" data-hover="border-color:rgba(19,91,124,.4);box-shadow:0 14px 34px rgba(19,36,46,.08)">
+        <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+          <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#135B7C">Upload<span style="width:4px;height:4px;border-radius:50%;background:rgba(19,36,46,.2);display:inline-block"></span>Quote<span style="width:4px;height:4px;border-radius:50%;background:rgba(19,36,46,.2);display:inline-block"></span>Production<span style="width:4px;height:4px;border-radius:50%;background:rgba(19,36,46,.2);display:inline-block"></span>Inspection<span style="width:4px;height:4px;border-radius:50%;background:rgba(19,36,46,.2);display:inline-block"></span>Shipment<span style="width:4px;height:4px;border-radius:50%;background:rgba(19,36,46,.2);display:inline-block"></span>Delivered</div>
+          <p style="margin:0;font-size:14px;line-height:1.5;color:rgba(19,36,46,.6)">Watch one part move through all six stages — <b style="color:#13242E;font-weight:600">live, on web and mobile.</b></p>
+        </div>
+        <span style="flex-shrink:0;display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:600;color:#135B7C;white-space:nowrap"><span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#135B7C;color:#fff;font-size:9px;padding-left:2px">▶</span>Watch the film <span style="font-size:16px;line-height:1">→</span></span>
+      </a>
+
+      <div style="position:relative;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;padding:36px 40px;border-radius:12px;background:#102531;box-shadow:0 16px 44px rgba(8,20,27,.3);overflow:hidden">
+        <img src="uploads/015-AetherMFG-shot02.png" alt="" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.28">
+        <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(16,37,49,.95) 30%,rgba(16,37,49,.55) 100%)"></div>
+        <div style="position:relative;display:flex;flex-direction:column;gap:8px;max-width:52ch">
+          <h4 style="margin:0;font-weight:500;font-size:22px;line-height:1.25;color:#fff">See our process work on your part.</h4>
+          <p style="margin:0;font-size:14px;line-height:1.55;color:rgba(255,255,255,.82)">Upload a STEP file and receive a transparent, process-based quote in minutes.</p>
+        </div>
+        <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="position:relative;flex-shrink:0;display:inline-flex;align-items:center;gap:9px;background:#fff;color:#135B7C;font-weight:600;font-size:14px;padding:15px 28px;border-radius:8px;transition:transform .18s,box-shadow .18s;box-shadow:0 4px 14px rgba(0,0,0,.15)" data-hover="transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)">Get an instant quote <span style="font-size:16px;line-height:1">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ 08 · STORY MAP (embedded prototype) ══════════════════════ -->
+<section style="background:#EFF2F3;padding-bottom:60px">
+  <iframe src="storymap.html" title="Story map — from global supply to a US-first blueprint" scrolling="no" style="display:block;width:100%;border:0;height:840px" data-storymap="1"></iframe>
+</section>
+
+<!-- ══════════════════════ 09 · TESTIMONIALS (marquee — 4 quotes ×2 for seamless loop) ══════════════════════ -->
+<section style="background:linear-gradient(180deg,#102531 0%,#0C1B24 100%);padding:clamp(56px,9vw,80px) 0">
+  <div style="padding:0 clamp(24px,8vw,120px);margin-bottom:clamp(32px,5vw,48px);display:flex;flex-direction:column;gap:13px">
+    <div style="font-weight:700;font-size:11px;letter-spacing:1.65px;text-transform:uppercase;color:rgba(255,255,255,.6)"><span style="color:#5FA8CC;font-family:'JetBrains Mono',monospace">06</span>&nbsp;&nbsp;Testimonials</div>
+    <h2 style="margin:0;font-weight:300;font-size:clamp(28px,3.2vw,34px);line-height:1.25;letter-spacing:-.01em;color:#fff">Trusted by Engineering Teams</h2>
+  </div>
+  <div style="width:100%;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)">
+    <div style="display:flex;align-items:stretch;width:max-content;padding:6px 0;animation:mq 55s linear infinite">
+      <!-- 4 quotes, duplicated (aria-hidden on the 2nd set) for the seamless -50% scroll -->
+      <div style="box-sizing:border-box;flex-shrink:0;width:434px;min-height:243px;margin-right:40px;background:rgba(19,91,124,.1);border:1px dashed rgba(95,168,204,.14);border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:9px">
+        <div style="display:flex;gap:16px;align-items:flex-start"><span style="width:54px;height:54px;flex-shrink:0;border-radius:50%;overflow:hidden;display:block"><img src="assets/08-avatar.svg" alt="" style="width:100%;height:100%;display:block"></span><div style="display:flex;flex-direction:column;gap:2px"><div style="font-weight:600;font-size:16px;line-height:20px;color:#fff">Leading U.S. Engineering Research Lab</div><div style="font-weight:400;font-size:12px;line-height:20px;color:#B7B7B8">Mechanical Engineering Researcher</div></div></div>
+        <p style="margin:0;font-weight:500;font-size:13px;line-height:22px;letter-spacing:.065px;color:#B7B7B8">“Aether’s instant AI machining quote system is clean, intuitive, and easy to use. It makes sourcing precision machined parts significantly faster than traditional manufacturing workflows.”</p>
+      </div>
+      <div style="box-sizing:border-box;flex-shrink:0;width:434px;min-height:243px;margin-right:40px;background:rgba(19,91,124,.1);border:1px dashed rgba(95,168,204,.14);border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:9px">
+        <div style="display:flex;gap:16px;align-items:flex-start"><span style="width:54px;height:54px;flex-shrink:0;border-radius:50%;overflow:hidden;display:block"><img src="assets/08-avatar.svg" alt="" style="width:100%;height:100%;display:block"></span><div style="display:flex;flex-direction:column;gap:2px"><div style="font-weight:600;font-size:16px;line-height:20px;color:#fff">Advanced Biomechatronics Research Lab</div><div style="font-weight:400;font-size:12px;line-height:20px;color:#B7B7B8">Research Engineer</div></div></div>
+        <p style="margin:0;font-weight:500;font-size:13px;line-height:22px;letter-spacing:.065px;color:#B7B7B8">“Working with Aether’s team was smooth and responsive. Their platform made it easy to iterate on designs and manage machining quotes as our project evolved.”</p>
+      </div>
+      <div style="box-sizing:border-box;flex-shrink:0;width:434px;min-height:243px;margin-right:40px;background:rgba(19,91,124,.1);border:1px dashed rgba(95,168,204,.14);border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:9px">
+        <div style="display:flex;gap:16px;align-items:flex-start"><span style="width:54px;height:54px;flex-shrink:0;border-radius:50%;overflow:hidden;display:block"><img src="assets/08-avatar.svg" alt="" style="width:100%;height:100%;display:block"></span><div style="display:flex;flex-direction:column;gap:2px"><div style="font-weight:600;font-size:16px;line-height:20px;color:#fff">Top U.S. Robotics Company</div><div style="font-weight:400;font-size:12px;line-height:20px;color:#B7B7B8">Lead Product Engineer</div></div></div>
+        <p style="margin:0;font-weight:500;font-size:13px;line-height:22px;letter-spacing:.065px;color:#B7B7B8">“Aether’s team provided valuable GD&amp;T and manufacturability feedback during the machining process. Their AI-driven machining approach helped us refine our design decisions and will influence how we design future robotic components.”</p>
+      </div>
+      <div style="box-sizing:border-box;flex-shrink:0;width:434px;min-height:243px;margin-right:40px;background:rgba(19,91,124,.1);border:1px dashed rgba(95,168,204,.14);border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:9px">
+        <div style="display:flex;gap:16px;align-items:flex-start"><span style="width:54px;height:54px;flex-shrink:0;border-radius:50%;overflow:hidden;display:block"><img src="assets/08-avatar.svg" alt="" style="width:100%;height:100%;display:block"></span><div style="display:flex;flex-direction:column;gap:2px"><div style="font-weight:600;font-size:16px;line-height:20px;color:#fff">Top Data Center Cooling Technology Company</div><div style="font-weight:400;font-size:12px;line-height:20px;color:#B7B7B8">Product Development Engineer</div></div></div>
+        <p style="margin:0;font-weight:500;font-size:13px;line-height:22px;letter-spacing:.065px;color:#B7B7B8">“The manifold samples looked great on arrival. Aether demonstrated strong execution in precision machining and manufacturing quality for complex thermal components.”</p>
+      </div>
+      <div aria-hidden="true" style="box-sizing:border-box;flex-shrink:0;width:434px;min-height:243px;margin-right:40px;background:rgba(19,91,124,.1);border:1px dashed rgba(95,168,204,.14);border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:9px">
+        <div style="display:flex;gap:16px;align-items:flex-start"><span style="width:54px;height:54px;flex-shrink:0;border-radius:50%;overflow:hidden;display:block"><img src="assets/08-avatar.svg" alt="" style="width:100%;height:100%;display:block"></span><div style="display:flex;flex-direction:column;gap:2px"><div style="font-weight:600;font-size:16px;line-height:20px;color:#fff">Leading U.S. Engineering Research Lab</div><div style="font-weight:400;font-size:12px;line-height:20px;color:#B7B7B8">Mechanical Engineering Researcher</div></div></div>
+        <p style="margin:0;font-weight:500;font-size:13px;line-height:22px;letter-spacing:.065px;color:#B7B7B8">“Aether’s instant AI machining quote system is clean, intuitive, and easy to use. It makes sourcing precision machined parts significantly faster than traditional manufacturing workflows.”</p>
+      </div>
+      <div aria-hidden="true" style="box-sizing:border-box;flex-shrink:0;width:434px;min-height:243px;margin-right:40px;background:rgba(19,91,124,.1);border:1px dashed rgba(95,168,204,.14);border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:9px">
+        <div style="display:flex;gap:16px;align-items:flex-start"><span style="width:54px;height:54px;flex-shrink:0;border-radius:50%;overflow:hidden;display:block"><img src="assets/08-avatar.svg" alt="" style="width:100%;height:100%;display:block"></span><div style="display:flex;flex-direction:column;gap:2px"><div style="font-weight:600;font-size:16px;line-height:20px;color:#fff">Advanced Biomechatronics Research Lab</div><div style="font-weight:400;font-size:12px;line-height:20px;color:#B7B7B8">Research Engineer</div></div></div>
+        <p style="margin:0;font-weight:500;font-size:13px;line-height:22px;letter-spacing:.065px;color:#B7B7B8">“Working with Aether’s team was smooth and responsive. Their platform made it easy to iterate on designs and manage machining quotes as our project evolved.”</p>
+      </div>
+      <div aria-hidden="true" style="box-sizing:border-box;flex-shrink:0;width:434px;min-height:243px;margin-right:40px;background:rgba(19,91,124,.1);border:1px dashed rgba(95,168,204,.14);border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:9px">
+        <div style="display:flex;gap:16px;align-items:flex-start"><span style="width:54px;height:54px;flex-shrink:0;border-radius:50%;overflow:hidden;display:block"><img src="assets/08-avatar.svg" alt="" style="width:100%;height:100%;display:block"></span><div style="display:flex;flex-direction:column;gap:2px"><div style="font-weight:600;font-size:16px;line-height:20px;color:#fff">Top U.S. Robotics Company</div><div style="font-weight:400;font-size:12px;line-height:20px;color:#B7B7B8">Lead Product Engineer</div></div></div>
+        <p style="margin:0;font-weight:500;font-size:13px;line-height:22px;letter-spacing:.065px;color:#B7B7B8">“Aether’s team provided valuable GD&amp;T and manufacturability feedback during the machining process. Their AI-driven machining approach helped us refine our design decisions and will influence how we design future robotic components.”</p>
+      </div>
+      <div aria-hidden="true" style="box-sizing:border-box;flex-shrink:0;width:434px;min-height:243px;margin-right:40px;background:rgba(19,91,124,.1);border:1px dashed rgba(95,168,204,.14);border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:9px">
+        <div style="display:flex;gap:16px;align-items:flex-start"><span style="width:54px;height:54px;flex-shrink:0;border-radius:50%;overflow:hidden;display:block"><img src="assets/08-avatar.svg" alt="" style="width:100%;height:100%;display:block"></span><div style="display:flex;flex-direction:column;gap:2px"><div style="font-weight:600;font-size:16px;line-height:20px;color:#fff">Top Data Center Cooling Technology Company</div><div style="font-weight:400;font-size:12px;line-height:20px;color:#B7B7B8">Product Development Engineer</div></div></div>
+        <p style="margin:0;font-weight:500;font-size:13px;line-height:22px;letter-spacing:.065px;color:#B7B7B8">“The manifold samples looked great on arrival. Aether demonstrated strong execution in precision machining and manufacturing quality for complex thermal components.”</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ 09b · VIDEO BAND (full-bleed banner) ══════════════════════ -->
+<section style="margin:0;padding:0;line-height:0;background:#0C1B24">
+  <img src="assets/factory-video-ss02.png" alt="Modular Factories scaled globally — Offshore Costs, Onshore Speeds" style="display:block;width:100%;height:auto">
+</section>
+
+<!-- ══════════════════════ 10 · SEGMENTED CTA (deep — three doors) ══════════════════════ -->
+<section id="cta" style="background:#08141B;color:#fff;padding:96px clamp(24px,11vw,160px)">
+  <div style="display:flex;flex-direction:column;gap:16px;max-width:60ch;margin-bottom:36px">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.62);display:inline-flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <span style="width:32px;height:1px;background:currentColor;opacity:.4"></span>07 — SEGMENTED CTA<span style="color:#5FA8CC;letter-spacing:.28em">Three doors, one house</span>
+    </div>
+    <h2 style="color:#fff;font-weight:300;font-size:clamp(28px,3.2vw,34px);line-height:1.25;letter-spacing:-.01em;text-wrap:balance;margin:0">See our process work on your part.</h2>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+    <div style="padding:26px 24px;border:1px solid rgba(255,255,255,.22);border-radius:8px;background:rgba(23,50,67,.35);display:flex;flex-direction:column;gap:14px;transition:border-color .18s ease, background .18s ease" data-hover="border-color:#5FA8CC;background:rgba(23,50,67,.55)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;color:#5FA8CC;text-transform:uppercase">I need parts</div>
+      <h3 style="color:#fff;font-weight:500;font-size:18px;line-height:1.25;margin:0">Get an instant quote</h3>
+      <p style="margin:0;font-size:13px;line-height:1.55;color:rgba(255,255,255,.62)">Upload a STEP file and receive a transparent, process-based quote in minutes — engineering review included.</p>
+      <div style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:#fff;text-transform:uppercase;padding-top:6px">Open the portal →</div>
+    </div>
+    <div style="padding:26px 24px;border:1px solid rgba(255,255,255,.22);border-radius:8px;background:rgba(23,50,67,.35);display:flex;flex-direction:column;gap:14px;transition:border-color .18s ease, background .18s ease" data-hover="border-color:#5FA8CC;background:rgba(23,50,67,.55)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;color:#5FA8CC;text-transform:uppercase">I'm an engineer</div>
+      <h3 style="color:#fff;font-weight:500;font-size:18px;line-height:1.25;margin:0">Explore the technology</h3>
+      <p style="margin:0;font-size:13px;line-height:1.55;color:rgba(255,255,255,.62)">See the full operating system — APG, FacOS, QMS, the automation cell, and how the stack replicates.</p>
+      <div style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:#fff;text-transform:uppercase;padding-top:6px">See the technology →</div>
+    </div>
+    <div style="padding:26px 24px;border:1px solid rgba(255,255,255,.22);border-radius:8px;background:rgba(23,50,67,.35);display:flex;flex-direction:column;gap:14px;transition:border-color .18s ease, background .18s ease" data-hover="border-color:#5FA8CC;background:rgba(23,50,67,.55)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;color:#5FA8CC;text-transform:uppercase">I'm an investor / partner</div>
+      <h3 style="color:#fff;font-weight:500;font-size:18px;line-height:1.25;margin:0">See the blueprint</h3>
+      <p style="margin:0;font-size:13px;line-height:1.55;color:rgba(255,255,255,.62)">How one factory blueprint scales into a global manufacturing network deployed by configuration.</p>
+      <div style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:#fff;text-transform:uppercase;padding-top:6px">Start a conversation →</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ 11 · FOOTER (deep) ══════════════════════ -->
+<footer style="background:#08141B;color:rgba(255,255,255,.62);border-top:1px solid rgba(255,255,255,.08);padding:clamp(52px,7vw,80px) clamp(24px,11vw,160px) 0">
+  <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:clamp(28px,4vw,56px)">
+    <div>
+      <div style="font-size:20px;letter-spacing:.02em;color:#fff"><b style="font-weight:700">Aether</b> <span style="color:rgba(255,255,255,.40);font-weight:400">Manufacturing</span></div>
+      <p style="margin:18px 0 0;font-size:13.5px;line-height:1.65;color:rgba(255,255,255,.62);max-width:42ch">Defining the category of AI CNC machining. Transparent quoting, autonomous production, and predictable quality for high-mix, low-volume manufacturing.</p>
+      <p style="margin:18px 0 0;font-size:11.5px;line-height:1.7;color:rgba(255,255,255,.40);max-width:56ch">Aether is an equal opportunity employer committed to diversity and inclusion in the workplace. We prohibit discrimination and harassment of any kind based on race, color, sex, religion, sexual orientation, national origin, disability, genetic information, pregnancy, or any other protected characteristic as outlined by federal, state, or local laws.</p>
+      <div style="margin-top:22px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em;color:rgba(255,255,255,.40)">HQ · 19 Morris Ave, Building 128 · Brooklyn, NY 11205, USA</div>
+    </div>
+    <nav style="display:flex;flex-direction:column">
+      <h4 style="margin:0 0 16px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#fff">Services</h4>
+      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">AI CNC Milling</a>
+      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">AI CNC Turning</a>
+      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">AI EDM</a>
+      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">AI Metal 3D Printing</a>
+    </nav>
+    <nav style="display:flex;flex-direction:column">
+      <h4 style="margin:0 0 16px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#fff">Platform</h4>
+      <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">AI White-Box Portal</a>
+      <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">Instant Quoting</a>
+      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">DFM Feedback</a>
+      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">Quality Assurance</a>
+    </nav>
+    <nav style="display:flex;flex-direction:column">
+      <h4 style="margin:0 0 16px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#fff">Company</h4>
+      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">About Aether</a>
+      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">Case Studies</a>
+      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">Contact</a>
+    </nav>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:24px 32px;flex-wrap:wrap;margin-top:clamp(40px,5vw,60px);padding:24px 0;border-top:1px solid rgba(255,255,255,.08)">
+    <div style="display:flex;align-items:center;gap:12px">
+      <a href="#" aria-label="LinkedIn" style="width:36px;height:36px;border:1px solid rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.40);transition:.18s" data-hover="color:#fff;border-color:#5FA8CC;background:rgba(44,134,176,.14)"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"></path></svg></a>
+      <a href="#" aria-label="X" style="width:36px;height:36px;border:1px solid rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.40);transition:.18s" data-hover="color:#fff;border-color:#5FA8CC;background:rgba(44,134,176,.14)"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.6l5.24 6.93 6.06-6.93zm-1.29 19.5h2.04L6.48 3.24H4.29l13.32 17.41z"></path></svg></a>
+      <a href="#" aria-label="YouTube" style="width:36px;height:36px;border:1px solid rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.40);transition:.18s" data-hover="color:#fff;border-color:#5FA8CC;background:rgba(44,134,176,.14)"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M23.5 6.5a3 3 0 0 0-2.1-2.12C19.5 3.86 12 3.86 12 3.86s-7.5 0-9.4.52A3 3 0 0 0 .5 6.5 31.3 31.3 0 0 0 0 12a31.3 31.3 0 0 0 .5 5.5 3 3 0 0 0 2.1 2.12c1.9.52 9.4.52 9.4.52s7.5 0 9.4-.52a3 3 0 0 0 2.1-2.12A31.3 31.3 0 0 0 24 12a31.3 31.3 0 0 0-.5-5.5zM9.6 15.57V8.43L15.8 12l-6.2 3.57z"></path></svg></a>
+      <a href="#" aria-label="Discord" style="width:36px;height:36px;border:1px solid rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.40);transition:.18s" data-hover="color:#fff;border-color:#5FA8CC;background:rgba(44,134,176,.14)"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M20.32 4.37A19.8 19.8 0 0 0 15.44 2.9a.07.07 0 0 0-.08.04c-.21.38-.44.87-.6 1.25a18.3 18.3 0 0 0-5.52 0c-.16-.39-.4-.87-.61-1.25a.08.08 0 0 0-.08-.04A19.7 19.7 0 0 0 3.68 4.37a.07.07 0 0 0-.03.03C.53 9.05-.32 13.6.1 18.1a.08.08 0 0 0 .03.05 19.9 19.9 0 0 0 6 3.03.08.08 0 0 0 .08-.03c.46-.63.87-1.3 1.23-2a.08.08 0 0 0-.04-.11 13.1 13.1 0 0 1-1.87-.89.08.08 0 0 1-.01-.13l.37-.29a.07.07 0 0 1 .08-.01 14.2 14.2 0 0 0 12.06 0 .07.07 0 0 1 .08.01l.37.29a.08.08 0 0 1-.01.13c-.6.35-1.22.64-1.88.89a.08.08 0 0 0-.04.11c.36.7.78 1.36 1.23 2a.08.08 0 0 0 .08.03 19.8 19.8 0 0 0 6.01-3.03.08.08 0 0 0 .03-.05c.5-5.18-.84-9.69-3.55-13.7a.06.06 0 0 0-.03-.03zM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42s.95-2.42 2.16-2.42c1.21 0 2.18 1.1 2.16 2.42 0 1.34-.96 2.42-2.16 2.42zm7.96 0c-1.18 0-2.16-1.08-2.16-2.42s.95-2.42 2.16-2.42c1.21 0 2.18 1.1 2.16 2.42 0 1.34-.95 2.42-2.16 2.42z"></path></svg></a>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <span style="display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.40);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:6px 13px"><svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:none;stroke:#5FA8CC;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round"><path d="M5 21V4M5 5h11l-1.7 2.6L16 10H5"></path></svg>Made in USA</span>
+      <span style="display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.40);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:6px 13px"><svg viewBox="0 0 24 24" style="width:12px;height:12px"><path fill="#5FA8CC" d="M12 3.5l2.4 5 5.4.5-4.1 3.6 1.2 5.3L12 20.2 7.1 17.9l1.2-5.3L4.2 9l5.4-.5z"></path></svg>Veteran-Led</span>
+      <span style="width:1px;height:16px;background:rgba(255,255,255,.15)"></span>
+      <span style="display:inline-flex;align-items:center;gap:10px"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.22)">Research</span><span style="font-size:12px;color:rgba(255,255,255,.62)">Univ. of Michigan</span><span style="width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.22)"></span><span style="font-size:12px;color:rgba(255,255,255,.62)">MIT</span></span>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:20px 0 28px;border-top:1px solid rgba(255,255,255,.08);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;color:rgba(255,255,255,.40)">
+    <span>© 2025 Aether Manufacturing — Precision. Software-defined.</span>
+    <span style="display:flex;gap:22px"><a href="#" style="color:inherit;transition:color .18s" data-hover="color:#fff">Privacy</a><a href="#" style="color:inherit;transition:color .18s" data-hover="color:#fff">Terms</a></span>
+  </div>
+</footer>
+
+</div><!-- /page wrapper -->
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   AETHER HOME v2 — interactivity (plain vanilla JS, no framework)
+   Sections, in order: hover · nav · reveal · OS stack · sectors ·
+   quote carousel · storymap height sync.
+   ═══════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  /* ── hover states (replaces the old style-hover attribute) ──
+     Every [data-hover] element appends its hover style on mouseenter and
+     restores the base inline style on mouseleave. Base is captured once,
+     so ONLY use data-hover on elements whose inline style isn't mutated
+     elsewhere by JS (dynamic ones use CSS :hover instead). */
+  document.querySelectorAll('[data-hover]').forEach(function (el) {
+    var base = el.getAttribute('style') || '';
+    var hover = el.getAttribute('data-hover');
+    el.addEventListener('mouseenter', function () { el.setAttribute('style', base + ';' + hover); });
+    el.addEventListener('mouseleave', function () { el.setAttribute('style', base); });
+  });
+
+  /* ── nav: dark(over hero) ↔ light(solid) crossfade on scroll ── */
+  var navDark = document.getElementById('nav-dark');
+  var navLight = document.getElementById('nav-light');
+  function onScroll() {
+    var hero = document.getElementById('hero');
+    var h = hero ? hero.offsetHeight : 600;
+    var solid = window.scrollY > h - 96;
+    navDark.style.opacity = solid ? '0' : '1';
+    navDark.style.pointerEvents = solid ? 'none' : 'auto';
+    navLight.style.opacity = solid ? '1' : '0';
+    navLight.style.pointerEvents = solid ? 'auto' : 'none';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ── reveal on scroll (fade + rise for [data-reveal]) ── */
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (ents) {
+      ents.forEach(function (e) {
+        if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'none'; io.unobserve(e.target); }
+      });
+    }, { threshold: .12 });
+    document.querySelectorAll('[data-reveal]').forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top > window.innerHeight * .92) {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(28px)';
+        el.style.transition = 'opacity 1.1s ease, transform 1.3s cubic-bezier(.16,.68,.28,1)';
+        io.observe(el);
+      }
+    });
+  }
+
+  /* ══════════ §05 · OPERATING SYSTEM — layer list + stack + detail ══════════
+     Data drives ONLY the zoom detail panel; the list & stack are static HTML. */
+  var OS_DETAIL = {
+    0: { st: 'rendered', name: 'APG', label: 'Autonomous Process Generator',
+         shot: { img: 'assets/02-system-06.png', alt: 'APG live portal', screen: 'APG · WHITE-BOX QUOTE', source: 'aethermfg.com', state: 'LIVE PORTAL' } },
+    1: { st: 'rendered', name: 'FacOS', label: 'Factory Operating System',
+         shot: { img: 'assets/02-system-07.jpg', alt: 'FacOS — production floor', screen: 'FACOS · PRODUCTION FLOOR', source: 'Fairview, PA node', state: 'LIVE FEED' } },
+    2: { st: 'blueprint', name: 'QMS', label: 'Quality Management System', kpis: ['Open NCRs', 'CAPA', 'Audits due', 'First-pass'] },
+    3: { st: 'floor', name: 'Automation Cell', label: 'The physical envelope' },
+    4: { st: 'blueprint', name: 'Logistics', label: 'Dispatch & distribution', kpis: ['Open orders', 'In transit', 'On-time', 'Lead time'] }
+  };
+  var OS_CHIP = {
+    rendered:  { t: 'RENDERED · REAL SCREEN', c: '#19749F', bg: 'rgba(44,134,176,.1)', b: 'rgba(44,134,176,.4)' },
+    blueprint: { t: 'BLUEPRINT · SCREEN PENDING', c: 'rgba(19,36,46,.55)', bg: 'rgba(19,36,46,.04)', b: 'rgba(19,36,46,.18)' },
+    floor:     { t: 'ON THE FLOOR', c: '#3FAE72', bg: 'rgba(63,174,114,.08)', b: 'rgba(63,174,114,.35)' }
+  };
+  var osItems = [].slice.call(document.querySelectorAll('#os-list .os-item'));
+  var osSlabs = [].slice.call(document.querySelectorAll('#os-stack .os-slab'));
+  var osStack = document.getElementById('os-stack');
+  var osDetail = document.getElementById('os-detail');
+  var osOpen = 0;    // which layer's list row is expanded
+  var osZoom = -1;   // -1 = stack shown, >=0 = detail shown for that layer
+
+  function osSetOpen(i) {
+    osOpen = i;
+    osItems.forEach(function (el, idx) { el.classList.toggle('active', idx === i); });
+  }
+  function osSetTint(i) {
+    osSlabs.forEach(function (slab, idx) {
+      var tint = slab.querySelector('.os-tint');
+      if (tint) tint.style.opacity = (idx === i) ? '.5' : '0';
+    });
+  }
+  function osKpiCard(label) {
+    return '<div style="border:1px solid rgba(19,36,46,.1);border-radius:4px;padding:11px 12px;background:#fff">'
+      + '<div style="font-family:\'JetBrains Mono\',monospace;font-size:8px;letter-spacing:.12em;color:rgba(19,36,46,.45);text-transform:uppercase;margin-bottom:8px">' + label + '</div>'
+      + '<div style="height:14px;width:60%;border:1px dashed rgba(19,91,124,.4);border-radius:2px"></div></div>';
+  }
+  function osDetailHTML(i) {
+    var d = OS_DETAIL[i], chip = OS_CHIP[d.st];
+    var head = '<button id="os-back" style="position:absolute;top:12px;left:14px;z-index:6;display:flex;align-items:center;gap:7px;font-family:\'JetBrains Mono\',monospace;font-size:10px;letter-spacing:.08em;color:rgba(19,36,46,.6);background:#fff;border:1px solid rgba(19,36,46,.16);border-radius:5px;padding:6px 11px;cursor:pointer;transition:.2s" data-hover="color:#135B7C;border-color:#2C86B0">‹ Stack</button>'
+      + '<div style="position:absolute;top:12px;right:14px;z-index:6;display:flex;align-items:center;gap:7px;font-family:\'JetBrains Mono\',monospace;font-size:9px;letter-spacing:.12em;border-radius:3px;padding:5px 9px;color:' + chip.c + ';background:' + chip.bg + ';border:1px solid ' + chip.b + '"><span style="width:6px;height:6px;border-radius:50%;background:currentColor"></span>' + chip.t + '</div>';
+    var body = '';
+    if (d.st === 'rendered') {
+      var s = d.shot;
+      body = '<div style="position:relative;width:100%;max-width:860px;border:1px solid rgba(19,36,46,.16);border-radius:6px;overflow:hidden;background:#0A1A22;box-shadow:0 20px 50px rgba(19,36,46,.2)">'
+        + '<img src="' + s.img + '" alt="' + s.alt + '" style="display:block;width:100%">'
+        + '<div style="display:flex;font-family:\'JetBrains Mono\',monospace;font-size:10px;background:rgba(6,16,22,.85);border-top:1px solid rgba(255,255,255,.08)">'
+        + '<span style="padding:8px 13px;border-right:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.6);white-space:nowrap;letter-spacing:.06em"><b style="color:rgba(255,255,255,.35);font-weight:400;font-size:8px;letter-spacing:.12em;margin-right:6px">SCREEN</b>' + s.screen + '</span>'
+        + '<span style="padding:8px 13px;border-right:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.6);white-space:nowrap;letter-spacing:.06em"><b style="color:rgba(255,255,255,.35);font-weight:400;font-size:8px;letter-spacing:.12em;margin-right:6px">SOURCE</b>' + s.source + '</span>'
+        + '<span style="padding:8px 13px;color:#5FA8CC;margin-left:auto;white-space:nowrap;letter-spacing:.06em"><b style="color:rgba(255,255,255,.35);font-weight:400;font-size:8px;letter-spacing:.12em;margin-right:6px">STATE</b>' + s.state + '</span>'
+        + '</div></div>';
+    } else if (d.st === 'blueprint') {
+      var title = (d.name + ' · ' + d.label).toUpperCase();
+      var kpis = d.kpis.map(osKpiCard).join('');
+      body = '<div style="width:100%;max-width:820px">'
+        + '<div style="display:flex;align-items:center;gap:8px;border:1px solid rgba(19,36,46,.16);border-bottom:none;border-radius:6px 6px 0 0;padding:9px 13px;background:#fff"><span style="width:8px;height:8px;border:1px solid rgba(19,36,46,.35);border-radius:50%"></span><span style="font-family:\'JetBrains Mono\',monospace;font-size:10px;letter-spacing:.08em;color:rgba(19,36,46,.45);margin-left:6px">' + title + '</span></div>'
+        + '<div style="border:1px solid rgba(19,36,46,.16);border-radius:0 0 6px 6px;padding:18px;display:grid;gap:14px;background:repeating-linear-gradient(135deg,rgba(19,91,124,.02) 0 8px,#fff 8px 16px)">'
+        + '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">' + kpis + '</div>'
+        + '<div style="display:grid;grid-template-columns:1.6fr 1fr;gap:12px">'
+        + '<div style="border:1px solid rgba(19,36,46,.1);border-radius:4px;height:150px;display:flex;align-items:flex-end;gap:8px;padding:14px;background:#fff">'
+        + '<span style="flex:1;height:52px;border:1px dashed rgba(19,91,124,.45);border-bottom:none;border-radius:2px 2px 0 0"></span><span style="flex:1;height:96px;border:1px dashed rgba(19,91,124,.45);border-bottom:none;border-radius:2px 2px 0 0"></span><span style="flex:1;height:70px;border:1px dashed rgba(19,91,124,.45);border-bottom:none;border-radius:2px 2px 0 0"></span><span style="flex:1;height:118px;border:1px dashed rgba(19,91,124,.45);border-bottom:none;border-radius:2px 2px 0 0"></span><span style="flex:1;height:84px;border:1px dashed rgba(19,91,124,.45);border-bottom:none;border-radius:2px 2px 0 0"></span><span style="flex:1;height:110px;border:1px dashed rgba(19,91,124,.45);border-bottom:none;border-radius:2px 2px 0 0"></span><span style="flex:1;height:62px;border:1px dashed rgba(19,91,124,.45);border-bottom:none;border-radius:2px 2px 0 0"></span>'
+        + '</div>'
+        + '<div style="border:1px solid rgba(19,36,46,.1);border-radius:4px;padding:12px;display:grid;gap:9px;align-content:start;background:#fff"><span style="height:10px;border:1px dashed rgba(19,91,124,.4);border-radius:2px;display:block"></span><span style="height:10px;width:80%;border:1px dashed rgba(19,91,124,.4);border-radius:2px;display:block"></span><span style="height:10px;width:90%;border:1px dashed rgba(19,91,124,.4);border-radius:2px;display:block"></span><span style="height:10px;width:70%;border:1px dashed rgba(19,91,124,.4);border-radius:2px;display:block"></span></div>'
+        + '</div></div>'
+        + '<div style="margin-top:10px;font-family:\'JetBrains Mono\',monospace;font-size:10px;letter-spacing:.08em;color:rgba(19,36,46,.45);text-align:center">BLUEPRINT · SCREEN PENDING</div></div>';
+    } else { /* floor */
+      body = '<div style="width:100%;max-width:740px;text-align:center">'
+        + '<div style="position:relative;border:1px solid rgba(19,36,46,.16);border-radius:6px;overflow:hidden;background:#0C1B24;box-shadow:0 20px 50px rgba(19,36,46,.2)">'
+        + '<img src="uploads/021-AetherMFG.png" alt="Machined parts from the automation cell" style="display:block;width:100%;max-height:380px;object-fit:cover">'
+        + '<span style="position:absolute;top:10px;left:10px;width:12px;height:12px;border-top:1px solid rgba(255,255,255,.5);border-left:1px solid rgba(255,255,255,.5)"></span>'
+        + '<span style="position:absolute;bottom:10px;right:10px;width:12px;height:12px;border-bottom:1px solid rgba(255,255,255,.5);border-right:1px solid rgba(255,255,255,.5)"></span></div>'
+        + '<div style="margin-top:12px;font-family:\'JetBrains Mono\',monospace;font-size:11px;letter-spacing:.06em;color:rgba(19,36,46,.55)">The cell’s output — <b style="color:#3FAE72;font-weight:400">machined on the Erie floor</b></div></div>';
+    }
+    return head + '<div style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(48px,5vw,56px) clamp(20px,3vw,40px) clamp(28px,3vw,40px);min-height:420px">' + body + '</div>';
+  }
+  function osShowDetail(i) {
+    osZoom = i;
+    osSetOpen(i);
+    osDetail.innerHTML = osDetailHTML(i);
+    osStack.style.display = 'none';
+    osDetail.style.display = 'block';
+    var back = document.getElementById('os-back');
+    if (back) {
+      var base = back.getAttribute('style');
+      back.addEventListener('mouseenter', function () { back.setAttribute('style', base + ';color:#135B7C;border-color:#2C86B0'); });
+      back.addEventListener('mouseleave', function () { back.setAttribute('style', base); });
+      back.addEventListener('click', osBackToStack);
+    }
+  }
+  function osBackToStack() {
+    osZoom = -1;
+    osDetail.style.display = 'none';
+    osStack.style.display = 'block';
+    osSetTint(-1);
+  }
+  // wire list rows
+  osItems.forEach(function (el, i) {
+    el.querySelector('.os-itembtn').addEventListener('mouseenter', function () { if (osZoom < 0) { osSetOpen(i); osSetTint(i); } });
+    el.querySelector('.os-itembtn').addEventListener('click', function () { osShowDetail(i); });
+  });
+  // wire stack slabs
+  osSlabs.forEach(function (el, i) {
+    el.addEventListener('mouseenter', function () { if (osZoom < 0) { osSetOpen(i); osSetTint(i); } });
+    el.addEventListener('click', function () { osShowDetail(i); });
+  });
+  osStack.addEventListener('mouseleave', function () { osSetTint(-1); });
+
+  /* ══════════ §06 · IN PRODUCTION — sector swap ══════════ */
+  var SECTORS = {
+    medical: { tag: 'Medical Devices', heading: 'Advanced Surgical Systems', cats: 'MEDICAL SURGERY  |  RADIOLOGY  |  ORTHOPEDICS',
+      parts: 'assets/06-inprod-parts.png', partsAlt: 'Titanium surgical plates in production with materials, dimensions, and tolerances',
+      robot: 'assets/06-inprod-robot.png', robotAlt: 'Robotic surgical system on the operating floor' },
+    robotics: { tag: 'Robotic Parts', heading: 'Humanoid Robots', cats: 'PRECISION JOINTS  |  ACTUATORS  |  STRUCTURAL FRAMES',
+      parts: 'assets/06-robotics-parts.png', partsAlt: 'Aluminum 7075 robotic parts in production with materials, dimensions, and tolerances',
+      robot: 'assets/06-robotics-robot.png', robotAlt: 'Humanoid robot built from Aether precision parts' }
+  };
+  var secPills = [].slice.call(document.querySelectorAll('.sec-pill'));
+  var secLeft = document.getElementById('sec-left');
+  var secTag = document.getElementById('sec-tag'), secHeading = document.getElementById('sec-heading'), secCats = document.getElementById('sec-cats');
+  var secParts = document.getElementById('sec-parts'), secRobot = document.getElementById('sec-robot');
+  var curSector = 'medical', secSwapping = false;
+  function renderSector() {
+    var s = SECTORS[curSector];
+    secTag.textContent = s.tag; secHeading.textContent = s.heading; secCats.textContent = s.cats;
+    secParts.src = s.parts; secParts.alt = s.partsAlt; secRobot.src = s.robot; secRobot.alt = s.robotAlt;
+    secPills.forEach(function (p) {
+      var on = p.getAttribute('data-sector') === curSector;
+      p.style.background = on ? '#135B7C' : '#fff';
+      p.style.borderColor = on ? '#135B7C' : 'rgba(19,36,46,.14)';
+      p.style.color = on ? '#fff' : 'rgba(19,36,46,.6)';
+    });
+  }
+  secPills.forEach(function (p) {
+    p.addEventListener('click', function () {
+      var key = p.getAttribute('data-sector');
+      if (!key || !SECTORS[key] || key === curSector || secSwapping) return;
+      secSwapping = true;
+      secLeft.style.opacity = '0'; secLeft.style.transform = 'translateY(12px)'; secRobot.style.opacity = '0';
+      setTimeout(function () {
+        curSector = key; renderSector();
+        secLeft.style.opacity = '1'; secLeft.style.transform = 'translateY(0)'; secRobot.style.opacity = '1';
+        secSwapping = false;
+      }, 300);
+    });
+  });
+
+  /* ══════════ §07 · QUOTE FLOW — 2-stage carousel (auto-cycle + dots) ══════════ */
+  var QST = [
+    { tag: '01 · Upload & quote', head: 'Drag in a STEP file. Get a price.',
+      body: 'APG reads the geometry — features, tolerances, material — and returns a transparent, process-based quote in minutes. No CAM programmer, no account.',
+      bullets: ['STEP file in', 'Process · cost · runtime out', 'Instant — no back-and-forth'] },
+    { tag: '02 · Confirm & track', head: 'Confirm, then watch it come to you.',
+      body: 'Once you approve the quote, the same portal tracks the order live — carrier, route, and ETA — all the way to your dock, with support one message away.',
+      bullets: ['Live route + ETA', 'Shipment events', 'Support in-thread'] }
+  ];
+  var qText = document.getElementById('q-text');
+  var qTag = document.getElementById('q-tag'), qHead = document.getElementById('q-head'), qBody = document.getElementById('q-body'), qBullets = document.getElementById('q-bullets');
+  var qScreen0 = document.getElementById('q-screen0'), qScreen1 = document.getElementById('q-screen1');
+  var qDotEls = [].slice.call(document.querySelectorAll('.q-dot'));
+  var qStage = 0, qTimer;
+  function renderQ() {
+    var q = QST[qStage];
+    qTag.textContent = q.tag; qHead.textContent = q.head; qBody.textContent = q.body;
+    qBullets.innerHTML = q.bullets.map(function (b) {
+      return '<div style="position:relative;padding-left:20px;font-family:\'JetBrains Mono\',monospace;font-size:11px;color:rgba(19,36,46,.6);line-height:1.4"><span style="position:absolute;left:0;top:4px;width:6px;height:6px;border-radius:50%;background:#135B7C"></span>' + b + '</div>';
+    }).join('');
+    qDotEls.forEach(function (d) { d.style.background = (+d.getAttribute('data-stage') === qStage) ? '#135B7C' : 'rgba(19,36,46,.2)'; });
+    qScreen0.style.opacity = qStage === 0 ? '1' : '0'; qScreen0.style.pointerEvents = qStage === 0 ? 'auto' : 'none';
+    qScreen1.style.opacity = qStage === 1 ? '1' : '0'; qScreen1.style.pointerEvents = qStage === 1 ? 'auto' : 'none';
+  }
+  function qShow(v) { qText.style.opacity = v ? '1' : '0'; qText.style.transform = v ? 'translateY(0px)' : 'translateY(-14px)'; }
+  function qCycle() {
+    clearTimeout(qTimer);
+    qTimer = setTimeout(function () {
+      qShow(false);
+      setTimeout(function () { qStage = (qStage + 1) % 2; renderQ(); qShow(true); qCycle(); }, 720);
+    }, 4200);
+  }
+  function qGo(i) {
+    clearTimeout(qTimer);
+    if (i === qStage) return;
+    qShow(false);
+    setTimeout(function () { qStage = i; renderQ(); qShow(true); qCycle(); }, 720);
+  }
+  qDotEls.forEach(function (d) { d.addEventListener('click', function () { qGo(+d.getAttribute('data-stage')); }); });
+  renderQ(); qShow(true); qCycle();
+
+  /* ══════════ §08 · STORY MAP — receive iframe height ══════════ */
+  window.addEventListener('message', function (e) {
+    if (e && e.data && e.data.aetherId === 's5' && e.data.aetherH) {
+      var f = document.querySelector('iframe[data-storymap]');
+      if (f) f.style.height = e.data.aetherH + 'px';
+    }
+  });
+})();
+</script>
+</body>
+</html>

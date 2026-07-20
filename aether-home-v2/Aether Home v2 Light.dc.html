@@ -584,132 +584,116 @@ img{max-width:100%}
 </section>
 
 <!-- ══ 08 · STORY MAP (original handoff — embedded verbatim) ══ -->
-<section data-screen-label="08 Story Map" style="background:#EFF2F3">
+<section data-screen-label="08 Story Map" style="background:#EFF2F3;padding-bottom:60px">
   <iframe src="storymap.html" title="Story map — from global supply to a US-first blueprint" scrolling="no" style="display:block;width:100%;border:0;height:840px" data-storymap="1"></iframe>
 </section>
 
-<!-- ══ 09 · TESTIMONIALS (white band + bw photo strip) ══ -->
-<section data-screen-label="09 Testimonials" style="background:#EFF2F3;padding:clamp(56px,9vw,80px) 0">
-  <div style="padding:0 clamp(24px,8vw,120px);margin-bottom:clamp(32px,5vw,48px);display:flex;flex-direction:column;gap:16px">
-    <div style="font-weight:700;font-size:11px;letter-spacing:1.65px;text-transform:uppercase;color:rgba(19,36,46,.55)"><span style="color:#2C86B0;font-family:'JetBrains Mono',monospace">06</span>&nbsp;&nbsp;Testimonials</div>
-    <h2 style="margin:0;font-weight:300;font-size:clamp(28px,3.2vw,34px);line-height:1.25;letter-spacing:-.01em;color:#13242E">Trusted by Engineering Teams</h2>
+<!-- ══ 09 · TESTIMONIALS (deep gradient → leads into CTA; ported 1:1 from Figma 6325:21079) ══ -->
+<section data-screen-label="09 Testimonials" style="background:linear-gradient(180deg,#102531 0%,#0C1B24 100%);padding:clamp(56px,9vw,80px) 0">
+  <div style="padding:0 clamp(24px,8vw,120px);margin-bottom:clamp(32px,5vw,48px);display:flex;flex-direction:column;gap:13px">
+    <div style="font-weight:700;font-size:11px;letter-spacing:1.65px;text-transform:uppercase;color:rgba(255,255,255,.6)"><span style="color:#5FA8CC;font-family:'JetBrains Mono',monospace">06</span>&nbsp;&nbsp;Testimonials</div>
+    <h2 style="margin:0;font-weight:300;font-size:clamp(28px,3.2vw,34px);line-height:1.25;letter-spacing:-.01em;color:#fff">Trusted by Engineering Teams</h2>
   </div>
   <div style="width:100%;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)">
     <div style="display:flex;align-items:stretch;width:max-content;padding:6px 0;animation:mq 55s linear infinite">
       <sc-for list="{{quotesLoop}}" as="q" hint-placeholder-count="8">
-        <div style="flex-shrink:0;width:434px;min-height:243px;margin-right:40px;background:#fff;border:1px dashed rgba(19,91,124,.3);border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:16px">
+        <div style="box-sizing:border-box;flex-shrink:0;width:434px;min-height:243px;margin-right:40px;background:rgba(19,91,124,.1);border:1px dashed rgba(95,168,204,.14);border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:9px">
           <div style="display:flex;gap:16px;align-items:flex-start">
             <span style="width:54px;height:54px;flex-shrink:0;border-radius:50%;overflow:hidden;display:block"><img src="assets/08-avatar.svg" alt="" style="width:100%;height:100%;display:block"></span>
             <div style="display:flex;flex-direction:column;gap:2px">
-              <div style="font-weight:600;font-size:16px;line-height:20px;color:#13242E">{{q.name}}</div>
-              <div style="font-weight:400;font-size:12px;line-height:20px;color:rgba(19,36,46,.55)">{{q.role}}</div>
+              <div style="font-weight:600;font-size:16px;line-height:20px;color:#fff">{{q.name}}</div>
+              <div style="font-weight:400;font-size:12px;line-height:20px;color:#B7B7B8">{{q.role}}</div>
             </div>
           </div>
-          <p style="margin:0;font-weight:500;font-size:13px;line-height:22px;color:rgba(19,36,46,.65)">“{{q.quote}}”</p>
+          <p style="margin:0;font-weight:500;font-size:13px;line-height:22px;letter-spacing:.065px;color:#B7B7B8">“{{q.quote}}”</p>
         </div>
       </sc-for>
     </div>
   </div>
-  <div style="margin-top:clamp(40px,6vw,64px);position:relative;height:clamp(180px,26vw,320px);overflow:hidden">
-    <img src="uploads/009-AetherMFG-bw.jpg" alt="Tool holders on the Erie production floor" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1)">
-    <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,20,27,.55),transparent 45%,rgba(8,20,27,.55))"></div>
-    <span style="position:absolute;bottom:14px;left:clamp(24px,8vw,120px);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;color:rgba(255,255,255,.7)">FIG 06 · TOOL LIBRARY — ERIE, PA</span>
-  </div>
 </section>
 
-<!-- ══ 10 · SEGMENTED CTA (paper — three doors) ══ -->
-<section id="cta" data-screen-label="10 CTA" style="background:#EFF2F3;padding:clamp(64px,8vw,96px) clamp(24px,8vw,120px)">
-  <div style="display:flex;flex-direction:column;gap:18px;max-width:60ch;margin-bottom:clamp(32px,4vw,48px)">
-    <div style="display:flex;align-items:center;gap:12px">
-      <span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11px;letter-spacing:2.2px;color:#2C86B0;line-height:1">07</span>
-      <span style="font-weight:700;font-size:11px;letter-spacing:2.2px;text-transform:uppercase;color:#135B7C;line-height:1">GET STARTED</span>
-      <span style="flex:1;height:1px;background:rgba(19,36,46,.1)"></span>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;color:rgba(19,36,46,.35)">DWG AE-HOME · SHT 07</span>
+<!-- ══ 09b · VIDEO BAND (full-bleed banner, flush between testimonials & CTA) ══ -->
+<section data-screen-label="09b Video" style="margin:0;padding:0;line-height:0;background:#0C1B24">
+  <img src="assets/factory-video-ss02.png" alt="Modular Factories scaled globally — Offshore Costs, Onshore Speeds" style="display:block;width:100%;height:auto">
+</section>
+
+<!-- ══ 10 · SEGMENTED CTA (deep — three doors, matched 1:1 to aether-home-handoff/09-cta) ══ -->
+<section id="cta" data-screen-label="10 CTA" style="background:#08141B;color:#fff;padding:96px clamp(24px,11vw,160px)">
+  <div style="display:flex;flex-direction:column;gap:16px;max-width:60ch;margin-bottom:36px">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.62);display:inline-flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <span style="width:32px;height:1px;background:currentColor;opacity:.4"></span>07 — SEGMENTED CTA<span style="color:#5FA8CC;letter-spacing:.28em">Three doors, one house</span>
     </div>
-    <h2 style="margin:0;font-weight:300;font-size:clamp(28px,3.2vw,34px);line-height:1.25;letter-spacing:-.01em;color:#13242E">Three doors, <b style="font-weight:600">one house.</b></h2>
-    <p style="margin:0;font-size:clamp(14px,1.1vw,16px);line-height:1.6;color:rgba(19,36,46,.6);max-width:56ch">However you arrive, you land on the same operating system. Pick the door that fits — and see our process work on your part.</p>
+    <h2 style="color:#fff;font-weight:300;font-size:clamp(28px,3.2vw,34px);line-height:1.25;letter-spacing:-.01em;text-wrap:balance;margin:0">See our process work on your part.</h2>
   </div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:20px">
-    <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="position:relative;overflow:hidden;min-height:236px;padding:26px 26px 24px;border:1px solid #135B7C;border-radius:12px;background:#135B7C;display:flex;flex-direction:column;gap:12px;transition:transform .2s,box-shadow .2s;color:inherit;box-shadow:0 20px 48px rgba(19,91,124,.22)" style-hover="transform:translateY(-4px);box-shadow:0 26px 56px rgba(19,91,124,.3)">
-      <span style="position:absolute;bottom:12px;right:12px;width:13px;height:13px;border-bottom:1px solid rgba(255,255,255,.4);border-right:1px solid rgba(255,255,255,.4);pointer-events:none"></span>
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
-        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#BFE3F4">I need parts</span>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;color:rgba(255,255,255,.5)">DOOR 01</span>
-      </div>
-      <h3 style="margin:4px 0 0;color:#fff;font-weight:600;font-size:19px;line-height:1.25">Get an instant quote</h3>
-      <p style="margin:0;font-size:13px;line-height:1.55;color:rgba(255,255,255,.85)">Upload a STEP file and receive a transparent, process-based quote in minutes — engineering review included.</p>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+    <div style="padding:26px 24px;border:1px solid rgba(255,255,255,.22);border-radius:8px;background:rgba(23,50,67,.35);display:flex;flex-direction:column;gap:14px;transition:border-color .18s ease, background .18s ease" style-hover="border-color:#5FA8CC;background:rgba(23,50,67,.55)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;color:#5FA8CC;text-transform:uppercase">I need parts</div>
+      <h3 style="color:#fff;font-weight:500;font-size:18px;line-height:1.25;margin:0">Get an instant quote</h3>
+      <p style="margin:0;font-size:13px;line-height:1.55;color:rgba(255,255,255,.62)">Upload a STEP file and receive a transparent, process-based quote in minutes — engineering review included.</p>
       <div style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:#fff;text-transform:uppercase;padding-top:6px">Open the portal →</div>
-    </a>
-    <a href="#os" style="position:relative;overflow:hidden;min-height:236px;padding:26px 26px 24px;border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#fff;display:flex;flex-direction:column;gap:12px;transition:transform .2s,border-color .2s,box-shadow .2s;color:inherit;box-shadow:0 18px 48px rgba(19,36,46,.08)" style-hover="transform:translateY(-4px);border-color:rgba(19,91,124,.45);box-shadow:0 24px 54px rgba(19,36,46,.12)">
-      <span style="position:absolute;bottom:12px;right:12px;width:13px;height:13px;border-bottom:1px solid rgba(19,91,124,.35);border-right:1px solid rgba(19,91,124,.35);pointer-events:none"></span>
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
-        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#135B7C">I'm an engineer</span>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;color:rgba(19,36,46,.35)">DOOR 02</span>
-      </div>
-      <h3 style="margin:4px 0 0;color:#13242E;font-weight:600;font-size:19px;line-height:1.25">Explore the technology</h3>
-      <p style="margin:0;font-size:13px;line-height:1.55;color:rgba(19,36,46,.6)">See the full operating system — APG, FacOS, QMS, the automation cell, and how the stack replicates.</p>
-      <div style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:#135B7C;text-transform:uppercase;padding-top:6px">See the technology →</div>
-    </a>
-    <a href="#cta" style="position:relative;overflow:hidden;min-height:236px;padding:26px 26px 24px;border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#fff;display:flex;flex-direction:column;gap:12px;transition:transform .2s,border-color .2s,box-shadow .2s;color:inherit;box-shadow:0 18px 48px rgba(19,36,46,.08)" style-hover="transform:translateY(-4px);border-color:rgba(19,91,124,.45);box-shadow:0 24px 54px rgba(19,36,46,.12)">
-      <span style="position:absolute;bottom:12px;right:12px;width:13px;height:13px;border-bottom:1px solid rgba(19,91,124,.35);border-right:1px solid rgba(19,91,124,.35);pointer-events:none"></span>
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
-        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#135B7C">Investor / partner</span>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;color:rgba(19,36,46,.35)">DOOR 03</span>
-      </div>
-      <h3 style="margin:4px 0 0;color:#13242E;font-weight:600;font-size:19px;line-height:1.25">See the blueprint</h3>
-      <p style="margin:0;font-size:13px;line-height:1.55;color:rgba(19,36,46,.6)">How one factory blueprint scales into a global manufacturing network deployed by configuration.</p>
-      <div style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:#135B7C;text-transform:uppercase;padding-top:6px">Start a conversation →</div>
-    </a>
+    </div>
+    <div style="padding:26px 24px;border:1px solid rgba(255,255,255,.22);border-radius:8px;background:rgba(23,50,67,.35);display:flex;flex-direction:column;gap:14px;transition:border-color .18s ease, background .18s ease" style-hover="border-color:#5FA8CC;background:rgba(23,50,67,.55)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;color:#5FA8CC;text-transform:uppercase">I'm an engineer</div>
+      <h3 style="color:#fff;font-weight:500;font-size:18px;line-height:1.25;margin:0">Explore the technology</h3>
+      <p style="margin:0;font-size:13px;line-height:1.55;color:rgba(255,255,255,.62)">See the full operating system — APG, FacOS, QMS, the automation cell, and how the stack replicates.</p>
+      <div style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:#fff;text-transform:uppercase;padding-top:6px">See the technology →</div>
+    </div>
+    <div style="padding:26px 24px;border:1px solid rgba(255,255,255,.22);border-radius:8px;background:rgba(23,50,67,.35);display:flex;flex-direction:column;gap:14px;transition:border-color .18s ease, background .18s ease" style-hover="border-color:#5FA8CC;background:rgba(23,50,67,.55)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;color:#5FA8CC;text-transform:uppercase">I'm an investor / partner</div>
+      <h3 style="color:#fff;font-weight:500;font-size:18px;line-height:1.25;margin:0">See the blueprint</h3>
+      <p style="margin:0;font-size:13px;line-height:1.55;color:rgba(255,255,255,.62)">How one factory blueprint scales into a global manufacturing network deployed by configuration.</p>
+      <div style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:#fff;text-transform:uppercase;padding-top:6px">Start a conversation →</div>
+    </div>
   </div>
 </section>
 
-<!-- ══ 11 · FOOTER (deep) ══ -->
-<footer data-screen-label="11 Footer" style="background:#E7EFF2;color:rgba(19,36,46,.65);border-top:1px solid rgba(19,36,46,.08);padding:clamp(52px,7vw,80px) clamp(24px,8vw,120px) 0">
+<!-- ══ 11 · FOOTER (deep — matched 1:1 to aether-home-handoff/10-footer) ══ -->
+<footer data-screen-label="11 Footer" style="background:#08141B;color:rgba(255,255,255,.62);border-top:1px solid rgba(255,255,255,.08);padding:clamp(52px,7vw,80px) clamp(24px,11vw,160px) 0">
   <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:clamp(28px,4vw,56px)">
     <div>
-      <img src="uploads/Primary.png" alt="Aether Manufacturing" style="height:16px;display:block">
-      <p style="margin:20px 0 0;font-size:13.5px;line-height:1.65;color:rgba(19,36,46,.65);max-width:42ch">Defining the category of AI CNC machining. Transparent quoting, autonomous production, and predictable quality for high-mix, low-volume manufacturing.</p>
-      <p style="margin:18px 0 0;font-size:11.5px;line-height:1.7;color:rgba(19,36,46,.5);max-width:56ch">Aether is an equal opportunity employer committed to diversity and inclusion in the workplace. We prohibit discrimination and harassment of any kind based on race, color, sex, religion, sexual orientation, national origin, disability, genetic information, pregnancy, or any other protected characteristic as outlined by federal, state, or local laws.</p>
-      <div style="margin-top:22px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em;color:rgba(19,36,46,.5)">HQ · 19 Morris Ave, Building 128 · Brooklyn, NY 11205, USA</div>
+      <div style="font-size:20px;letter-spacing:.02em;color:#fff"><b style="font-weight:700">Aether</b> <span style="color:rgba(255,255,255,.40);font-weight:400">Manufacturing</span></div>
+      <p style="margin:18px 0 0;font-size:13.5px;line-height:1.65;color:rgba(255,255,255,.62);max-width:42ch">Defining the category of AI CNC machining. Transparent quoting, autonomous production, and predictable quality for high-mix, low-volume manufacturing.</p>
+      <p style="margin:18px 0 0;font-size:11.5px;line-height:1.7;color:rgba(255,255,255,.40);max-width:56ch">Aether is an equal opportunity employer committed to diversity and inclusion in the workplace. We prohibit discrimination and harassment of any kind based on race, color, sex, religion, sexual orientation, national origin, disability, genetic information, pregnancy, or any other protected characteristic as outlined by federal, state, or local laws.</p>
+      <div style="margin-top:22px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em;color:rgba(255,255,255,.40)">HQ · 19 Morris Ave, Building 128 · Brooklyn, NY 11205, USA</div>
     </div>
     <nav style="display:flex;flex-direction:column">
-      <h4 style="margin:0 0 16px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#13242E">Services</h4>
-      <a href="#quote" style="font-size:13.5px;line-height:1.4;color:rgba(19,36,46,.65);padding:7px 0;transition:color .18s" style-hover="color:#135B7C">AI CNC Milling</a>
-      <a href="#quote" style="font-size:13.5px;line-height:1.4;color:rgba(19,36,46,.65);padding:7px 0;transition:color .18s" style-hover="color:#135B7C">AI CNC Turning</a>
-      <a href="#quote" style="font-size:13.5px;line-height:1.4;color:rgba(19,36,46,.65);padding:7px 0;transition:color .18s" style-hover="color:#135B7C">AI EDM</a>
-      <a href="#quote" style="font-size:13.5px;line-height:1.4;color:rgba(19,36,46,.65);padding:7px 0;transition:color .18s" style-hover="color:#135B7C">AI Metal 3D Printing</a>
+      <h4 style="margin:0 0 16px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#fff">Services</h4>
+      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" style-hover="color:#5FA8CC">AI CNC Milling</a>
+      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" style-hover="color:#5FA8CC">AI CNC Turning</a>
+      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" style-hover="color:#5FA8CC">AI EDM</a>
+      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" style-hover="color:#5FA8CC">AI Metal 3D Printing</a>
     </nav>
     <nav style="display:flex;flex-direction:column">
-      <h4 style="margin:0 0 16px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#13242E">Platform</h4>
-      <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="font-size:13.5px;line-height:1.4;color:rgba(19,36,46,.65);padding:7px 0;transition:color .18s" style-hover="color:#135B7C">AI White-Box Portal</a>
-      <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="font-size:13.5px;line-height:1.4;color:rgba(19,36,46,.65);padding:7px 0;transition:color .18s" style-hover="color:#135B7C">Instant Quoting</a>
-      <a href="#quote" style="font-size:13.5px;line-height:1.4;color:rgba(19,36,46,.65);padding:7px 0;transition:color .18s" style-hover="color:#135B7C">DFM Feedback</a>
-      <a href="#quote" style="font-size:13.5px;line-height:1.4;color:rgba(19,36,46,.65);padding:7px 0;transition:color .18s" style-hover="color:#135B7C">Quality Assurance</a>
+      <h4 style="margin:0 0 16px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#fff">Platform</h4>
+      <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" style-hover="color:#5FA8CC">AI White-Box Portal</a>
+      <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" style-hover="color:#5FA8CC">Instant Quoting</a>
+      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" style-hover="color:#5FA8CC">DFM Feedback</a>
+      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" style-hover="color:#5FA8CC">Quality Assurance</a>
     </nav>
     <nav style="display:flex;flex-direction:column">
-      <h4 style="margin:0 0 16px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#13242E">Company</h4>
-      <a href="#hero" style="font-size:13.5px;line-height:1.4;color:rgba(19,36,46,.65);padding:7px 0;transition:color .18s" style-hover="color:#135B7C">About Aether</a>
-      <a href="#hero" style="font-size:13.5px;line-height:1.4;color:rgba(19,36,46,.65);padding:7px 0;transition:color .18s" style-hover="color:#135B7C">Case Studies</a>
-      <a href="#cta" style="font-size:13.5px;line-height:1.4;color:rgba(19,36,46,.65);padding:7px 0;transition:color .18s" style-hover="color:#135B7C">Contact</a>
+      <h4 style="margin:0 0 16px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#fff">Company</h4>
+      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" style-hover="color:#5FA8CC">About Aether</a>
+      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" style-hover="color:#5FA8CC">Case Studies</a>
+      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" style-hover="color:#5FA8CC">Contact</a>
     </nav>
   </div>
-  <div style="display:flex;align-items:center;justify-content:space-between;gap:24px 32px;flex-wrap:wrap;margin-top:clamp(40px,5vw,60px);padding:24px 0;border-top:1px solid rgba(19,36,46,.08)">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:24px 32px;flex-wrap:wrap;margin-top:clamp(40px,5vw,60px);padding:24px 0;border-top:1px solid rgba(255,255,255,.08)">
     <div style="display:flex;align-items:center;gap:12px">
-      <a href="#hero" aria-label="LinkedIn" style="width:36px;height:36px;border:1px solid rgba(19,36,46,.14);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(19,36,46,.5);transition:.18s" style-hover="color:#13242E;border-color:#135B7C;background:rgba(44,134,176,.14)"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"></path></svg></a>
-      <a href="#hero" aria-label="X" style="width:36px;height:36px;border:1px solid rgba(19,36,46,.14);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(19,36,46,.5);transition:.18s" style-hover="color:#13242E;border-color:#135B7C;background:rgba(44,134,176,.14)"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.6l5.24 6.93 6.06-6.93zm-1.29 19.5h2.04L6.48 3.24H4.29l13.32 17.41z"></path></svg></a>
-      <a href="#hero" aria-label="YouTube" style="width:36px;height:36px;border:1px solid rgba(19,36,46,.14);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(19,36,46,.5);transition:.18s" style-hover="color:#13242E;border-color:#135B7C;background:rgba(44,134,176,.14)"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M23.5 6.5a3 3 0 0 0-2.1-2.12C19.5 3.86 12 3.86 12 3.86s-7.5 0-9.4.52A3 3 0 0 0 .5 6.5 31.3 31.3 0 0 0 0 12a31.3 31.3 0 0 0 .5 5.5 3 3 0 0 0 2.1 2.12c1.9.52 9.4.52 9.4.52s7.5 0 9.4-.52a3 3 0 0 0 2.1-2.12A31.3 31.3 0 0 0 24 12a31.3 31.3 0 0 0-.5-5.5zM9.6 15.57V8.43L15.8 12l-6.2 3.57z"></path></svg></a>
-      <a href="#hero" aria-label="Discord" style="width:36px;height:36px;border:1px solid rgba(19,36,46,.14);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(19,36,46,.5);transition:.18s" style-hover="color:#13242E;border-color:#135B7C;background:rgba(44,134,176,.14)"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M20.32 4.37A19.8 19.8 0 0 0 15.44 2.9a.07.07 0 0 0-.08.04c-.21.38-.44.87-.6 1.25a18.3 18.3 0 0 0-5.52 0c-.16-.39-.4-.87-.61-1.25a.08.08 0 0 0-.08-.04A19.7 19.7 0 0 0 3.68 4.37a.07.07 0 0 0-.03.03C.53 9.05-.32 13.6.1 18.1a.08.08 0 0 0 .03.05 19.9 19.9 0 0 0 6 3.03.08.08 0 0 0 .08-.03c.46-.63.87-1.3 1.23-2a.08.08 0 0 0-.04-.11 13.1 13.1 0 0 1-1.87-.89.08.08 0 0 1-.01-.13l.37-.29a.07.07 0 0 1 .08-.01 14.2 14.2 0 0 0 12.06 0 .07.07 0 0 1 .08.01l.37.29a.08.08 0 0 1-.01.13c-.6.35-1.22.64-1.88.89a.08.08 0 0 0-.04.11c.36.7.78 1.36 1.23 2a.08.08 0 0 0 .08.03 19.8 19.8 0 0 0 6.01-3.03.08.08 0 0 0 .03-.05c.5-5.18-.84-9.69-3.55-13.7a.06.06 0 0 0-.03-.03zM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42s.95-2.42 2.16-2.42c1.21 0 2.18 1.1 2.16 2.42 0 1.34-.96 2.42-2.16 2.42zm7.96 0c-1.18 0-2.16-1.08-2.16-2.42s.95-2.42 2.16-2.42c1.21 0 2.18 1.1 2.16 2.42 0 1.34-.95 2.42-2.16 2.42z"></path></svg></a>
+      <a href="#" aria-label="LinkedIn" style="width:36px;height:36px;border:1px solid rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.40);transition:.18s" style-hover="color:#fff;border-color:#5FA8CC;background:rgba(44,134,176,.14)"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"></path></svg></a>
+      <a href="#" aria-label="X" style="width:36px;height:36px;border:1px solid rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.40);transition:.18s" style-hover="color:#fff;border-color:#5FA8CC;background:rgba(44,134,176,.14)"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.6l5.24 6.93 6.06-6.93zm-1.29 19.5h2.04L6.48 3.24H4.29l13.32 17.41z"></path></svg></a>
+      <a href="#" aria-label="YouTube" style="width:36px;height:36px;border:1px solid rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.40);transition:.18s" style-hover="color:#fff;border-color:#5FA8CC;background:rgba(44,134,176,.14)"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M23.5 6.5a3 3 0 0 0-2.1-2.12C19.5 3.86 12 3.86 12 3.86s-7.5 0-9.4.52A3 3 0 0 0 .5 6.5 31.3 31.3 0 0 0 0 12a31.3 31.3 0 0 0 .5 5.5 3 3 0 0 0 2.1 2.12c1.9.52 9.4.52 9.4.52s7.5 0 9.4-.52a3 3 0 0 0 2.1-2.12A31.3 31.3 0 0 0 24 12a31.3 31.3 0 0 0-.5-5.5zM9.6 15.57V8.43L15.8 12l-6.2 3.57z"></path></svg></a>
+      <a href="#" aria-label="Discord" style="width:36px;height:36px;border:1px solid rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.40);transition:.18s" style-hover="color:#fff;border-color:#5FA8CC;background:rgba(44,134,176,.14)"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M20.32 4.37A19.8 19.8 0 0 0 15.44 2.9a.07.07 0 0 0-.08.04c-.21.38-.44.87-.6 1.25a18.3 18.3 0 0 0-5.52 0c-.16-.39-.4-.87-.61-1.25a.08.08 0 0 0-.08-.04A19.7 19.7 0 0 0 3.68 4.37a.07.07 0 0 0-.03.03C.53 9.05-.32 13.6.1 18.1a.08.08 0 0 0 .03.05 19.9 19.9 0 0 0 6 3.03.08.08 0 0 0 .08-.03c.46-.63.87-1.3 1.23-2a.08.08 0 0 0-.04-.11 13.1 13.1 0 0 1-1.87-.89.08.08 0 0 1-.01-.13l.37-.29a.07.07 0 0 1 .08-.01 14.2 14.2 0 0 0 12.06 0 .07.07 0 0 1 .08.01l.37.29a.08.08 0 0 1-.01.13c-.6.35-1.22.64-1.88.89a.08.08 0 0 0-.04.11c.36.7.78 1.36 1.23 2a.08.08 0 0 0 .08.03 19.8 19.8 0 0 0 6.01-3.03.08.08 0 0 0 .03-.05c.5-5.18-.84-9.69-3.55-13.7a.06.06 0 0 0-.03-.03zM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42s.95-2.42 2.16-2.42c1.21 0 2.18 1.1 2.16 2.42 0 1.34-.96 2.42-2.16 2.42zm7.96 0c-1.18 0-2.16-1.08-2.16-2.42s.95-2.42 2.16-2.42c1.21 0 2.18 1.1 2.16 2.42 0 1.34-.95 2.42-2.16 2.42z"></path></svg></a>
     </div>
     <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-      <span style="display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(19,36,46,.5);border:1px solid rgba(19,36,46,.14);border-radius:20px;padding:6px 13px"><svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:none;stroke:#135B7C;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round"><path d="M5 21V4M5 5h11l-1.7 2.6L16 10H5"></path></svg>Made in USA</span>
-      <span style="display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(19,36,46,.5);border:1px solid rgba(19,36,46,.14);border-radius:20px;padding:6px 13px"><svg viewBox="0 0 24 24" style="width:12px;height:12px"><path fill="#135B7C" d="M12 3.5l2.4 5 5.4.5-4.1 3.6 1.2 5.3L12 20.2 7.1 17.9l1.2-5.3L4.2 9l5.4-.5z"></path></svg>Veteran-Led</span>
-      <span style="width:1px;height:16px;background:rgba(19,36,46,.14)"></span>
-      <span style="display:inline-flex;align-items:center;gap:10px"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(19,36,46,.38)">Research</span><span style="font-size:12px;color:rgba(19,36,46,.65)">Univ. of Michigan</span><span style="width:3px;height:3px;border-radius:50%;background:rgba(19,36,46,.38)"></span><span style="font-size:12px;color:rgba(19,36,46,.65)">MIT</span></span>
+      <span style="display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.40);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:6px 13px"><svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:none;stroke:#5FA8CC;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round"><path d="M5 21V4M5 5h11l-1.7 2.6L16 10H5"></path></svg>Made in USA</span>
+      <span style="display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.40);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:6px 13px"><svg viewBox="0 0 24 24" style="width:12px;height:12px"><path fill="#5FA8CC" d="M12 3.5l2.4 5 5.4.5-4.1 3.6 1.2 5.3L12 20.2 7.1 17.9l1.2-5.3L4.2 9l5.4-.5z"></path></svg>Veteran-Led</span>
+      <span style="width:1px;height:16px;background:rgba(255,255,255,.15)"></span>
+      <span style="display:inline-flex;align-items:center;gap:10px"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.22)">Research</span><span style="font-size:12px;color:rgba(255,255,255,.62)">Univ. of Michigan</span><span style="width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.22)"></span><span style="font-size:12px;color:rgba(255,255,255,.62)">MIT</span></span>
     </div>
   </div>
-  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:20px 0 28px;border-top:1px solid rgba(19,36,46,.08);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;color:rgba(19,36,46,.5)">
-    <span>© 2026 Aether Manufacturing — Precision. Software-defined.</span>
-    <span style="display:flex;gap:22px"><a href="#hero" style="color:inherit;transition:color .18s" style-hover="color:#13242E">Privacy</a><a href="#hero" style="color:inherit;transition:color .18s" style-hover="color:#13242E">Terms</a></span>
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:20px 0 28px;border-top:1px solid rgba(255,255,255,.08);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;color:rgba(255,255,255,.40)">
+    <span>© 2025 Aether Manufacturing — Precision. Software-defined.</span>
+    <span style="display:flex;gap:22px"><a href="#" style="color:inherit;transition:color .18s" style-hover="color:#fff">Privacy</a><a href="#" style="color:inherit;transition:color .18s" style-hover="color:#fff">Terms</a></span>
   </div>
 </footer>
 
