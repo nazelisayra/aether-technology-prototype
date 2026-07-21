@@ -73,12 +73,12 @@ img{max-width:100%}
 <!-- ══════════════════════ NAV (dark ↔ light crossfade on scroll) ══════════════════════ -->
 <div style="position:fixed;top:0;left:0;right:0;z-index:1000;height:76px">
   <!-- dark/transparent nav — shown over the hero -->
-  <div id="nav-dark" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(24px,8vw,120px);color:#13242E;background:transparent;opacity:1;pointer-events:auto;transition:opacity .35s ease">
-    <a href="#hero" style="display:inline-flex;align-items:center"><img src="uploads/Primary.png" alt="AETHER" style="height:15px;display:block"></a>
+  <div id="nav-dark" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(24px,8vw,120px);color:#fff;background:transparent;opacity:1;pointer-events:auto;transition:opacity .35s ease">
+    <a href="#hero" style="display:inline-flex;align-items:center"><img src="uploads/Primary_Reversed.png" alt="AETHER" style="height:15px;display:block"></a>
     <div style="display:flex;align-items:center;gap:clamp(20px,2.8vw,40px);font-size:14px">
-      <a href="#os" style="color:rgba(19,36,46,.8)">Technology</a>
-      <a href="#quote" style="color:rgba(19,36,46,.8)">Services</a>
-      <a href="#cta" style="color:rgba(19,36,46,.8)">Contact</a>
+      <a href="technology.html" style="color:rgba(255,255,255,.85)">Technology</a>
+      <a href="services.html" style="color:rgba(255,255,255,.85)">Services</a>
+      <a href="#cta" style="color:rgba(255,255,255,.85)">Contact</a>
       <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="color:#fff;background:#135B7C;border:1px solid #135B7C;padding:10px 20px;border-radius:6px;font-size:13px;font-weight:600" data-hover="background:#2C86B0;border-color:#2C86B0">Get a quote</a>
     </div>
   </div>
@@ -86,8 +86,8 @@ img{max-width:100%}
   <div id="nav-light" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(24px,8vw,120px);color:#13242E;background:rgba(239,242,243,.88);backdrop-filter:blur(14px);border-bottom:1px solid rgba(19,36,46,.12);opacity:0;pointer-events:none;transition:opacity .35s ease">
     <a href="#hero" style="display:inline-flex;align-items:center"><img src="uploads/Primary.png" alt="AETHER" style="height:15px;display:block"></a>
     <div style="display:flex;align-items:center;gap:clamp(20px,2.8vw,40px);font-size:14px">
-      <a href="#os" style="color:rgba(19,36,46,.8)">Technology</a>
-      <a href="#quote" style="color:rgba(19,36,46,.8)">Services</a>
+      <a href="technology.html" style="color:rgba(19,36,46,.8)">Technology</a>
+      <a href="services.html" style="color:rgba(19,36,46,.8)">Services</a>
       <a href="#cta" style="color:rgba(19,36,46,.8)">Contact</a>
       <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="color:#fff;background:#135B7C;border:1px solid #135B7C;padding:10px 20px;border-radius:6px;font-size:13px;font-weight:600" data-hover="background:#2C86B0;border-color:#2C86B0">Get a quote</a>
     </div>
@@ -95,33 +95,33 @@ img{max-width:100%}
 </div>
 
 <!-- ══════════════════════ 01 · HERO ══════════════════════ -->
-<section id="hero" style="position:relative;min-height:clamp(620px,94vh,940px);display:flex;flex-direction:column;justify-content:center;overflow:hidden;background-color:#EFF2F3">
-  <!-- hero background video (H.264 .mov — plays in Chrome/Safari). Poster = the old still,
-       shown while it loads or if the browser can't decode. For Firefox, drop a
-       hero-factory.mp4 beside the .mov (see README) — the mp4 <source> is preferred. -->
+<section id="hero" style="position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden;background-color:#0C1B24">
+  <!-- hero background video (H.264 .mp4 — plays in all modern browsers). Autoplay needs
+       `muted`; `poster` is the still shown while it loads. To swap the clip, replace
+       assets/hero-factory-cropped.mp4 (or point the <source> at a new file). -->
   <video autoplay muted loop playsinline preload="auto" poster="uploads/001-AetherMFG-shot02.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 45%;filter:grayscale(.2) brightness(1.12) contrast(.94)">
     <source src="assets/hero-factory-cropped.mp4" type="video/mp4">
   </video>
   <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,27,36,.7) 0%,rgba(12,27,36,.25) 30%,rgba(12,27,36,.45) 70%,rgba(12,27,36,.92) 100%)"></div>
   <div style="position:absolute;inset:0;opacity:.35;background-image:linear-gradient(rgba(19,91,124,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(19,91,124,.06) 1px,transparent 1px);background-size:64px 64px;-webkit-mask-image:radial-gradient(110% 90% at 30% 55%,#000 30%,transparent 80%);mask-image:radial-gradient(110% 90% at 30% 55%,#000 30%,transparent 80%)"></div>
-  <div style="position:absolute;top:92px;right:clamp(24px,8vw,120px);z-index:3;display:flex;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.08em;color:rgba(19,36,46,.55);border:1px solid rgba(19,36,46,.16);backdrop-filter:blur(3px);border-radius:4px;overflow:hidden;border-width:0.7px;background-color:#13242E00">
-    <div style="padding:7px 13px;border-right:1px solid rgba(255,255,255,.08);background-color:#CCCCCC33"><b style="color:rgba(19,36,46,.4);font-weight:400;display:block;font-size:8px;margin-bottom:3px">DRAWING</b>FACTORY BLUEPRINT</div>
-    <div style="padding:7px 13px;border-right:1px solid rgba(255,255,255,.08);background-color:#CCCCCC33"><b style="color:rgba(19,36,46,.4);font-weight:400;display:block;font-size:8px;margin-bottom:3px">SHEET</b>01 · REV C</div>
-    <div style="padding:7px 13px;background-color:#CCCCCC33"><b style="color:rgba(19,36,46,.4);font-weight:400;display:block;font-size:8px;margin-bottom:3px">SCALE</b>NTS</div>
+  <div style="position:absolute;top:92px;right:clamp(24px,8vw,120px);z-index:3;display:flex;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.08em;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(3px);border-radius:4px;overflow:hidden;border-width:0.7px;background-color:#13242E00">
+    <div style="padding:7px 13px;border-right:1px solid rgba(255,255,255,.12);background-color:rgba(8,20,27,.32)"><b style="color:rgba(255,255,255,.45);font-weight:400;display:block;font-size:8px;margin-bottom:3px">DRAWING</b>FACTORY BLUEPRINT</div>
+    <div style="padding:7px 13px;border-right:1px solid rgba(255,255,255,.12);background-color:rgba(8,20,27,.32)"><b style="color:rgba(255,255,255,.45);font-weight:400;display:block;font-size:8px;margin-bottom:3px">SHEET</b>01 · REV C</div>
+    <div style="padding:7px 13px;background-color:rgba(8,20,27,.32)"><b style="color:rgba(255,255,255,.45);font-weight:400;display:block;font-size:8px;margin-bottom:3px">SCALE</b>NTS</div>
   </div>
-  <span style="position:absolute;top:88px;left:clamp(16px,2vw,28px);width:14px;height:14px;border-top:1px solid rgba(19,36,46,.45);border-left:1px solid rgba(19,36,46,.45);z-index:3"></span>
-  <span style="position:absolute;bottom:16px;right:clamp(16px,2vw,28px);width:14px;height:14px;border-bottom:1px solid rgba(19,36,46,.45);border-right:1px solid rgba(19,36,46,.45);z-index:3"></span>
+  <span style="position:absolute;top:88px;left:clamp(16px,2vw,28px);width:14px;height:14px;border-top:1px solid rgba(255,255,255,.5);border-left:1px solid rgba(255,255,255,.5);z-index:3"></span>
+  <span style="position:absolute;bottom:16px;right:clamp(16px,2vw,28px);width:14px;height:14px;border-bottom:1px solid rgba(255,255,255,.5);border-right:1px solid rgba(255,255,255,.5);z-index:3"></span>
   <div style="position:relative;z-index:3;width:100%;padding:0 clamp(24px,8vw,120px);top:12px">
     <h1 style="margin:0;font-weight:300;font-size:clamp(40px,8vw,104px);line-height:.98;letter-spacing:-.025em;color:#FFFF">One Blueprint.<span style="font-weight:700;display:block">Every Factory.</span></h1>
     <p style="margin:26px 0 0;max-width:54ch;font-size:clamp(15px,1.7vw,19px);line-height:1.6;color:rgba(255,255,255,.62)">The same operating system orchestrates every Aether factory — from the moment a STEP file arrives to the moment a certified part ships. Deployed by configuration, not by reconstruction.</p>
     <div style="margin-top:34px;display:flex;flex-wrap:wrap;gap:14px">
       <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="font-size:14px;font-weight:600;color:#fff;background:#135B7C;border-radius:8px;padding:14px 26px;display:inline-flex;align-items:center;gap:8px;transition:background .2s" data-hover="background:#2C86B0">Get an instant quote</a>
-      <a href="#os" style="font-size:14px;font-weight:600;color:rgba(19,36,46,.7);border:1px solid rgba(19,36,46,.2);border-radius:8px;padding:14px 26px;display:inline-flex;align-items:center;gap:8px;transition:.2s" data-hover="color:#0C3A50;border-color:#2C86B0">See how it works ↓</a>
+      <a href="#os" style="font-size:14px;font-weight:600;color:#fff;border:1px solid rgba(255,255,255,.55);border-radius:8px;padding:14px 26px;display:inline-flex;align-items:center;gap:8px;transition:.2s" data-hover="border-color:#fff;background:rgba(255,255,255,.08)">See how it works ↓</a>
     </div>
   </div>
-  <div style="position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.22em;color:rgba(19,36,46,.45)">
+  <div style="position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.22em;color:rgba(255,255,255,.55)">
     <span>SCROLL</span>
-    <span style="width:1px;height:34px;background:linear-gradient(rgba(19,36,46,.45),transparent);position:relative;overflow:hidden;display:block"><span style="position:absolute;left:0;top:0;width:1px;height:12px;background:#135B7C;animation:drop 2s ease-in-out infinite;display:block"></span></span>
+    <span style="width:1px;height:34px;background:linear-gradient(rgba(255,255,255,.55),transparent);position:relative;overflow:hidden;display:block"><span style="position:absolute;left:0;top:0;width:1px;height:12px;background:#5FA8CC;animation:drop 2s ease-in-out infinite;display:block"></span></span>
   </div>
 </section>
 
@@ -639,7 +639,7 @@ img{max-width:100%}
                 </div>
               </div>
             </div>
-            <div style="position:absolute;right:-4px;top:-30px;width:clamp(126px,15vw,170px);z-index:3">
+            <div style="position:absolute;right:-4px;top:-30px;width:clamp(189px,22.5vw,255px);z-index:3">
               <img src="assets/mobile.png" alt="Aether — the same order tracking on mobile" style="display:block;width:100%;height:auto;filter:drop-shadow(0 22px 40px rgba(19,36,46,.32))">
             </div>
           </div>
@@ -763,10 +763,10 @@ img{max-width:100%}
     </div>
     <nav style="display:flex;flex-direction:column">
       <h4 style="margin:0 0 16px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#fff">Services</h4>
-      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">AI CNC Milling</a>
-      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">AI CNC Turning</a>
-      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">AI EDM</a>
-      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">AI Metal 3D Printing</a>
+      <a href="services.html#proc-milling" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">AI CNC Milling</a>
+      <a href="services.html#proc-turning" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">AI CNC Turning</a>
+      <a href="services.html#future" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">AI EDM</a>
+      <a href="services.html#future" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">AI Metal 3D Printing</a>
     </nav>
     <nav style="display:flex;flex-direction:column">
       <h4 style="margin:0 0 16px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#fff">Platform</h4>

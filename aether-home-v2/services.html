@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aether — Services. AI CNC milling, turning &amp; more.</title>
+<meta name="description" content="AI-native machining services: 5-axis CNC milling, live-tooling CNC turning, with EDM and metal 3D printing on the way — quoted in minutes, parts in as fast as 3 days.">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/tokens.css">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   AETHER SERVICES v2 — image-led, real specs from aethermfg.com
+   Same inline-hex + blueprint convention as index.html / technology.html.
+   Order: NAV · 01 HERO · 02 SELECTOR+CARDS · 03 MILLING · 04 TURNING ·
+   05 MATERIALS · 06 HOW IT WORKS · 07 FUTURE · 08 QUALITY · 09 CTA · FOOTER
+   ═══════════════════════════════════════════════════════════════ */
+html{scroll-behavior:smooth}
+body{margin:0;background:#EFF2F3;color:#13242E;font-family:'Montserrat',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#135B7C;text-decoration:none}a:hover{color:#2C86B0}
+img{max-width:100%}
+.i{width:22px;height:22px;stroke:#135B7C;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;display:block}
+@keyframes kb{from{transform:scale(1.06)}to{transform:scale(1)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes riseIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important}}
+[data-reveal]{opacity:0}[data-reveal].in{animation:riseIn .7s cubic-bezier(.2,.7,.2,1) forwards}
+[id^="proc-"]{scroll-margin-top:132px}
+@media(max-width:1024px){[style*="repeat(4"],[style*="repeat(3"]{grid-template-columns:repeat(2,1fr)!important}.spec-scroll{overflow-x:auto}}
+@media(max-width:860px){
+  [style*="grid-template-columns"]{grid-template-columns:1fr!important}
+  .flip{flex-direction:column!important}.proc-sticky{position:static!important}
+}
+@media(max-width:600px){#nav-dark a[data-secondary],#nav-light a[data-secondary]{display:none!important}}
+.proc-pill{cursor:pointer;transition:.16s;white-space:nowrap}
+.proc-pill:hover{border-color:rgba(19,91,124,.5)!important}
+.cap-row:hover{background:rgba(19,91,124,.04)!important}
+.gal:hover img{transform:scale(1.05)}
+</style>
+</head>
+<body>
+<div style="min-height:100vh;background-color:#EFF2F3">
+
+<!-- ══════════════════════ NAV ══════════════════════ -->
+<div style="position:fixed;top:0;left:0;right:0;z-index:1000;height:76px">
+  <div id="nav-dark" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(24px,8vw,120px);color:#fff;background:transparent;opacity:1;pointer-events:auto;transition:opacity .35s ease">
+    <a href="index.html" style="display:inline-flex;align-items:center"><img src="uploads/Primary_Reversed.png" alt="AETHER" style="height:15px;display:block"></a>
+    <div style="display:flex;align-items:center;gap:clamp(20px,2.8vw,40px);font-size:14px">
+      <a href="technology.html" data-secondary style="color:rgba(255,255,255,.85)">Technology</a>
+      <a href="services.html" style="color:#fff;font-weight:600">Services</a>
+      <a href="#svc-cta" data-secondary style="color:rgba(255,255,255,.85)">Contact</a>
+      <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="color:#fff;background:#135B7C;border:1px solid #135B7C;padding:10px 20px;border-radius:6px;font-size:13px;font-weight:600" data-hover="background:#2C86B0;border-color:#2C86B0">Get a quote</a>
+    </div>
+  </div>
+  <div id="nav-light" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(24px,8vw,120px);color:#13242E;background:rgba(239,242,243,.88);backdrop-filter:blur(14px);border-bottom:1px solid rgba(19,36,46,.12);opacity:0;pointer-events:none;transition:opacity .35s ease">
+    <a href="index.html" style="display:inline-flex;align-items:center"><img src="uploads/Primary.png" alt="AETHER" style="height:15px;display:block"></a>
+    <div style="display:flex;align-items:center;gap:clamp(20px,2.8vw,40px);font-size:14px">
+      <a href="technology.html" data-secondary style="color:rgba(19,36,46,.8)">Technology</a>
+      <a href="services.html" style="color:#135B7C;font-weight:600">Services</a>
+      <a href="#svc-cta" data-secondary style="color:rgba(19,36,46,.8)">Contact</a>
+      <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="color:#fff;background:#135B7C;border:1px solid #135B7C;padding:10px 20px;border-radius:6px;font-size:13px;font-weight:600" data-hover="background:#2C86B0;border-color:#2C86B0">Get a quote</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ 01 · HERO ══════════════════════ -->
+<section id="top" style="position:relative;min-height:88vh;display:flex;align-items:center;overflow:hidden;background-color:#0C1B24">
+  <img src="assets/svc-hero.jpg" alt="Precision-machined aluminum and titanium components by Aether" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 60%;animation:kb 12s ease-out both;filter:brightness(.7) contrast(1.03)">
+  <div style="position:absolute;inset:0;background:linear-gradient(100deg,rgba(8,20,27,.95) 0%,rgba(8,20,27,.72) 44%,rgba(8,20,27,.4) 100%)"></div>
+  <div style="position:absolute;inset:0;opacity:.45;background-image:linear-gradient(rgba(95,168,204,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(95,168,204,.08) 1px,transparent 1px);background-size:60px 60px;-webkit-mask-image:radial-gradient(120% 100% at 22% 50%,#000 20%,transparent 78%);mask-image:radial-gradient(120% 100% at 22% 50%,#000 20%,transparent 78%)"></div>
+  <div style="position:absolute;top:96px;right:clamp(24px,8vw,120px);z-index:3;display:flex;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.08em;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.18);border-radius:4px;overflow:hidden">
+    <div style="padding:7px 13px;border-right:1px solid rgba(255,255,255,.12);background:rgba(8,20,27,.5)"><b style="color:rgba(255,255,255,.45);font-weight:400;display:block;font-size:8px;margin-bottom:3px">DRAWING</b>SERVICE INDEX</div>
+    <div style="padding:7px 13px;border-right:1px solid rgba(255,255,255,.12);background:rgba(8,20,27,.5)"><b style="color:rgba(255,255,255,.45);font-weight:400;display:block;font-size:8px;margin-bottom:3px">SHEET</b>AE-SVC · REV C</div>
+    <div style="padding:7px 13px;background:rgba(8,20,27,.5)"><b style="color:rgba(255,255,255,.45);font-weight:400;display:block;font-size:8px;margin-bottom:3px">PROC</b>2 LIVE · 2 SOON</div>
+  </div>
+  <span style="position:absolute;top:90px;left:clamp(16px,2vw,28px);width:14px;height:14px;border-top:1px solid rgba(255,255,255,.4);border-left:1px solid rgba(255,255,255,.4);z-index:3"></span>
+  <span style="position:absolute;bottom:20px;right:clamp(16px,2vw,28px);width:14px;height:14px;border-bottom:1px solid rgba(255,255,255,.4);border-right:1px solid rgba(255,255,255,.4);z-index:3"></span>
+  <div style="position:relative;z-index:3;width:100%;padding:120px clamp(24px,8vw,120px) 64px">
+    <div style="display:inline-flex;align-items:center;gap:10px;margin-bottom:24px">
+      <span style="width:24px;height:1px;background:#5FA8CC"></span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#5FA8CC">Services</span>
+    </div>
+    <h1 style="margin:0;font-weight:300;font-size:clamp(40px,6vw,78px);line-height:.99;letter-spacing:-.025em;color:#fff;max-width:16ch">Precision machining,<span style="font-weight:700;display:block">on autopilot.</span></h1>
+    <p style="margin:26px 0 0;max-width:56ch;font-size:clamp(15px,1.7vw,19px);line-height:1.62;color:rgba(255,255,255,.68)">Multi-axis CNC milling and live-tooling turning today — EDM and metal additive on the way. Every process is quoted, planned and produced through the same AI operating system. Upload a STEP file, get a white-box price in minutes, parts in as fast as three days.</p>
+    <div style="margin-top:32px;display:flex;flex-wrap:wrap;gap:14px">
+      <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="font-size:14px;font-weight:600;color:#fff;background:#135B7C;border-radius:8px;padding:14px 26px;display:inline-flex;align-items:center;gap:8px;transition:background .2s" data-hover="background:#2C86B0">Get an instant quote</a>
+      <a href="#processes" style="font-size:14px;font-weight:600;color:#fff;border:1px solid rgba(255,255,255,.5);border-radius:8px;padding:14px 26px;display:inline-flex;align-items:center;gap:8px;transition:.2s" data-hover="border-color:#fff;background:rgba(255,255,255,.08)">Browse processes ↓</a>
+    </div>
+    <div style="margin-top:44px;display:flex;flex-wrap:wrap;gap:34px 56px">
+      <div><div style="font-weight:300;font-size:34px;color:#fff;letter-spacing:-.02em">3<span style="font-size:15px;color:#5FA8CC"> days</span></div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:4px">Lead time, as fast as</div></div>
+      <div><div style="font-weight:300;font-size:34px;color:#fff;letter-spacing:-.02em">±0.005<span style="font-size:15px;color:#5FA8CC"> mm</span></div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:4px">Achievable accuracy</div></div>
+      <div><div style="font-weight:300;font-size:34px;color:#fff;letter-spacing:-.02em">6<span style="font-size:15px;color:#5FA8CC"> m</span></div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:4px">Max part envelope</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ 02 · SELECTOR + SERVICE CARDS ══════════════════════ -->
+<section style="position:relative;background:#EFF2F3;padding:clamp(56px,7vw,84px) clamp(24px,8vw,120px) clamp(30px,4vw,44px);overflow:hidden">
+  <div style="position:absolute;inset:0;opacity:.5;background-image:linear-gradient(rgba(19,91,124,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(19,91,124,.05) 1px,transparent 1px);background-size:46px 46px;pointer-events:none"></div>
+  <div style="position:relative">
+    <div style="display:flex;align-items:center;gap:14px;font-size:12px;font-weight:700;letter-spacing:.24em;color:rgba(19,36,46,.55)">
+      <span style="font-family:'JetBrains Mono',monospace;color:#2C86B0;font-weight:400">01</span> WHAT WE MAKE
+      <span style="flex:1;height:1px;background:rgba(19,36,46,.1)"></span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;color:rgba(19,36,46,.35);font-weight:400">DWG AE-SVC-01 · REV C</span>
+    </div>
+    <h2 style="margin:20px 0 0;max-width:24ch;font-weight:300;font-size:clamp(26px,3vw,34px);line-height:1.22;letter-spacing:-.01em;color:#13242E">Four processes. <b style="font-weight:600">One quote, one OS, one certified part.</b></h2>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:34px">
+      <a href="#proc-milling" style="border:1px solid rgba(19,91,124,.35);border-radius:12px;background:#fff;padding:24px;display:flex;flex-direction:column;gap:12px;transition:.2s" data-hover="border-color:#2C86B0;box-shadow:0 16px 40px rgba(19,91,124,.14);transform:translateY(-2px)">
+        <div style="display:flex;align-items:center;justify-content:space-between"><svg class="i" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M4.2 7.5l2.6 1.5M17.2 15l2.6 1.5M4.2 16.5l2.6-1.5M17.2 9l2.6-1.5"/><circle cx="12" cy="12" r="4"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.1em;color:#2E9A63;border:1px solid rgba(63,174,114,.4);border-radius:20px;padding:4px 9px">● LIVE</span></div>
+        <div style="font-weight:600;font-size:17px;color:#13242E">AI CNC Milling</div>
+        <p style="margin:0;font-size:12.5px;line-height:1.5;color:rgba(19,36,46,.6)">3-, 4- &amp; full 5-axis for complex prismatic geometry in a single setup.</p>
+        <span style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#135B7C">View milling →</span>
+      </a>
+      <a href="#proc-turning" style="border:1px solid rgba(19,91,124,.35);border-radius:12px;background:#fff;padding:24px;display:flex;flex-direction:column;gap:12px;transition:.2s" data-hover="border-color:#2C86B0;box-shadow:0 16px 40px rgba(19,91,124,.14);transform:translateY(-2px)">
+        <div style="display:flex;align-items:center;justify-content:space-between"><svg class="i" viewBox="0 0 24 24"><path d="M3 8h18M3 16h18"/><ellipse cx="12" cy="12" rx="3" ry="8"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.1em;color:#2E9A63;border:1px solid rgba(63,174,114,.4);border-radius:20px;padding:4px 9px">● LIVE</span></div>
+        <div style="font-weight:600;font-size:17px;color:#13242E">AI CNC Turning</div>
+        <p style="margin:0;font-size:12.5px;line-height:1.5;color:rgba(19,36,46,.6)">Live tooling &amp; dual-spindle for cylindrical parts, complete in one op.</p>
+        <span style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#135B7C">View turning →</span>
+      </a>
+      <div style="border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#F4F6F7;padding:24px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:center;justify-content:space-between"><svg class="i" viewBox="0 0 24 24" style="stroke:rgba(19,36,46,.45)"><path d="M12 3v6M12 15v6M5 12h14"/><path d="M9 9l3 3 3-3"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.1em;color:rgba(19,36,46,.45);border:1px solid rgba(19,36,46,.2);border-radius:20px;padding:4px 9px">SOON</span></div>
+        <div style="font-weight:600;font-size:17px;color:rgba(19,36,46,.7)">AI EDM</div>
+        <p style="margin:0;font-size:12.5px;line-height:1.5;color:rgba(19,36,46,.5)">Wire &amp; sinker for hardened alloys and features cutters can't reach.</p>
+        <span style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(19,36,46,.4)">On the roadmap</span>
+      </div>
+      <div style="border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#F4F6F7;padding:24px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:center;justify-content:space-between"><svg class="i" viewBox="0 0 24 24" style="stroke:rgba(19,36,46,.45)"><path d="M12 2l8 4.5v9L12 20l-8-4.5v-9L12 2z"/><path d="M12 11l8-4.5M12 11v9M12 11L4 6.5"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.1em;color:rgba(19,36,46,.45);border:1px solid rgba(19,36,46,.2);border-radius:20px;padding:4px 9px">SOON</span></div>
+        <div style="font-weight:600;font-size:17px;color:rgba(19,36,46,.7)">AI Metal 3D Printing</div>
+        <p style="margin:0;font-size:12.5px;line-height:1.5;color:rgba(19,36,46,.5)">DED &amp; powder-bed for near-net shapes, finished in the same route.</p>
+        <span style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(19,36,46,.4)">On the roadmap</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- sticky selector -->
+<div id="processes" class="proc-sticky" style="position:sticky;top:76px;z-index:900;background:rgba(239,242,243,.92);backdrop-filter:blur(12px);border-top:1px solid rgba(19,36,46,.1);border-bottom:1px solid rgba(19,36,46,.1);padding:13px clamp(24px,8vw,120px)">
+  <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+    <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(19,36,46,.45)">Jump to</span>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <a href="#proc-milling" class="proc-pill" style="display:inline-flex;align-items:center;padding:8px 15px;border-radius:30px;font-weight:500;font-size:12px;background:#135B7C;border:1px solid #135B7C;color:#fff">CNC Milling</a>
+      <a href="#proc-turning" class="proc-pill" style="display:inline-flex;align-items:center;padding:8px 15px;border-radius:30px;font-weight:500;font-size:12px;background:#fff;border:1px solid rgba(19,36,46,.14);color:rgba(19,36,46,.6)">CNC Turning</a>
+      <a href="#materials" class="proc-pill" style="display:inline-flex;align-items:center;padding:8px 15px;border-radius:30px;font-weight:500;font-size:12px;background:#fff;border:1px solid rgba(19,36,46,.14);color:rgba(19,36,46,.6)">Materials</a>
+      <a href="#future" class="proc-pill" style="display:inline-flex;align-items:center;padding:8px 15px;border-radius:30px;font-weight:500;font-size:12px;background:#fff;border:1px solid rgba(19,36,46,.14);color:rgba(19,36,46,.6)">What's next</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ 03 · AI CNC MILLING ══════════════════════ -->
+<section id="proc-milling" style="background:#EFF2F3;padding:clamp(56px,7vw,88px) clamp(24px,8vw,120px)">
+  <div style="display:flex;align-items:center;gap:12px">
+    <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:#2C86B0">PROC 01</span>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;color:#2E9A63;border:1px solid rgba(63,174,114,.4);border-radius:20px;padding:3px 9px">● LIVE</span>
+    <span style="flex:1;height:1px;background:rgba(19,36,46,.1)"></span>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;color:rgba(19,36,46,.35)">AE-SVC-M1 · REV C</span>
+  </div>
+  <div class="flip" style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,0.9fr);gap:clamp(32px,5vw,64px);margin-top:22px;align-items:center">
+    <div>
+      <h2 style="margin:0;font-weight:300;font-size:clamp(28px,3.4vw,40px);line-height:1.12;letter-spacing:-.015em;color:#13242E">AI CNC <b style="font-weight:700">Milling</b></h2>
+      <p style="margin:20px 0 0;max-width:60ch;font-size:16px;line-height:1.64;color:rgba(19,36,46,.66)">Multi-axis machining creates complex, high-precision parts in a single setup. APG automatically generates tooling and collision-checked toolpaths from your STEP file, eliminating manual CAM programming and delivering tight-tolerance parts in as fast as three days.</p>
+      <div style="margin-top:22px;display:flex;flex-wrap:wrap;gap:22px 40px">
+        <div><div style="font-weight:300;font-size:30px;color:#13242E;letter-spacing:-.02em">5-axis</div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(19,36,46,.45);margin-top:3px">Single-setup machining</div></div>
+        <div><div style="font-weight:300;font-size:30px;color:#13242E;letter-spacing:-.02em">≥±0.008<span style="font-size:14px;color:#2C86B0"> mm</span></div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(19,36,46,.45);margin-top:3px">Recommended accuracy</div></div>
+        <div><div style="font-weight:300;font-size:30px;color:#13242E;letter-spacing:-.02em">3<span style="font-size:14px;color:#2C86B0"> days</span></div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(19,36,46,.45);margin-top:3px">Build time, as fast as</div></div>
+      </div>
+      <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;margin-top:26px;font-size:13px;font-weight:600;color:#fff;background:#135B7C;border-radius:8px;padding:13px 22px;transition:.2s" data-hover="background:#2C86B0">Quote a milled part →</a>
+    </div>
+    <div data-reveal="1" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="gal" style="position:relative;aspect-ratio:1/1;border-radius:12px;overflow:hidden;border:1px solid rgba(19,36,46,.14);box-shadow:0 16px 40px rgba(19,36,46,.12);background:#EFF1F0"><img src="assets/svc-mill-1.jpg" alt="CNC-machined copper liquid cold plate with barb fittings" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease"><span style="position:absolute;left:10px;bottom:10px;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:#fff;background:rgba(8,20,27,.6);backdrop-filter:blur(3px);border-radius:4px;padding:4px 8px">COPPER · LIQUID COLD PLATE</span></div>
+      <div class="gal" style="position:relative;aspect-ratio:1/1;border-radius:12px;overflow:hidden;border:1px solid rgba(19,36,46,.14);box-shadow:0 16px 40px rgba(19,36,46,.12);background:#EFF1F0"><img src="assets/svc-mill-2.jpg" alt="Aluminum chassis with embedded copper cooling channels" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease"><span style="position:absolute;left:10px;bottom:10px;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:#fff;background:rgba(8,20,27,.6);backdrop-filter:blur(3px);border-radius:4px;padding:4px 8px">AL + CU · COOLED CHASSIS</span></div>
+      <div class="gal" style="position:relative;aspect-ratio:1/1;border-radius:12px;overflow:hidden;border:1px solid rgba(19,36,46,.14);box-shadow:0 16px 40px rgba(19,36,46,.12);background:#EFF1F0"><img src="assets/svc-mill-3.jpg" alt="Aluminum manifold block with milled pockets and bores" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease"><span style="position:absolute;left:10px;bottom:10px;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:#fff;background:rgba(8,20,27,.6);backdrop-filter:blur(3px);border-radius:4px;padding:4px 8px">AL · MANIFOLD · 5-AXIS</span></div>
+      <div class="gal" style="position:relative;aspect-ratio:1/1;border-radius:12px;overflow:hidden;border:1px solid rgba(19,36,46,.14);box-shadow:0 16px 40px rgba(19,36,46,.12);background:#EFF1F0"><img src="assets/svc-mill-4.jpg" alt="Aluminum motor mounting plate, circular bolt pattern" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease"><span style="position:absolute;left:10px;bottom:10px;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:#fff;background:rgba(8,20,27,.6);backdrop-filter:blur(3px);border-radius:4px;padding:4px 8px">AL · MOTOR MOUNT PLATE</span></div>
+    </div>
+  </div>
+
+  <!-- capabilities -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:44px">
+    <div style="border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#fff;padding:22px"><svg class="i" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M4.2 7.5l2.6 1.5M17.2 15l2.6 1.5M4.2 16.5l2.6-1.5M17.2 9l2.6-1.5"/><circle cx="12" cy="12" r="4"/></svg><div style="font-weight:600;font-size:14.5px;color:#13242E;margin-top:14px">3-, 4- &amp; full 5-axis</div><p style="margin:6px 0 0;font-size:12.5px;line-height:1.55;color:rgba(19,36,46,.6)">Intricate multi-sided machining in a single advanced setup — perfect geometric accuracy, no re-fixturing.</p></div>
+    <div style="border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#fff;padding:22px"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg><div style="font-weight:600;font-size:14.5px;color:#13242E;margin-top:14px">In-process QC</div><p style="margin:6px 0 0;font-size:12.5px;line-height:1.55;color:rgba(19,36,46,.6)">AI sensors monitor cutting conditions dynamically, preventing defects and holding precision on every part.</p></div>
+    <div style="border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#fff;padding:22px"><svg class="i" viewBox="0 0 24 24"><path d="M12 3l8 4.5-8 4.5-8-4.5L12 3z"/><path d="M4 12l8 4.5 8-4.5M4 16.5L12 21l8-4.5"/></svg><div style="font-weight:600;font-size:14.5px;color:#13242E;margin-top:14px">High-mix, low-volume</div><p style="margin:6px 0 0;font-size:12.5px;line-height:1.55;color:rgba(19,36,46,.6)">Rapid hardware iterations without mass-production commitments — from one-offs to specialized tooling runs.</p></div>
+    <div style="border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#fff;padding:22px"><svg class="i" viewBox="0 0 24 24"><path d="M12 3v4M5 8l3 2M19 8l-3 2M6 20h12l-1.5-7h-9L6 20z"/></svg><div style="font-weight:600;font-size:14.5px;color:#13242E;margin-top:14px">Surface finishing</div><p style="margin:6px 0 0;font-size:12.5px;line-height:1.55;color:rgba(19,36,46,.6)">Certified post-processing: brass electroplating, hard chrome plating, shot blasting and polishing.</p></div>
+  </div>
+
+  <!-- applications + design guidelines -->
+  <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:16px;margin-top:16px">
+    <div style="border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#fff;overflow:hidden">
+      <div style="padding:16px 22px;border-bottom:1px solid rgba(19,36,46,.1);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#135B7C">Where it's used</div>
+      <div class="cap-row" style="padding:16px 22px;border-bottom:1px solid rgba(19,36,46,.06);transition:.15s"><div style="display:flex;justify-content:space-between;gap:12px;align-items:baseline"><span style="font-weight:600;font-size:14px;color:#13242E">Structural aerospace components</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#2C86B0">AS9100D</span></div><p style="margin:5px 0 0;font-size:12.5px;line-height:1.5;color:rgba(19,36,46,.6)">High-precision titanium airframe parts and aerospace brackets, complex prismatic geometry.</p></div>
+      <div class="cap-row" style="padding:16px 22px;border-bottom:1px solid rgba(19,36,46,.06);transition:.15s"><div style="display:flex;justify-content:space-between;gap:12px;align-items:baseline"><span style="font-weight:600;font-size:14px;color:#13242E">Surgical instruments &amp; implants</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#2C86B0">ISO 13485</span></div><p style="margin:5px 0 0;font-size:12.5px;line-height:1.5;color:rgba(19,36,46,.6)">Flawless 5-axis execution of complex titanium bone plates and instrumentation.</p></div>
+      <div class="cap-row" style="padding:16px 22px;transition:.15s"><div style="display:flex;justify-content:space-between;gap:12px;align-items:baseline"><span style="font-weight:600;font-size:14px;color:#13242E">Robotic shafts &amp; housings</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#2C86B0">HIGH-MIX</span></div><p style="margin:5px 0 0;font-size:12.5px;line-height:1.5;color:rgba(19,36,46,.6)">Exact tolerances for custom brackets and joint housings in low-volume automation builds.</p></div>
+    </div>
+    <div class="spec-scroll" style="border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#fff;overflow:hidden">
+      <div style="padding:16px 22px;border-bottom:1px solid rgba(19,36,46,.1);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#135B7C">Design guidelines</div>
+      <div class="cap-row" style="display:flex;justify-content:space-between;gap:16px;padding:14px 22px;border-bottom:1px solid rgba(19,36,46,.06)"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5)">MAX BUILD SIZE</span><span style="font-size:13px;font-weight:500;color:#13242E">6000 mm</span></div>
+      <div class="cap-row" style="display:flex;justify-content:space-between;gap:16px;padding:14px 22px;border-bottom:1px solid rgba(19,36,46,.06)"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5)">MIN BUILD SIZE</span><span style="font-size:13px;font-weight:500;color:#13242E">5 mm</span></div>
+      <div class="cap-row" style="display:flex;justify-content:space-between;gap:16px;padding:14px 22px;border-bottom:1px solid rgba(19,36,46,.06)"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5)">REC. ACCURACY</span><span style="font-size:13px;font-weight:500;color:#135B7C">≥±0.008 mm</span></div>
+      <div class="cap-row" style="display:flex;justify-content:space-between;gap:16px;padding:14px 22px"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5)">CERTIFICATIONS</span><span style="font-size:12px;font-weight:500;color:#13242E;text-align:right">ISO 9001 · 13485 · AS9100D</span></div>
+      <div style="padding:14px 22px;border-top:1px solid rgba(19,36,46,.1);background:rgba(19,91,124,.03)">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(19,36,46,.45);margin-bottom:8px">Finishing</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <span style="font-size:11px;color:#135B7C;background:rgba(19,91,124,.08);border:1px solid rgba(19,91,124,.22);border-radius:5px;padding:5px 9px">Brass electroplating</span>
+          <span style="font-size:11px;color:#135B7C;background:rgba(19,91,124,.08);border:1px solid rgba(19,91,124,.22);border-radius:5px;padding:5px 9px">Hard chrome</span>
+          <span style="font-size:11px;color:#135B7C;background:rgba(19,91,124,.08);border:1px solid rgba(19,91,124,.22);border-radius:5px;padding:5px 9px">Shot blasting</span>
+          <span style="font-size:11px;color:#135B7C;background:rgba(19,91,124,.08);border:1px solid rgba(19,91,124,.22);border-radius:5px;padding:5px 9px">Polishing</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ 04 · AI CNC TURNING ══════════════════════ -->
+<section id="proc-turning" style="background:#fff;padding:clamp(56px,7vw,88px) clamp(24px,8vw,120px);border-top:1px solid rgba(19,36,46,.08)">
+  <div style="display:flex;align-items:center;gap:12px">
+    <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:#2C86B0">PROC 02</span>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;color:#2E9A63;border:1px solid rgba(63,174,114,.4);border-radius:20px;padding:3px 9px">● LIVE</span>
+    <span style="flex:1;height:1px;background:rgba(19,36,46,.1)"></span>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;color:rgba(19,36,46,.35)">AE-SVC-T1 · REV C</span>
+  </div>
+  <div class="flip" style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,0.9fr);gap:clamp(32px,5vw,64px);margin-top:22px;align-items:center">
+    <div data-reveal="1" style="order:2;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="gal" style="grid-column:span 2;position:relative;border-radius:12px;overflow:hidden;border:1px solid rgba(19,36,46,.14);box-shadow:0 16px 40px rgba(19,36,46,.12)"><img src="assets/svc-turn-1.jpg" alt="Steel valve body with bored cylinder and mounting flange" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;max-height:280px"><span style="position:absolute;left:10px;bottom:10px;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:#fff;background:rgba(8,20,27,.6);backdrop-filter:blur(3px);border-radius:4px;padding:4px 8px">STEEL · BORED VALVE BODY</span></div>
+      <div class="gal" style="position:relative;border-radius:12px;overflow:hidden;border:1px solid rgba(19,36,46,.14);box-shadow:0 16px 40px rgba(19,36,46,.12)"><img src="assets/svc-turn-2.jpg" alt="Steel bar with three ported and threaded holes" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease"><span style="position:absolute;left:10px;bottom:10px;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:#fff;background:rgba(8,20,27,.6);backdrop-filter:blur(3px);border-radius:4px;padding:4px 8px">STEEL · PORTED BAR</span></div>
+      <div class="gal" style="position:relative;border-radius:12px;overflow:hidden;border:1px solid rgba(19,36,46,.14);box-shadow:0 16px 40px rgba(19,36,46,.12)"><img src="assets/svc-turn-3.jpg" alt="Precision stainless steel bracket with counterbored holes" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease"><span style="position:absolute;left:10px;bottom:10px;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:#fff;background:rgba(8,20,27,.6);backdrop-filter:blur(3px);border-radius:4px;padding:4px 8px">SS · PRECISION BRACKET</span></div>
+    </div>
+    <div style="order:1">
+      <h2 style="margin:0;font-weight:300;font-size:clamp(28px,3.4vw,40px);line-height:1.12;letter-spacing:-.015em;color:#13242E">AI CNC <b style="font-weight:700">Turning</b></h2>
+      <p style="margin:20px 0 0;max-width:60ch;font-size:16px;line-height:1.64;color:rgba(19,36,46,.66)">Advanced turning for high-mix, low-volume cylindrical parts. Live tooling and dual-spindle machining combine milling and turning in a single setup for perfect concentricity. APG automates quoting, in-process inspection, and delivery in as fast as three days.</p>
+      <div style="margin-top:22px;display:flex;flex-wrap:wrap;gap:22px 40px">
+        <div><div style="font-weight:300;font-size:30px;color:#13242E;letter-spacing:-.02em">Ø500<span style="font-size:14px;color:#2C86B0"> mm</span></div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(19,36,46,.45);margin-top:3px">Max diameter</div></div>
+        <div><div style="font-weight:300;font-size:30px;color:#13242E;letter-spacing:-.02em">≥±0.005<span style="font-size:14px;color:#2C86B0"> mm</span></div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(19,36,46,.45);margin-top:3px">Recommended accuracy</div></div>
+        <div><div style="font-weight:300;font-size:30px;color:#13242E;letter-spacing:-.02em">3<span style="font-size:14px;color:#2C86B0"> days</span></div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(19,36,46,.45);margin-top:3px">Build time, as fast as</div></div>
+      </div>
+      <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;margin-top:26px;font-size:13px;font-weight:600;color:#fff;background:#135B7C;border-radius:8px;padding:13px 22px;transition:.2s" data-hover="background:#2C86B0">Quote a turned part →</a>
+    </div>
+  </div>
+
+  <!-- capabilities + guidelines -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px">
+    <div style="border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#F6F8F9;padding:22px"><svg class="i" viewBox="0 0 24 24"><path d="M3 8h18M3 16h18"/><ellipse cx="12" cy="12" rx="3" ry="8"/></svg><div style="font-weight:600;font-size:14.5px;color:#13242E;margin-top:14px">Live tooling &amp; dual-spindle</div><p style="margin:6px 0 0;font-size:12.5px;line-height:1.55;color:rgba(19,36,46,.6)">Complex milling and turning in one setup — no secondary handling, perfect concentricity.</p></div>
+    <div style="border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#F6F8F9;padding:22px"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg><div style="font-weight:600;font-size:14.5px;color:#13242E;margin-top:14px">In-process QC</div><p style="margin:6px 0 0;font-size:12.5px;line-height:1.55;color:rgba(19,36,46,.6)">AI sensor technology monitors conditions dynamically to keep extreme precision on every run.</p></div>
+    <div style="border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#F6F8F9;padding:22px"><svg class="i" viewBox="0 0 24 24"><path d="M12 3l8 4.5-8 4.5-8-4.5L12 3z"/><path d="M4 12l8 4.5 8-4.5M4 16.5L12 21l8-4.5"/></svg><div style="font-weight:600;font-size:14.5px;color:#13242E;margin-top:14px">High-mix, low-volume</div><p style="margin:6px 0 0;font-size:12.5px;line-height:1.55;color:rgba(19,36,46,.6)">Rapid iterations for specialized tooling and low-volume component runs — no mass-order minimums.</p></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:16px;margin-top:16px">
+    <div style="border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#F6F8F9;overflow:hidden">
+      <div style="padding:16px 22px;border-bottom:1px solid rgba(19,36,46,.1);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#135B7C">Where it's used</div>
+      <div class="cap-row" style="padding:16px 22px;border-bottom:1px solid rgba(19,36,46,.06);transition:.15s"><div style="display:flex;justify-content:space-between;gap:12px;align-items:baseline"><span style="font-weight:600;font-size:14px;color:#13242E">Lightweight aerospace components</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#2C86B0">AS9100D</span></div><p style="margin:5px 0 0;font-size:12.5px;line-height:1.5;color:rgba(19,36,46,.6)">Complex cylindrical parts in titanium and exotic metals for flight-critical assemblies.</p></div>
+      <div class="cap-row" style="padding:16px 22px;border-bottom:1px solid rgba(19,36,46,.06);transition:.15s"><div style="display:flex;justify-content:space-between;gap:12px;align-items:baseline"><span style="font-weight:600;font-size:14px;color:#13242E">Surgical instruments &amp; implants</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#2C86B0">ISO 13485</span></div><p style="margin:5px 0 0;font-size:12.5px;line-height:1.5;color:rgba(19,36,46,.6)">Live-tooling execution of biocompatible surgical tools and custom implants.</p></div>
+      <div class="cap-row" style="padding:16px 22px;transition:.15s"><div style="display:flex;justify-content:space-between;gap:12px;align-items:baseline"><span style="font-weight:600;font-size:14px;color:#13242E">Robotic drive shafts &amp; housings</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#2C86B0">DUAL-SPINDLE</span></div><p style="margin:5px 0 0;font-size:12.5px;line-height:1.5;color:rgba(19,36,46,.6)">Exact tolerances for custom drive shafts and complex motor housings.</p></div>
+    </div>
+    <div class="spec-scroll" style="border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#F6F8F9;overflow:hidden">
+      <div style="padding:16px 22px;border-bottom:1px solid rgba(19,36,46,.1);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#135B7C">Design guidelines</div>
+      <div class="cap-row" style="display:flex;justify-content:space-between;gap:16px;padding:14px 22px;border-bottom:1px solid rgba(19,36,46,.06)"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5)">MAX BUILD SIZE</span><span style="font-size:13px;font-weight:500;color:#13242E">Ø500 mm</span></div>
+      <div class="cap-row" style="display:flex;justify-content:space-between;gap:16px;padding:14px 22px;border-bottom:1px solid rgba(19,36,46,.06)"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5)">MIN BUILD SIZE</span><span style="font-size:13px;font-weight:500;color:#13242E">Ø1 mm</span></div>
+      <div class="cap-row" style="display:flex;justify-content:space-between;gap:16px;padding:14px 22px;border-bottom:1px solid rgba(19,36,46,.06)"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5)">REC. ACCURACY</span><span style="font-size:13px;font-weight:500;color:#135B7C">≥±0.005 mm</span></div>
+      <div class="cap-row" style="display:flex;justify-content:space-between;gap:16px;padding:14px 22px"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.5)">CERTIFICATIONS</span><span style="font-size:12px;font-weight:500;color:#13242E;text-align:right">ISO 9001 · 13485 · AS9100D</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ 05 · MATERIALS LIBRARY ══════════════════════ -->
+<section id="materials" style="position:relative;background:#EFF2F3;padding:clamp(56px,7vw,88px) clamp(24px,8vw,120px);overflow:hidden;border-top:1px solid rgba(19,36,46,.08)">
+  <div style="position:absolute;inset:0;opacity:.5;background-image:linear-gradient(rgba(19,91,124,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(19,91,124,.05) 1px,transparent 1px);background-size:46px 46px;pointer-events:none"></div>
+  <div style="position:relative">
+    <div style="display:flex;align-items:center;gap:14px;font-size:12px;font-weight:700;letter-spacing:.24em;color:rgba(19,36,46,.55)">
+      <span style="font-family:'JetBrains Mono',monospace;color:#2C86B0;font-weight:400">02</span> MATERIALS LIBRARY
+      <span style="flex:1;height:1px;background:rgba(19,36,46,.1)"></span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;color:rgba(19,36,46,.35);font-weight:400">DWG AE-SVC-MAT · REV C</span>
+    </div>
+    <h2 style="margin:20px 0 0;font-weight:300;font-size:clamp(26px,3vw,32px);line-height:1.2;letter-spacing:-.01em;color:#13242E">Stocked grades, <b style="font-weight:600">across both processes.</b></h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px">
+      <div style="border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#fff;overflow:hidden">
+        <div style="padding:14px 20px;border-bottom:1px solid rgba(19,36,46,.1);font-weight:600;font-size:14px;color:#13242E">Aluminum alloys</div>
+        <div class="cap-row" style="padding:12px 20px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:rgba(19,36,46,.65)">1xxx · 2xxx · 3xxx · 5xxx · 6xxx · 7xxx series</div>
+      </div>
+      <div style="border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#fff;overflow:hidden">
+        <div style="padding:14px 20px;border-bottom:1px solid rgba(19,36,46,.1);font-weight:600;font-size:14px;color:#13242E">Stainless &amp; specialty steel</div>
+        <div class="cap-row" style="padding:12px 20px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:rgba(19,36,46,.65)">303 · 304 · 316/316L · 410 · 430 · 2205 · 17-4PH</div>
+      </div>
+      <div style="border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#fff;overflow:hidden">
+        <div style="padding:14px 20px;border-bottom:1px solid rgba(19,36,46,.1);font-weight:600;font-size:14px;color:#13242E">Carbon &amp; alloy steel</div>
+        <div class="cap-row" style="padding:12px 20px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:rgba(19,36,46,.65)">A36 · 1010 · 1020 · 1045 · 4140</div>
+      </div>
+      <div style="border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#fff;overflow:hidden">
+        <div style="padding:14px 20px;border-bottom:1px solid rgba(19,36,46,.1);font-weight:600;font-size:14px;color:#13242E">Copper &amp; brass</div>
+        <div class="cap-row" style="padding:12px 20px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:rgba(19,36,46,.65)">C110 (Copper) · C280 (Brass)</div>
+      </div>
+      <div style="border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#fff;overflow:hidden">
+        <div style="padding:14px 20px;border-bottom:1px solid rgba(19,36,46,.1);font-weight:600;font-size:14px;color:#13242E">Titanium alloys</div>
+        <div class="cap-row" style="padding:12px 20px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:rgba(19,36,46,.65)">TC4 (Ti-6Al-4V) · TA2</div>
+      </div>
+      <div style="border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#fff;overflow:hidden">
+        <div style="padding:14px 20px;border-bottom:1px solid rgba(19,36,46,.1);font-weight:600;font-size:14px;color:#13242E">Engineering plastics</div>
+        <div class="cap-row" style="padding:12px 20px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:rgba(19,36,46,.65)">ABS · POM · PC · PA66 · PEEK · PTFE · HDPE · PMMA</div>
+      </div>
+    </div>
+    <p style="margin:16px 0 0;font-size:13px;color:rgba(19,36,46,.55)">Don't see a grade? The <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="font-weight:600">quote portal</a> accepts custom material call-outs.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════ 06 · HOW IT WORKS ══════════════════════ -->
+<section style="background:#fff;padding:clamp(56px,7vw,88px) clamp(24px,8vw,120px);border-top:1px solid rgba(19,36,46,.08)">
+  <div style="display:flex;align-items:center;gap:14px;font-size:12px;font-weight:700;letter-spacing:.24em;color:rgba(19,36,46,.55)">
+    <span style="font-family:'JetBrains Mono',monospace;color:#2C86B0;font-weight:400">03</span> HOW IT WORKS
+    <span style="flex:1;height:1px;background:rgba(19,36,46,.1)"></span>
+  </div>
+  <h2 style="margin:20px 0 0;font-weight:300;font-size:clamp(26px,3vw,32px);line-height:1.2;letter-spacing:-.01em;color:#13242E">From CAD to certified part, <b style="font-weight:600">in three steps.</b></h2>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px">
+    <div style="border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#F6F8F9;padding:26px;position:relative">
+      <span style="position:absolute;top:20px;right:22px;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.3)">01</span>
+      <svg class="i" viewBox="0 0 24 24" style="width:26px;height:26px"><path d="M12 15V4M12 4l-4 4M12 4l4 4"/><path d="M5 15v3a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3"/></svg>
+      <div style="font-weight:600;font-size:16px;color:#13242E;margin-top:16px">Upload your CAD</div>
+      <p style="margin:8px 0 0;font-size:13.5px;line-height:1.6;color:rgba(19,36,46,.6)">Submit 3D files to the secure portal and get instant manufacturability feedback and an accurate quote — no account needed.</p>
+    </div>
+    <div style="border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#F6F8F9;padding:26px;position:relative">
+      <span style="position:absolute;top:20px;right:22px;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.3)">02</span>
+      <svg class="i" viewBox="0 0 24 24" style="width:26px;height:26px"><path d="M4 7h11M19 7h1M4 17h1M9 17h11"/><circle cx="17" cy="7" r="2.2"/><circle cx="7" cy="17" r="2.2"/></svg>
+      <div style="font-weight:600;font-size:16px;color:#13242E;margin-top:16px">Configure &amp; confirm</div>
+      <p style="margin:8px 0 0;font-size:13.5px;line-height:1.6;color:rgba(19,36,46,.6)">Choose material — from standard plastics to exotic aerospace alloys — set surface finishes and tolerances, and lock the price.</p>
+    </div>
+    <div style="border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#F6F8F9;padding:26px;position:relative">
+      <span style="position:absolute;top:20px;right:22px;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(19,36,46,.3)">03</span>
+      <svg class="i" viewBox="0 0 24 24" style="width:26px;height:26px"><path d="M20 7L9.5 17.5 4 12"/></svg>
+      <div style="font-weight:600;font-size:16px;color:#13242E;margin-top:16px">Receive QC'd parts</div>
+      <p style="margin:8px 0 0;font-size:13.5px;line-height:1.6;color:rgba(19,36,46,.6)">Track progress while automated in-process QC runs. Certified parts — with CMM report — delivered in as fast as three days.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ 07 · FUTURE SERVICES ══════════════════════ -->
+<section id="future" style="background:#0C1B24;color:#fff;padding:clamp(56px,7vw,88px) clamp(24px,8vw,120px);position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;opacity:.32;background-image:linear-gradient(rgba(95,168,204,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(95,168,204,.08) 1px,transparent 1px);background-size:52px 52px;-webkit-mask-image:radial-gradient(120% 90% at 70% 20%,#000 30%,transparent 82%);mask-image:radial-gradient(120% 90% at 70% 20%,#000 30%,transparent 82%)"></div>
+  <div style="position:relative">
+    <div style="display:flex;align-items:center;gap:14px;font-size:12px;font-weight:700;letter-spacing:.24em;color:rgba(255,255,255,.55)">
+      <span style="font-family:'JetBrains Mono',monospace;color:#5FA8CC;font-weight:400">04</span> ON THE ROADMAP
+      <span style="flex:1;height:1px;background:rgba(255,255,255,.12)"></span>
+    </div>
+    <h2 style="margin:20px 0 0;max-width:26ch;font-weight:300;font-size:clamp(26px,3.2vw,36px);line-height:1.18;letter-spacing:-.015em;color:#fff">The same OS is built to <b style="font-weight:700">add processes by configuration.</b></h2>
+    <p style="margin:18px 0 0;max-width:60ch;font-size:clamp(14px,1.5vw,17px);line-height:1.6;color:rgba(255,255,255,.64)">Because APG already does hybrid routing across CNC, EDM, additive and welding, expanding what Aether offers is a software rollout — not a new factory. Next up:</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px">
+      <div style="border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(16,37,49,.5);padding:24px">
+        <div style="display:flex;align-items:center;justify-content:space-between"><svg class="i" viewBox="0 0 24 24" style="stroke:#5FA8CC"><path d="M12 2v7M12 15v7M5 12h14"/><path d="M9 9l3 3 3-3"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.1em;color:#5FA8CC;border:1px solid rgba(95,168,204,.4);border-radius:20px;padding:4px 9px">SOON</span></div>
+        <div style="font-weight:600;font-size:16px;color:#fff;margin-top:14px">AI EDM</div>
+        <p style="margin:7px 0 0;font-size:13px;line-height:1.55;color:rgba(255,255,255,.6)">Wire &amp; sinker EDM for hardened materials, sharp internal corners and features conventional cutters can't reach — planned in the same hybrid job.</p>
+      </div>
+      <div style="border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(16,37,49,.5);padding:24px">
+        <div style="display:flex;align-items:center;justify-content:space-between"><svg class="i" viewBox="0 0 24 24" style="stroke:#5FA8CC"><path d="M12 2l8 4.5v9L12 20l-8-4.5v-9L12 2z"/><path d="M12 11l8-4.5M12 11v9M12 11L4 6.5"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.1em;color:#5FA8CC;border:1px solid rgba(95,168,204,.4);border-radius:20px;padding:4px 9px">SOON</span></div>
+        <div style="font-weight:600;font-size:16px;color:#fff;margin-top:14px">AI Metal 3D Printing</div>
+        <p style="margin:7px 0 0;font-size:13px;line-height:1.55;color:rgba(255,255,255,.6)">Directed-energy and powder-bed additive for near-net shapes and repair — printed and finish-machined as one certified route.</p>
+      </div>
+      <div style="border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(16,37,49,.5);padding:24px">
+        <div style="display:flex;align-items:center;justify-content:space-between"><svg class="i" viewBox="0 0 24 24" style="stroke:#5FA8CC"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.1em;color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 9px">SCALING</span></div>
+        <div style="font-weight:600;font-size:16px;color:#fff;margin-top:14px">More nodes, more capacity</div>
+        <p style="margin:7px 0 0;font-size:13px;line-height:1.55;color:rgba(255,255,255,.6)">New Fabricator cells and factory nodes deploy by configuration, adding capacity and processes without re-engineering.</p>
+      </div>
+    </div>
+    <p style="margin:22px 0 0;font-size:13.5px;color:rgba(255,255,255,.6)">Curious about a process that isn't listed yet? <a href="#svc-cta" style="color:#5FA8CC;font-weight:600">Talk to engineering →</a></p>
+  </div>
+</section>
+
+<!-- ══════════════════════ 08 · QUALITY STRIP ══════════════════════ -->
+<section style="background:#EFF2F3;padding:clamp(44px,5vw,64px) clamp(24px,8vw,120px);border-top:1px solid rgba(19,36,46,.08)">
+  <div class="flip" style="display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap">
+    <div style="max-width:44ch">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#135B7C;margin-bottom:10px">Quality on every part</div>
+      <h2 style="margin:0;font-weight:300;font-size:clamp(20px,2.4vw,26px);line-height:1.3;letter-spacing:-.01em;color:#13242E">Automated in-process QC and a full <b style="font-weight:600">CMM report with every order.</b></h2>
+      <a href="technology.html#qms" style="display:inline-flex;align-items:center;gap:8px;margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#135B7C;border:1px solid rgba(19,91,124,.4);border-radius:8px;padding:11px 18px;transition:.2s" data-hover="border-color:#2C86B0;background:rgba(19,91,124,.06)">See the QMS layer →</a>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px">
+      <span style="border:1px solid rgba(19,36,46,.14);border-radius:8px;background:#fff;padding:12px 16px;font-weight:600;font-size:13px;color:#13242E">ISO 9001</span>
+      <span style="border:1px solid rgba(19,36,46,.14);border-radius:8px;background:#fff;padding:12px 16px;font-weight:600;font-size:13px;color:#13242E">ISO 13485</span>
+      <span style="border:1px solid rgba(19,36,46,.14);border-radius:8px;background:#fff;padding:12px 16px;font-weight:600;font-size:13px;color:#13242E">ISO 14001</span>
+      <span style="border:1px solid rgba(19,36,46,.14);border-radius:8px;background:#fff;padding:12px 16px;font-weight:600;font-size:13px;color:#13242E">AS9100D</span>
+      <span style="border:1px solid rgba(19,36,46,.14);border-radius:8px;background:#fff;padding:12px 16px;font-weight:600;font-size:13px;color:#13242E">Zeiss CMM</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ 09 · CTA ══════════════════════ -->
+<section id="svc-cta" style="background:#08141B;color:#fff;padding:clamp(72px,9vw,110px) clamp(24px,11vw,160px)">
+  <div style="display:flex;flex-direction:column;gap:16px;max-width:62ch;margin-bottom:36px">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.62);display:inline-flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <span style="width:32px;height:1px;background:currentColor;opacity:.4"></span>05 — START AN ORDER<span style="color:#5FA8CC;letter-spacing:.28em">One file, any process</span>
+    </div>
+    <h2 style="color:#fff;font-weight:300;font-size:clamp(28px,3.4vw,38px);line-height:1.2;letter-spacing:-.015em;text-wrap:balance;margin:0">Not sure which process? <b style="font-weight:600">Upload — the system will route it.</b></h2>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+    <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="padding:26px 24px;border:1px solid rgba(255,255,255,.22);border-radius:8px;background:rgba(23,50,67,.35);display:flex;flex-direction:column;gap:14px;transition:border-color .18s ease, background .18s ease" data-hover="border-color:#5FA8CC;background:rgba(23,50,67,.55)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;color:#5FA8CC;text-transform:uppercase">Fastest path</div>
+      <h3 style="color:#fff;font-weight:500;font-size:18px;line-height:1.25;margin:0">Get an instant quote</h3>
+      <p style="margin:0;font-size:13px;line-height:1.55;color:rgba(255,255,255,.62)">Upload a STEP file and let APG pick the route and price it in minutes.</p>
+      <div style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:#fff;text-transform:uppercase;padding-top:6px">Open the portal →</div>
+    </a>
+    <a href="#" style="padding:26px 24px;border:1px solid rgba(255,255,255,.22);border-radius:8px;background:rgba(23,50,67,.35);display:flex;flex-direction:column;gap:14px;transition:border-color .18s ease, background .18s ease" data-hover="border-color:#5FA8CC;background:rgba(23,50,67,.55)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;color:#5FA8CC;text-transform:uppercase">Production program</div>
+      <h3 style="color:#fff;font-weight:500;font-size:18px;line-height:1.25;margin:0">Talk to engineering</h3>
+      <p style="margin:0;font-size:13px;line-height:1.55;color:rgba(255,255,255,.62)">Recurring or high-mix volume — we'll map it onto the cell and OS with you.</p>
+      <div style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:#fff;text-transform:uppercase;padding-top:6px">Start a conversation →</div>
+    </a>
+    <a href="technology.html" style="padding:26px 24px;border:1px solid rgba(255,255,255,.22);border-radius:8px;background:rgba(23,50,67,.35);display:flex;flex-direction:column;gap:14px;transition:border-color .18s ease, background .18s ease" data-hover="border-color:#5FA8CC;background:rgba(23,50,67,.55)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;color:#5FA8CC;text-transform:uppercase">How it works</div>
+      <h3 style="color:#fff;font-weight:500;font-size:18px;line-height:1.25;margin:0">See the technology</h3>
+      <p style="margin:0;font-size:13px;line-height:1.55;color:rgba(255,255,255,.62)">The operating system behind every process — APG, FacOS, the Fabricator and QMS.</p>
+      <div style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:#fff;text-transform:uppercase;padding-top:6px">Explore technology →</div>
+    </a>
+  </div>
+</section>
+
+<!-- ══════════════════════ FOOTER ══════════════════════ -->
+<footer style="background:#08141B;color:rgba(255,255,255,.62);border-top:1px solid rgba(255,255,255,.08);padding:clamp(52px,7vw,80px) clamp(24px,11vw,160px) 0">
+  <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:clamp(28px,4vw,56px)">
+    <div>
+      <div style="font-size:20px;letter-spacing:.02em;color:#fff"><b style="font-weight:700">Aether</b> <span style="color:rgba(255,255,255,.40);font-weight:400">Manufacturing</span></div>
+      <p style="margin:18px 0 0;font-size:13.5px;line-height:1.65;color:rgba(255,255,255,.62);max-width:42ch">Defining the category of AI CNC machining. Transparent quoting, autonomous production, and predictable quality for high-mix, low-volume manufacturing.</p>
+      <div style="margin-top:22px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em;color:rgba(255,255,255,.40)">HQ · 19 Morris Ave, Building 128 · Brooklyn, NY 11205, USA</div>
+    </div>
+    <nav style="display:flex;flex-direction:column">
+      <h4 style="margin:0 0 16px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#fff">Services</h4>
+      <a href="services.html#proc-milling" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">AI CNC Milling</a>
+      <a href="services.html#proc-turning" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">AI CNC Turning</a>
+      <a href="services.html#future" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">AI EDM</a>
+      <a href="services.html#future" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">AI Metal 3D Printing</a>
+    </nav>
+    <nav style="display:flex;flex-direction:column">
+      <h4 style="margin:0 0 16px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#fff">Technology</h4>
+      <a href="technology.html#apg" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">APG Engine</a>
+      <a href="technology.html#facos" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">FacOS</a>
+      <a href="technology.html#fabricator" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">The Fabricator</a>
+      <a href="technology.html#qms" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">Quality &amp; Metrology</a>
+    </nav>
+    <nav style="display:flex;flex-direction:column">
+      <h4 style="margin:0 0 16px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#fff">Company</h4>
+      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">About Aether</a>
+      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">Case Studies</a>
+      <a href="#" style="font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">Contact</a>
+    </nav>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:clamp(40px,5vw,60px);padding:24px 0 28px;border-top:1px solid rgba(255,255,255,.08);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;color:rgba(255,255,255,.40)">
+    <span>© 2026 Aether Manufacturing — Precision. Software-defined.</span>
+    <span style="display:flex;gap:22px"><a href="#" style="color:inherit;transition:color .18s" data-hover="color:#fff">Privacy</a><a href="#" style="color:inherit;transition:color .18s" data-hover="color:#fff">Terms</a></span>
+  </div>
+</footer>
+
+</div><!-- /page wrapper -->
+
+<script>
+(function () {
+  'use strict';
+  document.querySelectorAll('[data-hover]').forEach(function (el) {
+    var base = el.getAttribute('style') || '';
+    var hover = el.getAttribute('data-hover');
+    el.addEventListener('mouseenter', function () { el.setAttribute('style', base + ';' + hover); });
+    el.addEventListener('mouseleave', function () { el.setAttribute('style', base); });
+  });
+  var navDark = document.getElementById('nav-dark'), navLight = document.getElementById('nav-light');
+  function onScroll() {
+    var hero = document.getElementById('top'); var h = hero ? hero.offsetHeight : 600;
+    var solid = window.scrollY > h - 96;
+    navDark.style.opacity = solid ? '0' : '1'; navDark.style.pointerEvents = solid ? 'none' : 'auto';
+    navLight.style.opacity = solid ? '1' : '0'; navLight.style.pointerEvents = solid ? 'auto' : 'none';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('[data-reveal]').forEach(function (el) { io.observe(el); });
+  /* active jump pill */
+  var pills = Array.prototype.slice.call(document.querySelectorAll('.proc-pill'));
+  function setActive(id) {
+    pills.forEach(function (p) { var on = p.getAttribute('href') === '#' + id;
+      p.style.background = on ? '#135B7C' : '#fff'; p.style.borderColor = on ? '#135B7C' : 'rgba(19,36,46,.14)'; p.style.color = on ? '#fff' : 'rgba(19,36,46,.6)'; });
+  }
+  var so = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) setActive(e.target.id); });
+  }, { rootMargin: '-45% 0px -45% 0px' });
+  ['proc-milling','proc-turning','materials','future'].forEach(function (id) { var el = document.getElementById(id); if (el) so.observe(el); });
+})();
+</script>
+</body>
+</html>
