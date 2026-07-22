@@ -160,7 +160,9 @@ img{max-width:100%}
         <p style="margin:0;font-weight:300;font-size:20px;line-height:33px;color:rgba(19,36,46,.78)">Founded by MIT engineers specializing in <b style="font-weight:600;color:#13242E">AI</b>, <b style="font-weight:600;color:#13242E">advanced manufacturing</b>, and <b style="font-weight:600;color:#13242E">intelligent automation</b>.</p>
       </div>
       <div style="position:relative;width:100%;aspect-ratio:16/9;border:1px solid rgba(19,36,46,.14);border-radius:8px;overflow:hidden;box-shadow:0 24px 60px rgba(19,36,46,.18);background:#0C1B24">
-        <img src="assets/factory-story.png" alt="Aether factory floor" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform 6s ease" data-hover="transform:scale(1.04)">
+        <video autoplay muted loop playsinline preload="auto" poster="assets/factory-story.png" aria-label="Aether team & story" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform 6s ease" data-hover="transform:scale(1.04)">
+          <source src="uploads/shortcut-video-edited-blured.mp4" type="video/mp4">
+        </video>
         <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.12) 0%,rgba(0,0,0,.42) 100%)"></div>
         <span style="position:absolute;top:10px;left:10px;width:12px;height:12px;border-top:1px solid rgba(255,255,255,.5);border-left:1px solid rgba(255,255,255,.5)"></span>
         <span style="position:absolute;bottom:10px;right:10px;width:12px;height:12px;border-bottom:1px solid rgba(255,255,255,.5);border-right:1px solid rgba(255,255,255,.5)"></span>
@@ -486,7 +488,7 @@ img{max-width:100%}
         <div style="display:flex;gap:7px;flex-wrap:wrap">
           <button class="sec-pill" data-sector="medical" style="display:inline-flex;align-items:center;justify-content:center;padding:8px 15px;border-radius:30px;font-family:'Montserrat',sans-serif;font-weight:500;font-size:12px;white-space:nowrap;background:#135B7C;border:1px solid #135B7C;color:#fff">Medical</button>
           <button class="sec-pill" data-sector="robotics" style="display:inline-flex;align-items:center;justify-content:center;padding:8px 15px;border-radius:30px;font-family:'Montserrat',sans-serif;font-weight:500;font-size:12px;white-space:nowrap;background:#fff;border:1px solid rgba(19,36,46,.14);color:rgba(19,36,46,.6)">Robotics</button>
-          <button class="sec-pill" style="display:inline-flex;align-items:center;justify-content:center;padding:8px 15px;border-radius:30px;font-family:'Montserrat',sans-serif;font-weight:500;font-size:12px;white-space:nowrap;background:#fff;border:1px solid rgba(19,36,46,.14);color:rgba(19,36,46,.6)">Aerospace</button>
+          <button class="sec-pill" data-sector="aerospace" style="display:inline-flex;align-items:center;justify-content:center;padding:8px 15px;border-radius:30px;font-family:'Montserrat',sans-serif;font-weight:500;font-size:12px;white-space:nowrap;background:#fff;border:1px solid rgba(19,36,46,.14);color:rgba(19,36,46,.6)">Aerospace</button>
           <button class="sec-pill" style="display:inline-flex;align-items:center;justify-content:center;padding:8px 15px;border-radius:30px;font-family:'Montserrat',sans-serif;font-weight:500;font-size:12px;white-space:nowrap;background:#fff;border:1px solid rgba(19,36,46,.14);color:rgba(19,36,46,.6)">Oil &amp; Gas</button>
           <button class="sec-pill" style="display:inline-flex;align-items:center;justify-content:center;padding:8px 15px;border-radius:30px;font-family:'Montserrat',sans-serif;font-weight:500;font-size:12px;white-space:nowrap;background:#fff;border:1px solid rgba(19,36,46,.14);color:rgba(19,36,46,.6)">Semiconductor</button>
           <button class="sec-pill" style="display:inline-flex;align-items:center;justify-content:center;padding:8px 15px;border-radius:30px;font-family:'Montserrat',sans-serif;font-weight:500;font-size:12px;white-space:nowrap;background:#fff;border:1px solid rgba(19,36,46,.14);color:rgba(19,36,46,.6)">Data Center</button>
@@ -499,7 +501,7 @@ img{max-width:100%}
           <div id="sec-left" style="opacity:1;transform:translateY(0);transition:opacity .3s ease,transform .3s ease">
             <div style="display:flex;align-items:center;gap:9px">
               <span id="sec-tag" style="display:inline-flex;align-items:center;background:rgba(95,168,204,.14);border:1px solid rgba(95,168,204,.35);border-radius:4px;padding:6px 9px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#19749F">Medical Devices</span>
-              <span style="display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.9px;text-transform:uppercase;color:#3FAE72"><span style="width:6px;height:6px;border-radius:50%;background:#3FAE72;box-shadow:0 0 7px #6FE0A6;animation:pulse 2s ease-in-out infinite"></span>In production</span>
+              <span id="sec-status" style="display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.9px;text-transform:uppercase;color:#3FAE72"><span id="sec-dot" style="width:6px;height:6px;border-radius:50%;background:#3FAE72;box-shadow:0 0 7px #6FE0A6;animation:pulse 2s ease-in-out infinite"></span><span id="sec-statuslabel">In production</span></span>
             </div>
             <h3 id="sec-heading" style="margin:16px 0 0;font-weight:600;font-size:24px;line-height:31px;letter-spacing:-.01em;color:#135B7C">Advanced Surgical Systems</h3>
             <div id="sec-cats" style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.9px;text-transform:uppercase;color:#135B7C;margin-top:13px">MEDICAL SURGERY  |  RADIOLOGY  |  ORTHOPEDICS</div>
@@ -574,7 +576,7 @@ img{max-width:100%}
         <div style="width:48px;height:48px;border-radius:50%;background:#135B7C;border:1px solid #135B7C;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(19,36,46,.12)"><svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"><path d="M12 3l8 4v10l-8 4-8-4V7z"></path><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg></div>
         <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;color:#135B7C">06</div>
         <h4 style="margin:0;font-weight:600;font-size:14px;line-height:1.25;color:#13242E">Delivered</h4>
-        <p style="margin:0;font-size:12px;line-height:1.5;color:rgba(19,36,46,.6);max-width:22ch">Finished, inspected parts on your dock — record included.</p>
+        <p style="margin:0;font-size:12px;line-height:1.5;color:rgba(19,36,46,.6);max-width:22ch">Finished, inspected parts on your dock.</p>
       </div>
     </div>
 
@@ -648,8 +650,7 @@ img{max-width:100%}
 
       <a href="https://youtu.be/YKWQ-ogiVJo?si=cRJkjHrKAB9ykNAJ" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:24px 28px;border:1px solid rgba(19,36,46,.12);border-radius:12px;background:#fff;transition:border-color .2s,box-shadow .2s;color:inherit" data-hover="border-color:rgba(19,91,124,.4);box-shadow:0 14px 34px rgba(19,36,46,.08)">
         <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
-          <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#135B7C">Upload<span style="width:4px;height:4px;border-radius:50%;background:rgba(19,36,46,.2);display:inline-block"></span>Quote<span style="width:4px;height:4px;border-radius:50%;background:rgba(19,36,46,.2);display:inline-block"></span>Production<span style="width:4px;height:4px;border-radius:50%;background:rgba(19,36,46,.2);display:inline-block"></span>Inspection<span style="width:4px;height:4px;border-radius:50%;background:rgba(19,36,46,.2);display:inline-block"></span>Shipment<span style="width:4px;height:4px;border-radius:50%;background:rgba(19,36,46,.2);display:inline-block"></span>Delivered</div>
-          <p style="margin:0;font-size:14px;line-height:1.5;color:rgba(19,36,46,.6)">Watch one part move through all six stages — <b style="color:#13242E;font-weight:600">live, on web and mobile.</b></p>
+          <p style="margin:0;font-size:14px;line-height:1.5;color:rgba(19,36,46,.6)">Watch one part move through all six stages </p>
         </div>
         <span style="flex-shrink:0;display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:600;color:#135B7C;white-space:nowrap"><span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#135B7C;color:#fff;font-size:9px;padding-left:2px">▶</span>Watch the film <span style="font-size:16px;line-height:1">→</span></span>
       </a>
@@ -719,7 +720,9 @@ img{max-width:100%}
 
 <!-- ══════════════════════ 09b · VIDEO BAND (full-bleed banner) ══════════════════════ -->
 <section style="margin:0;padding:0;line-height:0;background:#0C1B24">
-  <img src="assets/factory-video-ss02.png" alt="Modular Factories scaled globally — Offshore Costs, Onshore Speeds" style="display:block;width:100%;height:auto">
+  <video autoplay muted loop playsinline preload="auto" poster="assets/factory-video-ss02.png" aria-label="Aether Mexico factory" style="display:block;width:100%;height:clamp(320px,34vw,620px);object-fit:cover">
+    <source src="assets/aether-factory-mexico.mp4" type="video/mp4">
+  </video>
 </section>
 
 <!-- ══════════════════════ 10 · SEGMENTED CTA (deep — three doors) ══════════════════════ -->
@@ -862,12 +865,12 @@ img{max-width:100%}
      Data drives ONLY the zoom detail panel; the list & stack are static HTML. */
   var OS_DETAIL = {
     0: { st: 'rendered', name: 'APG', label: 'Autonomous Process Generator',
-         shot: { img: 'assets/02-system-06.png', alt: 'APG live portal', screen: 'APG · WHITE-BOX QUOTE', source: 'aethermfg.com', state: 'LIVE PORTAL' } },
+         shot: { img: 'assets/apg-review-quote-cropped.png', alt: 'APG live portal', screen: 'APG · WHITE-BOX QUOTE', source: 'aethermfg.com', state: 'LIVE PORTAL' } },
     1: { st: 'rendered', name: 'FacOS', label: 'Factory Operating System',
-         shot: { img: 'assets/02-system-07.jpg', alt: 'FacOS — production floor', screen: 'FACOS · PRODUCTION FLOOR', source: 'Fairview, PA node', state: 'LIVE FEED' } },
-    2: { st: 'blueprint', name: 'QMS', label: 'Quality Management System', kpis: ['Open NCRs', 'CAPA', 'Audits due', 'First-pass'] },
+         shot: { img: 'assets/facos-dashboard.png', alt: 'FacOS — production floor', screen: 'FACOS · PRODUCTION FLOOR', source: 'Fairview, PA node', state: 'LIVE FEED' } },
+    2: { st: 'rendered', name: 'QMS', label: 'Quality Management System', shot: { img: 'assets/qms-screenshot.png', alt: 'QMS — quality & metrology dashboard', screen: 'QMS · QUALITY DASHBOARD', source: 'Erie, PA node', state: 'LIVE FEED' } },
     3: { st: 'floor', name: 'Automation Cell', label: 'The physical envelope' },
-    4: { st: 'blueprint', name: 'Logistics', label: 'Dispatch & distribution', kpis: ['Open orders', 'In transit', 'On-time', 'Lead time'] }
+    4: { st: 'rendered', name: 'Logistics', label: 'Dispatch & distribution', shot: { img: 'assets/logistics-shipment.png', alt: 'Logistics — dispatch & shipment tracking', screen: 'LOGISTICS · DISPATCH & TRACKING', source: 'Erie, PA node', state: 'LIVE FEED', bare: true } }
   };
   var OS_CHIP = {
     rendered:  { t: 'RENDERED · REAL SCREEN', c: '#19749F', bg: 'rgba(44,134,176,.1)', b: 'rgba(44,134,176,.4)' },
@@ -880,6 +883,7 @@ img{max-width:100%}
   var osDetail = document.getElementById('os-detail');
   var osOpen = 0;    // which layer's list row is expanded
   var osZoom = -1;   // -1 = stack shown, >=0 = detail shown for that layer
+  var osStackH = 0;  // cached height of the stack view, so `bare` detail can match it
 
   function osSetOpen(i) {
     osOpen = i;
@@ -903,13 +907,20 @@ img{max-width:100%}
     var body = '';
     if (d.st === 'rendered') {
       var s = d.shot;
-      body = '<div style="position:relative;width:100%;max-width:860px;border:1px solid rgba(19,36,46,.16);border-radius:6px;overflow:hidden;background:#0A1A22;box-shadow:0 20px 50px rgba(19,36,46,.2)">'
-        + '<img src="' + s.img + '" alt="' + s.alt + '" style="display:block;width:100%">'
-        + '<div style="display:flex;font-family:\'JetBrains Mono\',monospace;font-size:10px;background:rgba(6,16,22,.85);border-top:1px solid rgba(255,255,255,.08)">'
+      // `bare` (e.g. logistics): the PNG carries its own transparent padding — drop the navy
+      // frame/border/shadow AND the SCREEN/SOURCE/STATE caption; the frame is just the artwork.
+      var frameStyle = s.bare
+        ? 'position:relative;width:100%;max-width:860px;border-radius:6px;overflow:hidden;background:transparent'
+        : 'position:relative;width:100%;max-width:860px;border:1px solid rgba(19,36,46,.16);border-radius:6px;overflow:hidden;background:#0A1A22;box-shadow:0 20px 50px rgba(19,36,46,.2)';
+      var footer = s.bare ? '' : ('<div style="display:flex;font-family:\'JetBrains Mono\',monospace;font-size:10px;background:rgba(6,16,22,.85);border-top:1px solid rgba(255,255,255,.08)">'
         + '<span style="padding:8px 13px;border-right:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.6);white-space:nowrap;letter-spacing:.06em"><b style="color:rgba(255,255,255,.35);font-weight:400;font-size:8px;letter-spacing:.12em;margin-right:6px">SCREEN</b>' + s.screen + '</span>'
         + '<span style="padding:8px 13px;border-right:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.6);white-space:nowrap;letter-spacing:.06em"><b style="color:rgba(255,255,255,.35);font-weight:400;font-size:8px;letter-spacing:.12em;margin-right:6px">SOURCE</b>' + s.source + '</span>'
         + '<span style="padding:8px 13px;color:#5FA8CC;margin-left:auto;white-space:nowrap;letter-spacing:.06em"><b style="color:rgba(255,255,255,.35);font-weight:400;font-size:8px;letter-spacing:.12em;margin-right:6px">STATE</b>' + s.state + '</span>'
-        + '</div></div>';
+        + '</div>');
+      body = '<div style="' + frameStyle + '">'
+        + '<img src="' + s.img + '" alt="' + s.alt + '" style="display:block;width:100%">'
+        + footer
+        + '</div>';
     } else if (d.st === 'blueprint') {
       var title = (d.name + ' · ' + d.label).toUpperCase();
       var kpis = d.kpis.map(osKpiCard).join('');
@@ -926,20 +937,42 @@ img{max-width:100%}
         + '<div style="margin-top:10px;font-family:\'JetBrains Mono\',monospace;font-size:10px;letter-spacing:.08em;color:rgba(19,36,46,.45);text-align:center">BLUEPRINT · SCREEN PENDING</div></div>';
     } else { /* floor */
       body = '<div style="width:100%;max-width:740px;text-align:center">'
-        + '<div style="position:relative;border:1px solid rgba(19,36,46,.16);border-radius:6px;overflow:hidden;background:#0C1B24;box-shadow:0 20px 50px rgba(19,36,46,.2)">'
-        + '<img src="uploads/021-AetherMFG.png" alt="Machined parts from the automation cell" style="display:block;width:100%;max-height:380px;object-fit:cover">'
+        + '<div style="position:relative;border:1px solid rgba(19,36,46,.16);border-radius:6px;overflow:hidden;background:#EFF1F0;box-shadow:0 20px 50px rgba(19,36,46,.2)">'
+        + '<img src="uploads/fabricator-image.png" alt="Aether Fabricator cell — labeled cutaway" style="display:block;width:80%;max-height:380px;object-fit:cover;margin:0 auto">'
         + '<span style="position:absolute;top:10px;left:10px;width:12px;height:12px;border-top:1px solid rgba(255,255,255,.5);border-left:1px solid rgba(255,255,255,.5)"></span>'
         + '<span style="position:absolute;bottom:10px;right:10px;width:12px;height:12px;border-bottom:1px solid rgba(255,255,255,.5);border-right:1px solid rgba(255,255,255,.5)"></span></div>'
-        + '<div style="margin-top:12px;font-family:\'JetBrains Mono\',monospace;font-size:11px;letter-spacing:.06em;color:rgba(19,36,46,.55)">The cell’s output — <b style="color:#3FAE72;font-weight:400">machined on the Erie floor</b></div></div>';
     }
     return head + '<div style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(48px,5vw,56px) clamp(20px,3vw,40px) clamp(28px,3vw,40px);min-height:420px">' + body + '</div>';
   }
   function osShowDetail(i) {
     osZoom = i;
     osSetOpen(i);
+    // remember the stack view's height while it's still visible, so a `bare` detail
+    // can be locked to the exact same frame size instead of growing taller.
+    if (getComputedStyle(osStack).display !== 'none') osStackH = osStack.parentElement.getBoundingClientRect().height;
     osDetail.innerHTML = osDetailHTML(i);
     osStack.style.display = 'none';
     osDetail.style.display = 'block';
+    var d = OS_DETAIL[i];
+    if (d.shot && d.shot.bare && osStackH) {
+      var wrap = [].slice.call(osDetail.children).find(function (el) { return getComputedStyle(el).position !== 'absolute'; });
+      if (wrap) {
+        var wcs = getComputedStyle(wrap);
+        var padV = parseFloat(wcs.paddingTop) + parseFloat(wcs.paddingBottom);
+        // lock the frame to the stack height, then scale the artwork ~10% while keeping it
+        // centered (symmetric padding) and never letting the padding fall under the header row
+        // (‹ Stack / chip, ~44px) — so no overlap, no clipping, frame height unchanged.
+        var targetH = (osStackH - padV) * 1.10;
+        var pad = Math.max(44, (osStackH - targetH) / 2);
+        wrap.style.minHeight = '0';
+        wrap.style.boxSizing = 'border-box';
+        wrap.style.height = osStackH + 'px';
+        wrap.style.paddingTop = pad + 'px';
+        wrap.style.paddingBottom = pad + 'px';
+        var bimg = osDetail.querySelector('img');
+        if (bimg) { bimg.style.width = 'auto'; bimg.style.maxWidth = '100%'; bimg.style.maxHeight = (osStackH - 2 * pad) + 'px'; bimg.style.margin = '0 auto'; }
+      }
+    }
     var back = document.getElementById('os-back');
     if (back) {
       var base = back.getAttribute('style');
@@ -965,25 +998,40 @@ img{max-width:100%}
     el.addEventListener('click', function () { osShowDetail(i); });
   });
   osStack.addEventListener('mouseleave', function () { osSetTint(-1); });
+  // keep the cached stack height current on resize (only measurable while stack is shown)
+  window.addEventListener('resize', function () { if (getComputedStyle(osStack).display !== 'none') osStackH = osStack.parentElement.getBoundingClientRect().height; });
 
   /* ══════════ §06 · IN PRODUCTION — sector swap ══════════ */
   var SECTORS = {
     medical: { tag: 'Medical Devices', heading: 'Advanced Surgical Systems', cats: 'MEDICAL SURGERY  |  RADIOLOGY  |  ORTHOPEDICS',
+      status: 'In production', statusColor: '#3FAE72', live: true,
       parts: 'assets/06-inprod-parts.png', partsAlt: 'Titanium surgical plates in production with materials, dimensions, and tolerances',
       robot: 'assets/06-inprod-robot-v2.png', robotAlt: 'Robotic surgical system on the operating floor' },
     robotics: { tag: 'Robotic Parts', heading: 'Humanoid Robots', cats: 'PRECISION JOINTS  |  ACTUATORS  |  STRUCTURAL FRAMES',
+      status: 'In production', statusColor: '#3FAE72', live: true,
       parts: 'assets/06-robotics-parts.png', partsAlt: 'Aluminum 7075 robotic parts in production with materials, dimensions, and tolerances',
-      robot: 'assets/06-robotics-robot.png', robotAlt: 'Humanoid robot built from Aether precision parts' }
+      robot: 'assets/06-robotics-robot.png', robotAlt: 'Humanoid robot built from Aether precision parts' },
+    aerospace: { tag: 'Aerospace', heading: 'Electric Aviation & Hyperloop', cats: 'AIRFRAME STRUCTURES  |  MOTOR COMPONENTS  |  FLIGHT-CRITICAL SYSTEMS',
+      status: 'Representative capability', statusColor: '#838386', live: false,
+      parts: 'assets/06-aerospace-parts.png', partsAlt: 'Aerospace machined parts — jet engine impeller, valve block, connecting rod, weldneck flange — with materials, dimensions, and tolerances',
+      robot: 'assets/06-aerospace-robot.png', robotAlt: 'Electric aviation eVTOL aircraft built from Aether precision parts' }
   };
   var secPills = [].slice.call(document.querySelectorAll('.sec-pill'));
   var secLeft = document.getElementById('sec-left');
   var secTag = document.getElementById('sec-tag'), secHeading = document.getElementById('sec-heading'), secCats = document.getElementById('sec-cats');
   var secParts = document.getElementById('sec-parts'), secRobot = document.getElementById('sec-robot');
+  var secStatus = document.getElementById('sec-status'), secDot = document.getElementById('sec-dot'), secStatusLabel = document.getElementById('sec-statuslabel');
   var curSector = 'medical', secSwapping = false;
   function renderSector() {
     var s = SECTORS[curSector];
     secTag.textContent = s.tag; secHeading.textContent = s.heading; secCats.textContent = s.cats;
     secParts.src = s.parts; secParts.alt = s.partsAlt; secRobot.src = s.robot; secRobot.alt = s.robotAlt;
+    // status pill (In production · live green ↔ Representative capability · muted grey)
+    secStatusLabel.textContent = s.status;
+    secStatus.style.color = s.statusColor;
+    secDot.style.background = s.statusColor;
+    secDot.style.boxShadow = s.live ? '0 0 7px #6FE0A6' : 'none';
+    secDot.style.animation = s.live ? 'pulse 2s ease-in-out infinite' : 'none';
     secPills.forEach(function (p) {
       var on = p.getAttribute('data-sector') === curSector;
       p.style.background = on ? '#135B7C' : '#fff';
