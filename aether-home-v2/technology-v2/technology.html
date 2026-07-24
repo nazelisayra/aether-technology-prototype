@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aether — Technology</title>
+<meta name="description" content="The Aether Fabricator, the APG process generator, the FacOS factory operating system, and closed-loop metrology — the four parts of an AI-native machine shop.">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   AETHER · TECHNOLOGY v2
+   Order (fixed by product): FABRICATOR → APG → FACOS → QMS → CERTS
+   Light page. Dark is used only for the closing CTA and footer.
+   Palette / spacing tokens: ../assets/tokens.css
+   Convention matches index.html — inline styles, literal hex,
+   data-hover for hover states.
+   ═══════════════════════════════════════════════════════════════ */
+
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{margin:0;background:#EFF2F3;color:#13242E;font-family:'Montserrat',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#135B7C;text-decoration:none}
+a:hover{color:#2C86B0}
+img,video{max-width:100%}
+:focus-visible{outline:2px solid #2C86B0;outline-offset:3px;border-radius:2px}
+
+/* ── SECTION RHYTHM ──────────────────────────────────────────
+   One padding rule for the whole page. Change it here, not
+   in the sections.                                            */
+.sec{padding:clamp(72px,9vw,124px) clamp(24px,8vw,120px)}
+.sec--tight{padding-top:clamp(40px,5vw,64px);padding-bottom:clamp(40px,5vw,64px)}
+
+/* ── TYPE ──────────────────────────────────────────────────── */
+.eyebrow{display:inline-flex;align-items:center;gap:12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#135B7C}
+.eyebrow::before{content:"";width:26px;height:1px;background:#135B7C;opacity:.55}
+.h1{margin:22px 0 0;max-width:19ch;font-weight:300;font-size:clamp(38px,5.6vw,72px);line-height:1.0;letter-spacing:-.032em;color:#13242E}
+.h2{margin:20px 0 0;font-weight:300;font-size:clamp(28px,3.6vw,44px);line-height:1.08;letter-spacing:-.026em;color:#13242E}
+.h1 b,.h2 b{font-weight:700}
+.lead{margin:22px 0 0;font-size:clamp(15px,1.5vw,17.5px);line-height:1.62;color:rgba(19,36,46,.62)}
+.mono{font-family:'JetBrains Mono',monospace}
+
+/* ── POINTS — a hairline list, no bullets, no cards ────────── */
+.pt{display:grid;grid-template-columns:14px 1fr;gap:14px;padding:16px 0;border-top:1px solid rgba(19,36,46,.1);font-size:14.5px;line-height:1.56;color:rgba(19,36,46,.68)}
+.pt:last-child{border-bottom:1px solid rgba(19,36,46,.1)}
+.pt i{font-style:normal;color:#2C86B0;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7}
+.pt b{color:#13242E;font-weight:600}
+
+/* ── THE CELL — two views of the same machine, one media well.
+   Both the cutaway render and the simulation were produced on the
+   Aether paper background (#EEF0EF / #EFF2F3), so neither needs a
+   card: they dissolve straight into the page.                     */
+.cell{position:relative;aspect-ratio:16/9;margin-top:clamp(16px,2.4vw,32px)}
+.cell>*{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .5s cubic-bezier(.4,0,.2,1);pointer-events:none}
+.cell>*.on{opacity:1;pointer-events:auto}
+.viewtabs{display:flex;justify-content:flex-end;gap:4px;margin-top:clamp(20px,3vw,36px)}
+.viewtab{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(19,36,46,.5);background:none;border:1px solid rgba(19,36,46,0);border-radius:20px;padding:8px 16px;cursor:pointer;transition:.22s}
+.viewtab:hover{color:#13242E}
+.viewtab[aria-pressed="true"]{color:#135B7C;border-color:rgba(19,91,124,.35);background:rgba(19,91,124,.05)}
+
+/* ── MEDIA FRAME — one treatment for every screen capture ──── */
+.frame{border:1px solid rgba(19,36,46,.14);border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 24px 60px rgba(19,36,46,.1)}
+.frame-bar{display:flex;align-items:center;gap:7px;padding:11px 15px;background:#F6F8F9;border-bottom:1px solid rgba(19,36,46,.1)}
+.frame-bar span.d{width:8px;height:8px;border-radius:50%;background:rgba(19,36,46,.16)}
+.frame-bar span.u{margin-left:8px;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.08em;color:rgba(19,36,46,.45)}
+.frame video,.frame img{display:block;width:100%}
+
+/* ── SPLIT — text + media, alternating ─────────────────────── */
+.split{display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);gap:clamp(36px,5.5vw,84px);align-items:center}
+/* media on the left, text on the right — the media keeps the wide column */
+.split--rev{grid-template-columns:minmax(0,1.14fr) minmax(0,.86fr)}
+.split--rev>*:first-child{order:2}
+.certsplit{display:grid;grid-template-columns:minmax(0,.5fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:center}
+.footgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:clamp(28px,4vw,56px)}
+
+/* ── MOTION ────────────────────────────────────────────────── */
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+[data-reveal]{opacity:0}
+[data-reveal].in{animation:rise .8s cubic-bezier(.22,.7,.2,1) both;animation-delay:var(--d,0s)}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  [data-reveal]{opacity:1!important;animation:none!important}
+  *{transition:none!important}
+}
+
+/* ── RESPONSIVE ────────────────────────────────────────────── */
+@media(max-width:960px){
+  .split,.certsplit{grid-template-columns:1fr;gap:36px}
+  .split--rev>*:first-child{order:0}
+  .footgrid{grid-template-columns:1fr 1fr;gap:36px}
+  .h1{font-size:clamp(34px,8vw,46px)}
+}
+@media(max-width:720px){
+  .sec{padding-left:20px;padding-right:20px}
+  .nav-in{padding:0 20px!important}
+  footer{padding-left:20px!important;padding-right:20px!important}
+  .hide-sm{display:none!important}
+  .specrow{grid-template-columns:1fr 1fr!important}
+  .certrow{grid-template-columns:1fr 1fr!important}
+  .viewtabs{justify-content:flex-start}
+}
+</style>
+<noscript><style>[data-reveal]{opacity:1}.cell>*{opacity:1}.cell>video{display:none}</style></noscript>
+</head>
+<body>
+
+<!-- ══════════════════════ NAV ══════════════════════
+     Light and solid from the first pixel — the hero is light,
+     so there is nothing for a transparent nav to sit over.      -->
+<header id="nav" style="position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(239,242,243,.86);backdrop-filter:blur(16px);border-bottom:1px solid rgba(19,36,46,0);transition:border-color .3s ease,background .3s ease">
+  <div class="nav-in" style="height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(24px,8vw,120px)">
+    <a href="../index.html" aria-label="Aether — home" style="display:inline-flex;align-items:center"><img src="../uploads/Primary.png" alt="AETHER" style="height:15px;display:block"></a>
+    <nav style="display:flex;align-items:center;gap:clamp(20px,2.8vw,40px);font-size:14px">
+      <a href="technology.html" aria-current="page" style="color:#135B7C;font-weight:600">Technology</a>
+      <a href="../services.html" class="hide-sm" style="color:rgba(19,36,46,.78)">Services</a>
+      <a href="#contact" class="hide-sm" style="color:rgba(19,36,46,.78)">Contact</a>
+      <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="color:#fff;background:#135B7C;border:1px solid #135B7C;padding:10px 20px;border-radius:6px;font-size:13px;font-weight:600;transition:.2s" data-hover="background:#2C86B0;border-color:#2C86B0">Get a quote</a>
+    </nav>
+  </div>
+  <!-- reading progress — the page is one long argument, this shows where you are -->
+  <div id="prog" style="height:2px;width:0;background:#2C86B0;transition:width .1s linear"></div>
+</header>
+
+<!-- ══════════════════════ FABRICATOR ══════════════════════
+     The page opens on the machine itself. The render sits
+     directly on the paper — no card, no border. Its own
+     background (#EEF0EF) is within 1% of --paper, and a soft
+     radial mask feathers what is left, so the cell floats.     -->
+<section id="fabricator" class="sec" style="padding-top:clamp(132px,14vw,180px);padding-bottom:clamp(24px,3vw,40px);background:#EFF2F3">
+  <div style="max-width:1440px;margin:0 auto">
+    <div data-reveal>
+      <span class="eyebrow">Technology</span>
+      <h1 class="h1">The factory, reduced to <b>a single cell.</b></h1>
+    </div>
+    <p class="lead" data-reveal style="--d:.08s;max-width:60ch">The Aether Fabricator is a self-contained production cell — two 5-axis machines, one robot, and the software that runs them. It turns raw stock into finished parts without an operator standing next to it. Add cells to add capacity; there is nothing to re-engineer.</p>
+
+    <!-- Two views of one machine: what it is, and what it does. -->
+    <div data-reveal style="--d:.16s">
+      <div class="viewtabs" role="group" aria-label="Fabricator view">
+        <button class="viewtab" type="button" data-view="cutaway" aria-pressed="true" aria-controls="cell-media">Cutaway</button>
+        <button class="viewtab" type="button" data-view="motion" aria-pressed="false" aria-controls="cell-media">In motion</button>
+      </div>
+      <div class="cell" id="cell-media">
+        <img class="on" data-pane="cutaway" src="../assets/fabricator-cutaway.png"
+             alt="Cutaway of the Aether Fabricator: robot arm, precision machining zone, workpiece storage, HMI control, safety fence and power distribution, with the software layers alongside.">
+        <video data-pane="motion" data-inview muted loop playsinline preload="none"
+               aria-label="The Aether Fabricator running: the robot loads a blank, the machine cuts it, and the finished part is returned to storage.">
+          <source src="../assets/fabricator-simulation.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+
+    <!-- what one cell is — five numbers, one line, no table -->
+    <div class="specrow" data-reveal style="--d:.24s;display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(19,36,46,.1);border-top:1px solid rgba(19,36,46,.1);border-bottom:1px solid rgba(19,36,46,.1);margin-top:clamp(24px,4vw,48px)">
+      <div style="background:#EFF2F3;padding:22px 4px 22px 0"><div class="mono" style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(19,36,46,.45)">Machining</div><div style="font-weight:300;font-size:clamp(19px,2vw,25px);letter-spacing:-.02em;margin-top:7px">2× <span style="font-size:14px;font-weight:500">5-axis CNC</span></div></div>
+      <div style="background:#EFF2F3;padding:22px 4px 22px 20px"><div class="mono" style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(19,36,46,.45)">Handling</div><div style="font-weight:300;font-size:clamp(19px,2vw,25px);letter-spacing:-.02em;margin-top:7px">1× <span style="font-size:14px;font-weight:500">robot</span></div></div>
+      <div style="background:#EFF2F3;padding:22px 4px 22px 20px"><div class="mono" style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(19,36,46,.45)">Storage</div><div style="font-weight:300;font-size:clamp(19px,2vw,25px);letter-spacing:-.02em;margin-top:7px">28–45 <span style="font-size:14px;font-weight:500">pallets</span></div></div>
+      <div style="background:#EFF2F3;padding:22px 4px 22px 20px"><div class="mono" style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(19,36,46,.45)">Footprint</div><div style="font-weight:300;font-size:clamp(19px,2vw,25px);letter-spacing:-.02em;margin-top:7px">480–540 <span style="font-size:14px;font-weight:500">sq ft</span></div></div>
+      <div style="background:#EFF2F3;padding:22px 4px 22px 20px"><div class="mono" style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(19,36,46,.45)">Operation</div><div style="font-weight:300;font-size:clamp(19px,2vw,25px);letter-spacing:-.02em;margin-top:7px">24/7 <span style="font-size:14px;font-weight:500">unattended</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ APG ══════════════════════ -->
+<section id="apg" class="sec" style="background:#fff">
+  <div class="split" style="max-width:1440px;margin:0 auto">
+    <div data-reveal>
+      <span class="eyebrow">APG · Autonomous Process Generator</span>
+      <h2 class="h2">From STEP file to price, <b>in minutes.</b></h2>
+      <p class="lead">APG reads geometry straight out of your CAD file, plans the machining process behind it, and hands back a quote you can see the reasoning for — the same way, every time.</p>
+      <div style="margin-top:30px">
+        <div class="pt"><i>&rarr;</i><span><b>Reads the drawing, not just the shape.</b> ISO and ASME tolerances and finishes are picked up directly from the STEP file.</span></div>
+        <div class="pt"><i>&rarr;</i><span><b>Shows its work.</b> Cost, cycle time, setup time and the toolpath behind them — not a number with no explanation.</span></div>
+        <div class="pt"><i>&rarr;</i><span><b>Re-plans in minutes.</b> When machines, tooling or priorities change, the process updates instead of going back to a programmer.</span></div>
+      </div>
+      <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;margin-top:30px;font-size:14px;font-weight:600;color:#fff;background:#135B7C;border-radius:8px;padding:14px 26px;transition:.2s" data-hover="background:#2C86B0">Upload a STEP file <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="frame" data-reveal style="--d:.1s">
+      <div class="frame-bar"><span class="d"></span><span class="d"></span><span class="d"></span><span class="u">quote.aethermfg.com</span></div>
+      <video data-inview muted loop playsinline preload="metadata" style="aspect-ratio:16/9;object-fit:cover"
+             aria-label="APG quoting portal: a part is analysed and priced with its machining operations listed">
+        <source src="../assets/APG-quick-video.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ FacOS ══════════════════════ -->
+<section id="facos" class="sec" style="background:#EFF2F3">
+  <div class="split split--rev" style="max-width:1440px;margin:0 auto">
+    <div data-reveal>
+      <span class="eyebrow">FacOS · Factory Operating System</span>
+      <h2 class="h2">Every machine on the floor, <b>one live system.</b></h2>
+      <p class="lead">FacOS runs the floor in real time — machines, robots, orders and inspection on one model. Equipment that was never designed to talk to each other behaves like a single factory.</p>
+      <div style="margin-top:30px">
+        <div class="pt"><i>&rarr;</i><span><b>Closed loop.</b> Probe and CMM results correct tool offsets while the job is still running.</span></div>
+        <div class="pt"><i>&rarr;</i><span><b>Built for high mix.</b> Universal fixturing and dynamic scheduling absorb thousands of part variants with little changeover.</span></div>
+        <div class="pt"><i>&rarr;</i><span><b>Nothing hidden.</b> Every station, order and operator on one screen, live.</span></div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:26px 52px;margin-top:34px">
+        <div><div style="font-weight:300;font-size:clamp(30px,3.4vw,42px);letter-spacing:-.03em;color:#13242E">70<span style="font-size:.5em;color:#2C86B0">%</span></div><div class="mono" style="font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:rgba(19,36,46,.5);margin-top:2px">OEE · 2× the industry</div></div>
+        <div><div style="font-weight:300;font-size:clamp(30px,3.4vw,42px);letter-spacing:-.03em;color:#13242E">22<span style="font-size:.5em;color:#2C86B0">h</span></div><div class="mono" style="font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:rgba(19,36,46,.5);margin-top:2px">Running, every day</div></div>
+        <div><div style="font-weight:300;font-size:clamp(30px,3.4vw,42px);letter-spacing:-.03em;color:#13242E">10,000</div><div class="mono" style="font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:rgba(19,36,46,.5);margin-top:2px">Nodes orchestrated</div></div>
+      </div>
+    </div>
+    <div class="frame" data-reveal style="--d:.1s">
+      <div class="frame-bar"><span class="d"></span><span class="d"></span><span class="d"></span><span class="u">FacOS — shop floor, live</span></div>
+      <img src="../assets/facos-dashboard.png" loading="lazy" alt="FacOS shop floor view: a 3D map of the floor beside a live list of machines with OEE and running state, one row expanded to show the current order, cycle time and schedule.">
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ QMS ══════════════════════ -->
+<section id="qms" class="sec" style="background:#fff">
+  <div class="split" style="max-width:1440px;margin:0 auto">
+    <div data-reveal>
+      <span class="eyebrow">QMS · Quality &amp; Metrology</span>
+      <h2 class="h2">Measurement that goes <b>back into the process.</b></h2>
+      <p class="lead">Parts are inspected on Zeiss CMM and the result returns to FacOS and APG. Quality is not a gate at the end of the line — it is what tunes the next part.</p>
+      <div style="margin-top:30px">
+        <div class="pt"><i>&rarr;</i><span><b>First article inspection.</b> The CMM validates the first parts against GD&amp;T; deviations update tool offsets automatically.</span></div>
+        <div class="pt"><i>&rarr;</i><span><b>In-process control.</b> Statistical sampling through the run, charted live.</span></div>
+        <div class="pt"><i>&rarr;</i><span><b>Full traceability.</b> Material lot, machine, tool history and inspection results stay attached to every part.</span></div>
+        <div class="pt"><i>&rarr;</i><span><b>Autonomous compensation.</b> Under 15 µm, the cell probes, adjusts and re-cuts without an operator.</span></div>
+      </div>
+    </div>
+    <div class="frame" data-reveal style="--d:.1s">
+      <!-- source is a 16:9 file with a 2.40:1 image letterboxed inside it;
+           cover-cropping to 2.40:1 removes the bars exactly -->
+      <video data-inview muted loop playsinline preload="metadata" poster="../assets/qms-screenshot.png"
+             style="aspect-ratio:2.4/1;object-fit:cover"
+             aria-label="A machined part being measured on a Zeiss coordinate measuring machine">
+        <source src="../assets/qms-inspection-.mp4" type="video/mp4">
+      </video>
+      <div style="display:flex;flex-wrap:wrap;border-top:1px solid rgba(19,36,46,.1)">
+        <span class="mono" style="padding:12px 16px;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(19,36,46,.5);border-right:1px solid rgba(19,36,46,.08)">Zeiss CMM</span>
+        <span class="mono" style="padding:12px 16px;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(19,36,46,.5);border-right:1px solid rgba(19,36,46,.08)">FAI · IPQC · SPC</span>
+        <span class="mono" style="padding:12px 16px;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#135B7C">&lt;15 µm auto-compensation</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ CERTIFICATIONS ══════════════════════ -->
+<section id="certifications" class="sec sec--tight" style="background:#EFF2F3;border-top:1px solid rgba(19,36,46,.09)">
+  <div class="certsplit" style="max-width:1440px;margin:0 auto">
+    <div data-reveal>
+      <span class="eyebrow">Certifications</span>
+      <p style="margin:16px 0 0;font-weight:300;font-size:clamp(19px,2.1vw,26px);line-height:1.25;letter-spacing:-.02em;color:#13242E;max-width:18ch">Held on the system, <b style="font-weight:600">not on the order.</b></p>
+    </div>
+    <div class="certrow" data-reveal style="--d:.08s;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(19,36,46,.11);border:1px solid rgba(19,36,46,.11);border-radius:10px;overflow:hidden">
+      <div style="background:#fff;padding:20px 18px"><div style="font-weight:700;font-size:15px;color:#13242E">ISO 9001</div><div class="mono" style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(19,36,46,.5);margin-top:6px">Quality management</div></div>
+      <div style="background:#fff;padding:20px 18px"><div style="font-weight:700;font-size:15px;color:#13242E">ISO 13485</div><div class="mono" style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(19,36,46,.5);margin-top:6px">Medical devices</div></div>
+      <div style="background:#fff;padding:20px 18px"><div style="font-weight:700;font-size:15px;color:#13242E">ISO 14001</div><div class="mono" style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(19,36,46,.5);margin-top:6px">Environmental</div></div>
+      <div style="background:#fff;padding:20px 18px"><div style="font-weight:700;font-size:15px;color:#13242E">AS9100</div><div class="mono" style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(19,36,46,.5);margin-top:6px">Aerospace &amp; defense</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ CTA ══════════════════════ -->
+<section id="contact" class="sec sec--tight" style="background:#0C1B24">
+  <div style="max-width:1440px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap">
+    <h2 style="margin:0;font-weight:300;font-size:clamp(22px,3vw,36px);line-height:1.2;letter-spacing:-.025em;color:#fff;max-width:22ch">See the system price your part. <b style="font-weight:600">Start with a STEP file.</b></h2>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="font-size:14px;font-weight:600;color:#fff;background:#135B7C;border:1px solid #135B7C;border-radius:8px;padding:15px 28px;transition:.2s" data-hover="background:#2C86B0;border-color:#2C86B0">Get an instant quote</a>
+      <a href="mailto:sales@aethermfg.com" style="font-size:14px;font-weight:600;color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:8px;padding:15px 28px;transition:.2s" data-hover="border-color:#fff;background:rgba(255,255,255,.08)">Contact sales</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ FOOTER ══════════════════════ -->
+<footer style="background:#08141B;color:rgba(255,255,255,.62);border-top:1px solid rgba(255,255,255,.08);padding:clamp(52px,7vw,80px) clamp(24px,8vw,120px) 0">
+  <div style="max-width:1440px;margin:0 auto">
+    <div class="footgrid">
+      <div>
+        <div style="font-size:20px;letter-spacing:.02em;color:#fff"><b style="font-weight:700">Aether</b> <span style="color:rgba(255,255,255,.4);font-weight:400">Manufacturing</span></div>
+        <p style="margin:18px 0 0;font-size:13.5px;line-height:1.65;max-width:42ch">Defining the category of AI CNC machining. Transparent quoting, autonomous production, and predictable quality for high-mix, low-volume manufacturing.</p>
+        <div class="mono" style="margin-top:22px;font-size:11px;letter-spacing:.04em;color:rgba(255,255,255,.4)">HQ · 19 Morris Ave, Building 128 · Brooklyn, NY 11205, USA</div>
+      </div>
+      <nav style="display:flex;flex-direction:column">
+        <h4 style="margin:0 0 16px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#fff">Services</h4>
+        <a href="../services.html#proc-milling" style="font-size:13.5px;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">AI CNC Milling</a>
+        <a href="../services.html#proc-turning" style="font-size:13.5px;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">AI CNC Turning</a>
+        <a href="../services.html#proc-edm" style="font-size:13.5px;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">AI EDM</a>
+        <a href="../services.html#proc-am" style="font-size:13.5px;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">AI Metal 3D Printing</a>
+      </nav>
+      <nav style="display:flex;flex-direction:column">
+        <h4 style="margin:0 0 16px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#fff">Technology</h4>
+        <a href="#fabricator" style="font-size:13.5px;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">The Fabricator</a>
+        <a href="#apg" style="font-size:13.5px;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">APG</a>
+        <a href="#facos" style="font-size:13.5px;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">FacOS</a>
+        <a href="#qms" style="font-size:13.5px;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">Quality &amp; metrology</a>
+      </nav>
+      <nav style="display:flex;flex-direction:column">
+        <h4 style="margin:0 0 16px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#fff">Company</h4>
+        <a href="../index.html" style="font-size:13.5px;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">Home</a>
+        <a href="mailto:sales@aethermfg.com" style="font-size:13.5px;color:rgba(255,255,255,.62);padding:7px 0;transition:color .18s" data-hover="color:#5FA8CC">Contact</a>
+      </nav>
+    </div>
+    <div class="mono" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:clamp(40px,5vw,60px);padding:24px 0 28px;border-top:1px solid rgba(255,255,255,.08);font-size:11px;letter-spacing:.06em;color:rgba(255,255,255,.4)">
+      <span>© 2026 Aether Manufacturing — Precision. Software-defined.</span>
+      <span style="display:flex;gap:22px"><a href="#" style="color:inherit;transition:color .18s" data-hover="color:#fff">Privacy</a><a href="#" style="color:inherit;transition:color .18s" data-hover="color:#fff">Terms</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* videos ship with preload="none"/"metadata"; play() itself pulls the
+     rest of the file, so never call load() here — it aborts the play. */
+  function play(v) {
+    if (v.preload !== 'auto') { v.preload = 'auto'; }
+    var p = v.play();
+    if (p && p.catch) { p.catch(function () {}); }
+  }
+
+  /* hover — same convention as index.html */
+  document.querySelectorAll('[data-hover]').forEach(function (el) {
+    var base = el.getAttribute('style') || '';
+    var hover = el.getAttribute('data-hover');
+    el.addEventListener('mouseenter', function () { el.setAttribute('style', base + ';' + hover); });
+    el.addEventListener('mouseleave', function () { el.setAttribute('style', base); });
+    el.addEventListener('focus', function () { el.setAttribute('style', base + ';' + hover); });
+    el.addEventListener('blur', function () { el.setAttribute('style', base); });
+  });
+
+  /* nav hairline + reading progress */
+  var nav = document.getElementById('nav'), prog = document.getElementById('prog');
+  function onScroll() {
+    nav.style.borderBottomColor = window.scrollY > 8 ? 'rgba(19,36,46,.12)' : 'rgba(19,36,46,0)';
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    prog.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  /* reveal on scroll */
+  if (reduced) {
+    document.querySelectorAll('[data-reveal]').forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(function (el) { io.observe(el); });
+  }
+
+  /* cutaway ↔ in motion — one media well, two views of the same cell.
+     The video is only fetched the first time someone asks for it. */
+  var cell = document.getElementById('cell-media');
+  if (cell) {
+    var panes = cell.querySelectorAll('[data-pane]');
+    document.querySelectorAll('.viewtab').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var want = tab.dataset.view;
+        document.querySelectorAll('.viewtab').forEach(function (t) {
+          t.setAttribute('aria-pressed', String(t.dataset.view === want));
+        });
+        panes.forEach(function (p) {
+          var on = p.dataset.pane === want;
+          p.classList.toggle('on', on);
+          if (p.tagName === 'VIDEO') {
+            if (on) { play(p); } else { p.pause(); }
+          }
+        });
+      });
+    });
+  }
+
+  /* video plays only while it is on screen — nothing loads until then */
+  var vio = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      var v = e.target;
+      /* a hidden pane never loads or plays */
+      if (v.hasAttribute('data-pane') && !v.classList.contains('on')) { v.pause(); return; }
+      if (e.isIntersecting) { play(v); } else { v.pause(); }
+    });
+  }, { threshold: 0.25 });
+  document.querySelectorAll('video[data-inview]').forEach(function (v) { vio.observe(v); });
+})();
+</script>
+</body>
+</html>

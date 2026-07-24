@@ -85,12 +85,12 @@ h2 em{font-style:normal;font-weight:600;color:var(--teal)}
 .arcwrap.vis .arc{stroke-dashoffset:0}
 .spark{opacity:0}.arcwrap.vis .spark{animation:spark 2.1s ease-in-out .3s infinite}
 @keyframes spark{0%{offset-distance:0%;opacity:0}12%{opacity:1}88%{opacity:1}100%{offset-distance:100%;opacity:0}}
-#bp .box{animation:pop .5s cubic-bezier(.2,.7,.3,1) backwards;transform-box:fill-box}
-@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+#bp .box{animation:pop .55s cubic-bezier(.2,.7,.3,1) backwards;transform-box:fill-box;transform-origin:center}
+@keyframes pop{from{opacity:0;transform:scale(.84)}to{opacity:1;transform:scale(1)}}
 #bp .anno{animation:fade .55s ease .2s backwards}@keyframes fade{from{opacity:0}to{opacity:1}}
 
 /* titleblock (blueprint) */
-.tblock{position:absolute;right:14px;bottom:14px;z-index:5;display:flex;font-family:var(--mono);
+.tblock{position:absolute;right:14px;top:14px;z-index:5;display:flex;font-family:var(--mono);
   border:1px solid var(--hair);border-radius:5px;background:rgba(8,20,27,.7);overflow:hidden;
   opacity:0;transform:translateY(6px);transition:opacity .5s ease,transform .5s ease;pointer-events:none}
 .tblock.show{opacity:1;transform:none}
@@ -99,6 +99,16 @@ h2 em{font-style:normal;font-weight:600;color:var(--teal)}
 .tblock .k{font-size:8px;letter-spacing:.14em;color:var(--faint);display:block;margin-bottom:3px}
 .tblock .v{font-size:11px;color:var(--ink)}
 .tblock .v.teal{color:var(--teal-lite)}
+
+/* dim global-supplier markers — shown on the blueprint board (bottom corners) */
+.suppliers{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;transition:opacity .6s ease}
+#bpStage.on .suppliers{opacity:1}
+.supchip{position:absolute;bottom:16px;display:flex;flex-direction:column;gap:2px;opacity:.34;font-family:var(--mono);padding:6px 10px;border:1px solid var(--hair2);border-radius:5px;background:rgba(8,20,27,.45)}
+.supchip:nth-child(1){left:16px}
+.supchip:nth-child(2){right:16px}
+.supchip .supicon{width:46px;height:32px;display:block;margin:0 auto 4px;overflow:visible}
+.supchip .sk{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.supchip .sv{font-size:10.5px;color:var(--dim);letter-spacing:.04em}
 
 /* ── stepper (01–06) ─────────────────────────────────── */
 .stepper{display:flex;align-items:flex-start;gap:0;padding:20px clamp(16px,2vw,26px) 6px}
@@ -172,7 +182,7 @@ h2 em{font-style:normal;font-weight:600;color:var(--teal)}
     </div>
 
     <div class="stagewrap">
-      <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <span class="corner tl"></span>
       <span class="hint" id="hint">SAME DRAWING · SCALES TO NETWORK</span>
 
       <!-- SCREEN A · world map -->
@@ -191,17 +201,19 @@ h2 em{font-style:normal;font-weight:600;color:var(--teal)}
           <div class="c"><span class="k">PROJECTION</span><span class="v">ISO · DIMETRIC</span></div>
           <div class="c"><span class="k">REV</span><span class="v">C</span></div>
         </div>
+        <div class="suppliers" id="suppliers">
+          <div class="supchip"><span class="sk">Global supply</span><span class="sv">Monterrey · MX</span></div>
+          <div class="supchip"><span class="sk">Global supply</span><span class="sv">Dongguan · CN</span></div>
+        </div>
       </div>
     </div>
 
     <!-- stepper -->
     <nav class="stepper" id="stepper">
-      <button class="step" data-i="0"><span class="dot">01</span><span class="sl">Origin</span></button>
-      <button class="step" data-i="1"><span class="dot">02</span><span class="sl">Supply</span></button>
-      <button class="step" data-i="2"><span class="dot">03</span><span class="sl">Inbound</span></button>
-      <button class="step" data-i="3"><span class="dot">04</span><span class="sl">PA Node</span></button>
-      <button class="step" data-i="4"><span class="dot">05</span><span class="sl">TX Node</span></button>
-      <button class="step" data-i="5"><span class="dot">06</span><span class="sl">Franchise</span></button>
+      <button class="step" data-i="0"><span class="dot">01</span><span class="sl">Inbound</span></button>
+      <button class="step" data-i="1"><span class="dot">02</span><span class="sl">PA Node</span></button>
+      <button class="step" data-i="2"><span class="dot">03</span><span class="sl">TX Node</span></button>
+      <button class="step" data-i="3"><span class="dot">04</span><span class="sl">Franchise</span></button>
     </nav>
 
     <!-- SCREEN A cards -->
@@ -253,12 +265,12 @@ function label(p,text,since,opt={}){
   const d=document.createElement('div');d.className='mlabel'+(opt.live?' live':'');
   d.style.left=(p.x/210*100).toFixed(2)+'%';d.style.top=(p.y/100*100).toFixed(2)+'%';
   d.textContent=text;d.dataset.since=since;maplabels.appendChild(d);mapEls.push(d);return d;}
-// build map scene
-pin(LOC.dongguan,'#7FB3D0',0,.85); label(LOC.dongguan,'Dongguan',0);
-arc(LOC.dongguan,LOC.monterrey,1,'#5FA8CC','#9CD2F0');   // step 02 · blue supply bridge (draw + spark, like step 03)
-pin(LOC.monterrey,'#7FB3D0',1,.85); label(LOC.monterrey,'Monterrey',1);
-arc(LOC.dongguan,LOC.erie,2,'rgba(111,224,166,.7)','#6FE0A6'); arc(LOC.monterrey,LOC.erie,2,'#6FE0A6','#6FE0A6');
-pin(LOC.erie,'#8FE3B4',2,.95); label(LOC.erie,'ERIE, PA · LIVE',2,{live:true});
+// build map scene — all three appear together on step 0 (INBOUND):
+// China + Mexico suppliers both feed inbound to Erie, PA (the live US floor)
+pin(LOC.dongguan,'#7FB3D0',0,.85); label(LOC.dongguan,'Dongguan · CN',0);
+pin(LOC.monterrey,'#7FB3D0',0,.85); label(LOC.monterrey,'Monterrey · MX',0);
+arc(LOC.dongguan,LOC.erie,0,'rgba(111,224,166,.7)','#6FE0A6'); arc(LOC.monterrey,LOC.erie,0,'#6FE0A6','#6FE0A6');
+pin(LOC.erie,'#8FE3B4',0,.95); label(LOC.erie,'ERIE, PA · LIVE',0,{live:true});
 
 /* ═══════ SCREEN B · isometric BLUEPRINT (drawUnit, from L4) ═══════ */
 const bp=document.getElementById('bp');let bpScene,bpOverlay;
@@ -318,7 +330,7 @@ function buildNetwork(nodes){
   nodes.forEach((nd,k)=>{
     const stroke=nd.state==='render'?'rgba(170,215,240,.85)':'rgba(150,190,220,.55)';
     const base=iso(nd.gx,nd.gy,TW,TH);const lift=nd.lift||0;
-    const ctw=TW/4.6,cth=TH/4.6;
+    const div=nodes.length>3?6.6:4.6;const ctw=TW/div,cth=TH/div;
     const bxo=ox+base[0]-ctw*0.5, byo=oy+base[1]-cth*1.6-lift;
     // drop line for lifted (live) node
     if(lift){const foot=[ox+base[0],oy+base[1]];bpScene.appendChild(el('line',{x1:foot[0],y1:foot[1],x2:foot[0],y2:foot[1]-lift,stroke:'rgba(120,180,214,.4)','stroke-width':1,'stroke-dasharray':'3 4',class:'box'}));
@@ -341,20 +353,38 @@ function buildNetwork(nodes){
       const tt=el('text',{x:bx+2,y:by,fill:'#CFF3E0','font-family':'var(--mono)','font-size':9,'text-anchor':'middle','letter-spacing':'.1em'});tt.textContent='LIVE';bg.appendChild(tt);bpOverlay.appendChild(bg);}
   });
 }
-const PA={gx:0,gy:-.35,state:'render',label:'Pennsylvania',sub:'LIVE',live:true,lift:70,delay:60};
-const TX={gx:1.5,gy:.7,state:'wire',label:'Texas',sub:'2027',delay:80};
-const FR={gx:-1.5,gy:.7,state:'wire',label:'Franchise',sub:'PARTNER OS',delay:80};
+// organic scatter: PA back-centre (lifted, bright). Franchise nodes are deliberately
+// irregular — US · West sits far left, US · East far right, the rest scattered at varied
+// depths (gx-gy → screen X, gx+gy → depth) so it reads as a spreading network, not a row.
+// Staggered delays make them scale-pop into existence one after another.
+const PA={gx:-.4,gy:-.45,state:'render',label:'Pennsylvania',sub:'LIVE',live:true,lift:64,delay:60};
+const TX={gx:1,gy:.0,state:'wire',label:'Texas',sub:'2027',delay:70};
+const U1={gx:2.35,gy:-.35,state:'wire',label:'US · East',sub:'FRANCHISE',delay:150};
+const U2={gx:1,gy:1.75,state:'wire',label:'US · South',sub:'FRANCHISE',delay:110};
+const U3={gx:-.95,gy:1,state:'wire',label:'US · West',sub:'FRANCHISE',delay:190};
+
+/* mini isometric factory glyph inside each dim supplier chip — same clay style as the
+   PA node, just small; the chip's .34 opacity fades it to a representative marker */
+(function(){
+  document.querySelectorAll('.supchip').forEach(function(chip){
+    var svg=el('svg',{viewBox:'0 0 64 46',class:'supicon'});
+    var TW=27,TH=13.5,ox=32,oy=23;
+    svg.appendChild(drawPlate(ox,oy,-.05,-.05,1.1,1.1,TW,TH,{stroke:'rgba(255,255,255,.45)',sw:1,fill:'rgba(255,255,255,.05)'}));
+    svg.appendChild(drawBox(ox,oy,.08,.10,.38,.44,TH*1.3,TW,TH,'clay',{sw:.9}).g);
+    svg.appendChild(drawBox(ox,oy,.56,.10,.38,.44,TH*1.3,TW,TH,'clay',{sw:.9}).g);
+    svg.appendChild(drawBox(ox,oy,.34,.60,.40,.24,TH*.62,TW,TH,'clay',{sw:.8}).g);
+    chip.insertBefore(svg,chip.firstChild);
+  });
+})();
 
 /* ═══════ step state machine ═══════ */
 const STEPS=[
-  {tag:'GLOBAL SUPPLY · <b>ORIGIN</b>',hint:'GLOBAL SUPPLY · SINGLE ORIGIN'},
-  {tag:'GLOBAL SUPPLY · <b>PARTNERS</b>',hint:'CHINA + MEXICO · PARTNER FACTORIES'},
-  {tag:'US-FIRST · <b>ERIE, PA LIVE</b>',hint:'SAME DRAWING · INBOUND TO ERIE'},
+  {tag:'GLOBAL SUPPLY → <b>ERIE, PA · LIVE</b>',hint:'CHINA + MEXICO · INBOUND TO ERIE, PA'},
   {tag:'BLUEPRINT · <b>PA NODE</b>',hint:'ONE FACTORY = 12 CELLS · 1 OS',net:[PA],tb:{d:'AE-NODE-PA',s:'1 : 12'},nodes:'1',status:'LIVE',statusSub:'Fairview PA'},
-  {tag:'BLUEPRINT · <b>TEXAS 2027</b>',hint:'SAME DRAWING · NEXT SITE',net:[PA,TX],tb:{d:'AE-NET-02',s:'1 : N'},nodes:'2',status:'SCALING',statusSub:'PA live · TX 2027'},
-  {tag:'BLUEPRINT · <b>FRANCHISE</b>',hint:'PARTNERS RUN THE IDENTICAL STACK',net:[PA,TX,FR],tb:{d:'AE-NET-FR',s:'1 : N'},nodes:'N',status:'REPLICATING',statusSub:'partner OS'}
+  {tag:'BLUEPRINT · <b>TEXAS 2027</b>',hint:'SAME DRAWING · NEXT US SITE',net:[PA,TX],tb:{d:'AE-NET-02',s:'1 : N'},nodes:'2',status:'SCALING',statusSub:'PA live · TX 2027'},
+  {tag:'BLUEPRINT · <b>US FRANCHISE</b>',hint:'SAME DRAWING · US FRANCHISE NETWORK',net:[PA,TX,U1,U2,U3],tb:{d:'AE-NET-FR',s:'1 : N'},nodes:'5',status:'REPLICATING',statusSub:'US partner network'}
 ];
-const N=6;
+const N=4;
 const mapStage=document.getElementById('mapStage'),bpStage=document.getElementById('bpStage');
 const tabsMap=document.getElementById('tabsMap'),tabsBp=document.getElementById('tabsBp');
 const tabsMapB=[...tabsMap.querySelectorAll('.tab')],tabsBpB=[...tabsBp.querySelectorAll('.tab')];
@@ -367,7 +397,7 @@ const stepBtns=[...document.querySelectorAll('.step')];
 let cur=-1,hintT=null;
 function setHint(txt){if(hintEl.textContent===txt)return;hintEl.style.opacity='0';clearTimeout(hintT);hintT=setTimeout(()=>{hintEl.textContent=txt;hintEl.style.opacity='1';},170);}
 function go(i){
-  cur=i;const S=STEPS[i];const isMap=i<=2;
+  cur=i;const S=STEPS[i];const isMap=i===0;
   mapStage.classList.toggle('on',isMap);bpStage.classList.toggle('on',!isMap);
   tabsMap.classList.toggle('on',isMap);tabsBp.classList.toggle('on',!isMap);
   tblock.classList.toggle('show',!isMap);
@@ -380,12 +410,12 @@ function go(i){
     buildNetwork(S.net);
     tbDraw.textContent=S.tb.d;tbScale.textContent=S.tb.s;
     bNodes.textContent=S.nodes;bStatus.textContent=S.status;bStatusSub.textContent=S.statusSub;
-    tabsBpB.forEach((t,k)=>t.classList.toggle('on',k===i-3));
+    tabsBpB.forEach((t,k)=>t.classList.toggle('on',k===i-1));
   }
   stepBtns.forEach((b,k)=>{b.classList.toggle('on',k===i);b.classList.toggle('done',k<i);});
 }
 
-const DUR=[1700,1900,2600,2400,2600,3200];
+const DUR=[2200,1400,1600,3000];
 let playing=false,tId=null;
 function schedule(){clearTimeout(tId);tId=setTimeout(()=>{go((cur+1)%N);if(playing)schedule();},DUR[cur]);}
 const playBtn=document.getElementById('play'),playLbl=document.getElementById('playlbl');
@@ -398,7 +428,7 @@ stepBtns.forEach(b=>b.addEventListener('click',()=>{stop();go(+b.dataset.i);}));
 
 const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 const forced=new URLSearchParams(location.search).get('step');
-if(reduce){go(5);}else if(forced!==null){go(Math.max(0,Math.min(5,+forced)));}else{go(0);play();}
+if(reduce){go(3);}else if(forced!==null){go(Math.max(0,Math.min(3,+forced)));}else{go(0);play();}
 </script>
 <script>(function(){var ID='s5';function p(){try{parent.postMessage({aetherH:document.body.scrollHeight,aetherId:ID},'*');}catch(e){}}window.addEventListener('load',p);window.addEventListener('resize',p);if(window.ResizeObserver){new ResizeObserver(p).observe(document.body);}setInterval(p,800);})();</script>
 </body></html>
