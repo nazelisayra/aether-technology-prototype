@@ -34,6 +34,18 @@ img,video{max-width:100%}
 .h1 b{font-weight:700}
 .lead{margin:22px 0 0;font-size:clamp(14.5px,1.4vw,16.5px);line-height:1.62;color:rgba(19,36,46,.62)}
 .mono{font-family:'JetBrains Mono',monospace}
+/* ── NAV — Resources ▾ dropdown (News · Blog) ── */
+.dropdown{position:relative;display:inline-flex}
+.dropdown-trigger{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:rgba(19,36,46,.78);background:none;border:0;padding:0;cursor:pointer;font-family:inherit}
+.dropdown-trigger .car{width:9px;height:9px;stroke:currentColor;fill:none;stroke-width:1.7;transition:transform .2s ease}
+.dropdown[data-open="true"] .car{transform:rotate(180deg)}
+.dropdown-menu{position:absolute;top:calc(100% + 18px);left:50%;transform:translateX(-50%) translateY(-6px);min-width:212px;background:#fff;border:1px solid rgba(19,36,46,.12);border-radius:12px;box-shadow:0 20px 50px rgba(19,36,46,.16);padding:8px;opacity:0;visibility:hidden;transition:opacity .2s ease,transform .2s ease,visibility .2s;z-index:1001}
+.dropdown:hover .dropdown-menu,.dropdown:focus-within .dropdown-menu,.dropdown[data-open="true"] .dropdown-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.dropdown-item{display:block;padding:11px 13px;border-radius:8px;transition:background .16s ease}
+.dropdown-item:hover{background:rgba(19,91,124,.06)}
+.dropdown-item .t{display:block;font-size:14px;font-weight:600;color:#13242E}
+.dropdown-item:hover .t{color:#135B7C}
+.dropdown-item .d{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:rgba(19,36,46,.45);margin-top:3px}
 
 /* ── CONTACT LAYOUT — info (L) + form (R) ── */
 .contact-grid{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:clamp(28px,4vw,56px);margin-top:clamp(36px,5vw,56px);align-items:start}
@@ -114,6 +126,13 @@ a.info-tile:hover{border-color:#5FA8CC;box-shadow:0 14px 34px rgba(19,91,124,.1)
     <nav style="display:flex;align-items:center;gap:clamp(20px,2.8vw,40px);font-size:14px">
       <a href="../technology-v2/technology.html" class="hide-sm" style="color:rgba(19,36,46,.78)">Technology</a>
       <a href="../services-v2/services.html" class="hide-sm" style="color:rgba(19,36,46,.78)">Services</a>
+      <div class="dropdown hide-sm">
+        <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false">Resources <svg class="car" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="dropdown-menu" role="menu">
+          <a class="dropdown-item" role="menuitem" href="../news/news.html"><span class="t">News</span><span class="d">Company updates &amp; milestones</span></a>
+          <a class="dropdown-item" role="menuitem" href="#"><span class="t">Blog</span><span class="d">Engineering guides &amp; articles</span></a>
+        </div>
+      </div>
       <a href="contact.html" aria-current="page" style="color:#135B7C;font-weight:600">Contact</a>
       <a href="https://quote.aethermfg.com/login" target="_blank" rel="noopener" style="color:#fff;background:#135B7C;border:1px solid #135B7C;padding:10px 20px;border-radius:6px;font-size:13px;font-weight:600;transition:.2s" data-hover="background:#2C86B0;border-color:#2C86B0">Get a quote</a>
     </nav>
@@ -267,6 +286,16 @@ a.info-tile:hover{border-color:#5FA8CC;box-shadow:0 14px 34px rgba(19,91,124,.1)
     el.addEventListener('focus', function () { el.setAttribute('style', base + ';' + hover); });
     el.addEventListener('blur', function () { el.setAttribute('style', base); });
   });
+
+  /* Resources ▾ dropdown — hover (CSS) + tap toggle + Esc/outside close */
+  var dropdowns = document.querySelectorAll('.dropdown');
+  function closeDropdowns(){ dropdowns.forEach(function(d){ d.dataset.open='false'; var t=d.querySelector('.dropdown-trigger'); if(t) t.setAttribute('aria-expanded','false'); }); }
+  dropdowns.forEach(function(d){
+    var trigger=d.querySelector('.dropdown-trigger');
+    trigger.addEventListener('click', function(e){ e.preventDefault(); var wasOpen=d.dataset.open==='true'; closeDropdowns(); if(!wasOpen){ d.dataset.open='true'; trigger.setAttribute('aria-expanded','true'); } });
+  });
+  document.addEventListener('click', function(e){ if(!e.target.closest('.dropdown')) closeDropdowns(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeDropdowns(); });
 
   /* nav hairline + reading progress */
   var nav = document.getElementById('nav'), prog = document.getElementById('prog');
