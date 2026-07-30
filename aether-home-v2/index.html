@@ -35,12 +35,15 @@ img{max-width:100%}
 }
 @media(max-width:768px){
   [style*="grid-template-columns"]{grid-template-columns:1fr!important}
+  .scale-media{order:0!important}
   [style*="minmax(140px"]{display:none!important}
   
   /* YENİ EKLENEN KISIM: Mobil ekranlarda sağ/sol padding'i 16px yapar */
   [style*="padding"][style*="clamp(24px,8vw,120px)"]{padding-left:16px!important;padding-right:16px!important}
   [style*="right:clamp(24px,8vw,120px)"]{right:16px!important}
 }
+/* At scale today: video sits left of the copy on desktop, stacks under the heading on mobile */
+.scale-media{order:-1}
 /* OS layer stack on small screens: label drops UNDER a near-full-width diagram */
 @media(max-width:640px){
   .os-slab{flex-direction:column;align-items:flex-start;gap:6px;margin-top:22px!important}
@@ -72,17 +75,22 @@ img{max-width:100%}
 .sec-pill:hover{border-color:rgba(19,91,124,.5)!important}
 
 /* ═══════════ NAV — Resources ▾ dropdown (News · Blog) ═══════════ */
-.dropdown{position:relative;display:inline-flex}
+.dropdown{position:relative;display:inline-flex;align-items:center;align-self:stretch}
 .dropdown-trigger{display:inline-flex;align-items:center;gap:6px;font-size:14px;background:none;border:0;padding:0;cursor:pointer;font-family:inherit;color:inherit}
 .dropdown-trigger .car{width:9px;height:9px;stroke:currentColor;fill:none;stroke-width:1.7;transition:transform .2s ease}
 .dropdown[data-open="true"] .car{transform:rotate(180deg)}
-.dropdown-menu{position:absolute;top:calc(100% + 18px);left:50%;transform:translateX(-50%) translateY(-6px);min-width:212px;background:#fff;border:1px solid rgba(19,36,46,.12);border-radius:12px;box-shadow:0 20px 50px rgba(19,36,46,.16);padding:8px;opacity:0;visibility:hidden;transition:opacity .2s ease,transform .2s ease,visibility .2s;z-index:1001}
-.dropdown:hover .dropdown-menu,.dropdown:focus-within .dropdown-menu,.dropdown[data-open="true"] .dropdown-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
-.dropdown-item{display:block;padding:11px 13px;border-radius:8px;color:#13242E;transition:background .16s ease}
-.dropdown-item:hover{background:rgba(19,91,124,.06)}
-.dropdown-item .t{display:block;font-size:14px;font-weight:600;color:#13242E}
-.dropdown-item:hover .t{color:#135B7C}
-.dropdown-item .d{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:rgba(19,36,46,.45);margin-top:3px}
+/* Figma ref: links drop straight below the bar; bg matches the top bar in each state */
+.dropdown-menu{position:absolute;top:calc(100% + 20px);left:-10px;min-width:335px;background:rgba(239,242,243,.88);backdrop-filter:blur(14px);border:1px solid rgba(19,36,46,.1);border-top:0;border-radius:0 0 12px 12px;box-shadow:0 22px 40px rgba(19,36,46,.08);padding:8px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .2s ease,transform .2s ease,visibility .2s;z-index:1001}
+.dropdown:hover .dropdown-menu,.dropdown:focus-within .dropdown-menu,.dropdown[data-open="true"] .dropdown-menu{opacity:1;visibility:visible;transform:translateY(0)}
+.dropdown-item{display:flex;align-items:baseline;gap:14px;padding:9px 14px;border-radius:7px;white-space:nowrap;transition:background .16s ease}
+.dropdown-item:hover{background:rgba(19,36,46,.05)}
+.dropdown-item .t{flex:0 0 auto;min-width:42px;font-size:14px;font-weight:400;color:rgba(19,36,46,.8)}
+.dropdown-item .d{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:400;letter-spacing:0;text-transform:none;color:rgba(19,36,46,.42)}
+/* over the hero the top bar is transparent → the dropdown matches (frosted, light text) */
+#nav-dark .dropdown-menu{background:transparent;backdrop-filter:blur(14px);border-color:rgba(255,255,255,.16);box-shadow:0 22px 44px rgba(0,0,0,.28)}
+#nav-dark .dropdown-item:hover{background:rgba(255,255,255,.1)}
+#nav-dark .dropdown-item .t{color:rgba(255,255,255,.92)}
+#nav-dark .dropdown-item .d{color:rgba(255,255,255,.5)}
 </style>
 </head>
 <body>
@@ -212,7 +220,7 @@ img{max-width:100%}
 <!-- ══════════════════════ 03 · SCALE & NETWORK ══════════════════════ -->
 <section style="position:relative;background:#EFF2F3;padding:clamp(64px,8vw,96px) clamp(24px,8vw,120px);overflow:hidden">
   <div style="position:absolute;inset:0;opacity:.5;background-image:linear-gradient(rgba(19,91,124,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(19,91,124,.05) 1px,transparent 1px);background-size:46px 46px;pointer-events:none"></div>
-  <div style="position:relative;display:grid;grid-template-columns:minmax(0,640px) minmax(0,1fr);gap:clamp(36px,5vw,72px);align-items:center">
+  <div style="position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,640px);gap:clamp(36px,5vw,72px);align-items:center">
     <div style="display:flex;flex-direction:column;gap:clamp(30px,4vw,44px)">
       <div style="display:flex;flex-direction:column;gap:16px;max-width:660px">
         <div style="display:flex;align-items:center;gap:12px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#135B7C"><span style="width:28px;height:1px;background:#135B7C;opacity:.5"></span>At scale today</div>
@@ -245,7 +253,7 @@ img{max-width:100%}
         <div style="display:flex;align-items:baseline;gap:12px;flex:1 1 100%"><span style="font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(19,36,46,.5);white-space:nowrap">Machine brands</span><span style="font-weight:400;font-size:14px;color:rgba(19,36,46,.65)"><b style="font-weight:600;color:#13242E">Haas</b> · <b style="font-weight:600;color:#13242E">DN Solutions</b> · <b style="font-weight:600;color:#13242E">Brother</b> · <b style="font-weight:600;color:#13242E">Mazak</b> · <b style="font-weight:600;color:#13242E">Mecof</b> · <b style="font-weight:600;color:#13242E">Makino</b> · <b style="font-weight:600;color:#13242E">Syil</b> · <b style="font-weight:600;color:#13242E">Okuma</b></span></div>
       </div>
     </div>
-    <div data-reveal="1">
+    <div data-reveal="1" class="scale-media">
       <!-- footage from the Aether floor — 16:9, shown uncropped; technical caption attached below -->
       <div style="position:relative;border-radius:8px 8px 0 0;overflow:hidden;border:1px solid rgba(19,36,46,.14);border-bottom:0;background:#0C1B24;box-shadow:0 24px 60px rgba(19,36,46,.16);aspect-ratio:16/9">
         <video autoplay muted loop playsinline preload="metadata" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" aria-label="Footage from the Aether factory floor">
@@ -319,7 +327,7 @@ img{max-width:100%}
     <h2 style="margin:20px 0 0;font-weight:300;font-size:clamp(28px,3.2vw,34px);line-height:1.25;letter-spacing:-.01em;color:#13242E">Software runs the factory.<br><b style="font-weight:600">Humans handle the exceptions.</b></h2>
     <p style="margin:18px 0 0;max-width:52ch;font-size:clamp(14px,1.5vw,17px);line-height:1.6;color:rgba(19,36,46,.6)">Five layers — from the first quote to the final delivery — run every Aether node. The stack is the map; select a layer to open it.</p>
 
-    <div style="display:grid;grid-template-columns:minmax(min(420px,100%),520px) minmax(0,0.9fr);gap:clamp(40px,4.5vw,64px);margin-top:clamp(28px,4vh,44px);align-items:start">
+    <div style="display:grid;grid-template-columns:minmax(0,500px) minmax(0,700px);justify-content:space-between;column-gap:clamp(36px,4vw,56px);margin-top:clamp(28px,4vh,44px);align-items:start">
       <!-- ── layer list ── -->
       <div id="os-list" style="border-top:1px solid rgba(19,36,46,.14)">
         <div class="os-item active" data-idx="0">
@@ -434,60 +442,70 @@ img{max-width:100%}
         <!-- stack view -->
         <div id="os-stack" style="position:relative;padding:44px clamp(24px,4vw,56px) 30px">
           <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:rgba(19,36,46,.4);text-transform:uppercase;white-space:nowrap">LAYER STACK · SELECT A LAYER</div>
-          <div class="os-slab" data-idx="0" style="position:relative;z-index:5;cursor:pointer;margin-top:0;transition:opacity .25s ease;display:flex;align-items:center;gap:10px">
-            <div class="os-slabimg" style="position:relative;width:min(52%,270px);flex:0 0 auto"><img src="assets/layer-01.png" alt="APG" style="display:block;width:100%;filter:drop-shadow(0 10px 22px rgba(19,36,46,.18))"><div class="os-tint" style="position:absolute;inset:0;background:#2C86B0;opacity:0;-webkit-mask:url('assets/layer-01.png') center/contain no-repeat;mask:url('assets/layer-01.png') center/contain no-repeat;pointer-events:none"></div></div>
-            <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
-              <span style="flex:0 0 auto;width:18px;height:1px;background:rgba(19,36,46,.3)"></span>
-              <div style="display:flex;flex-direction:column;gap:2px;white-space:nowrap">
-                <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(19,36,46,.4)">01</span>
-                <span style="font-weight:600;font-size:13px;color:#13242E">APG</span>
-                <span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:rgba(44,134,176,.9)">SOFTWARE</span>
+          
+          <!-- HİZALAMAYI KORUYUP GRUBU ORTALAYAN SARICI (WRAPPER) -->
+          <div style="width: 100%; max-width: 520px; margin: 0 auto; display: flex; flex-direction: column;">
+            
+            <div class="os-slab" data-idx="0" style="position:relative;z-index:5;cursor:pointer;margin-top:0;transition:opacity .25s ease;display:flex;align-items:center;gap:10px">
+              <div class="os-slabimg" style="position:relative;width:min(52%,270px);flex:0 0 auto"><img src="assets/layer-01.png" alt="APG" style="display:block;width:100%;filter:drop-shadow(0 10px 22px rgba(19,36,46,.18))"><div class="os-tint" style="position:absolute;inset:0;background:#2C86B0;opacity:0;-webkit-mask:url('assets/layer-01.png') center/contain no-repeat;mask:url('assets/layer-01.png') center/contain no-repeat;pointer-events:none"></div></div>
+              <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+                <span style="flex:0 0 auto;width:18px;height:1px;background:rgba(19,36,46,.3)"></span>
+                <div style="display:flex;flex-direction:column;gap:2px;white-space:nowrap">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(19,36,46,.4)">01</span>
+                  <span style="font-weight:600;font-size:13px;color:#13242E">APG</span>
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:rgba(44,134,176,.9)">SOFTWARE</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="os-slab" data-idx="1" style="position:relative;z-index:4;cursor:pointer;margin-top:-5%;transition:opacity .25s ease;display:flex;align-items:center;gap:10px">
-            <div class="os-slabimg" style="position:relative;width:min(52%,270px);flex:0 0 auto"><img src="assets/layer-02.png" alt="FacOS" style="display:block;width:100%;filter:drop-shadow(0 10px 22px rgba(19,36,46,.18))"><div class="os-tint" style="position:absolute;inset:0;background:#2C86B0;opacity:0;-webkit-mask:url('assets/layer-02.png') center/contain no-repeat;mask:url('assets/layer-02.png') center/contain no-repeat;pointer-events:none"></div></div>
-            <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
-              <span style="flex:0 0 auto;width:18px;height:1px;background:rgba(19,36,46,.3)"></span>
-              <div style="display:flex;flex-direction:column;gap:2px;white-space:nowrap">
-                <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(19,36,46,.4)">02</span>
-                <span style="font-weight:600;font-size:13px;color:#13242E">FacOS</span>
-                <span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:rgba(44,134,176,.9)">SOFTWARE</span>
+
+            <div class="os-slab" data-idx="1" style="position:relative;z-index:4;cursor:pointer;margin-top:-5%;transition:opacity .25s ease;display:flex;align-items:center;gap:10px">
+              <div class="os-slabimg" style="position:relative;width:min(52%,270px);flex:0 0 auto"><img src="assets/layer-02.png" alt="FacOS" style="display:block;width:100%;filter:drop-shadow(0 10px 22px rgba(19,36,46,.18))"><div class="os-tint" style="position:absolute;inset:0;background:#2C86B0;opacity:0;-webkit-mask:url('assets/layer-02.png') center/contain no-repeat;mask:url('assets/layer-02.png') center/contain no-repeat;pointer-events:none"></div></div>
+              <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+                <span style="flex:0 0 auto;width:18px;height:1px;background:rgba(19,36,46,.3)"></span>
+                <div style="display:flex;flex-direction:column;gap:2px;white-space:nowrap">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(19,36,46,.4)">02</span>
+                  <span style="font-weight:600;font-size:13px;color:#13242E">FacOS</span>
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:rgba(44,134,176,.9)">SOFTWARE</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="os-slab" data-idx="2" style="position:relative;z-index:3;cursor:pointer;margin-top:-5%;transition:opacity .25s ease;display:flex;align-items:center;gap:10px">
-            <div class="os-slabimg" style="position:relative;width:min(52%,270px);flex:0 0 auto"><img src="assets/layer-03.png" alt="QMS" style="display:block;width:100%;filter:drop-shadow(0 10px 22px rgba(19,36,46,.18))"><div class="os-tint" style="position:absolute;inset:0;background:#2C86B0;opacity:0;-webkit-mask:url('assets/layer-03.png') center/contain no-repeat;mask:url('assets/layer-03.png') center/contain no-repeat;pointer-events:none"></div></div>
-            <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
-              <span style="flex:0 0 auto;width:18px;height:1px;background:rgba(19,36,46,.3)"></span>
-              <div style="display:flex;flex-direction:column;gap:2px;white-space:nowrap">
-                <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(19,36,46,.4)">03</span>
-                <span style="font-weight:600;font-size:13px;color:#13242E">QMS</span>
-                <span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:rgba(44,134,176,.9)">SOFTWARE</span>
+
+            <div class="os-slab" data-idx="2" style="position:relative;z-index:3;cursor:pointer;margin-top:-5%;transition:opacity .25s ease;display:flex;align-items:center;gap:10px">
+              <div class="os-slabimg" style="position:relative;width:min(52%,270px);flex:0 0 auto"><img src="assets/layer-03.png" alt="QMS" style="display:block;width:100%;filter:drop-shadow(0 10px 22px rgba(19,36,46,.18))"><div class="os-tint" style="position:absolute;inset:0;background:#2C86B0;opacity:0;-webkit-mask:url('assets/layer-03.png') center/contain no-repeat;mask:url('assets/layer-03.png') center/contain no-repeat;pointer-events:none"></div></div>
+              <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+                <span style="flex:0 0 auto;width:18px;height:1px;background:rgba(19,36,46,.3)"></span>
+                <div style="display:flex;flex-direction:column;gap:2px;white-space:nowrap">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(19,36,46,.4)">03</span>
+                  <span style="font-weight:600;font-size:13px;color:#13242E">QMS</span>
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:rgba(44,134,176,.9)">SOFTWARE</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="os-slab" data-idx="3" style="position:relative;z-index:2;cursor:pointer;margin-top:-5%;transition:opacity .25s ease;display:flex;align-items:center;gap:10px">
-            <div class="os-slabimg" style="position:relative;width:min(52%,270px);flex:0 0 auto"><img src="assets/layer-04.png" alt="Automation Cell" style="display:block;width:100%;filter:drop-shadow(0 10px 22px rgba(19,36,46,.18))"><div class="os-tint" style="position:absolute;inset:0;background:#2C86B0;opacity:0;-webkit-mask:url('assets/layer-04.png') center/contain no-repeat;mask:url('assets/layer-04.png') center/contain no-repeat;pointer-events:none"></div></div>
-            <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
-              <span style="flex:0 0 auto;width:18px;height:1px;background:rgba(19,36,46,.3)"></span>
-              <div style="display:flex;flex-direction:column;gap:2px;white-space:nowrap">
-                <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(19,36,46,.4)">04</span>
-                <span style="font-weight:600;font-size:13px;color:#13242E">Automation Cell</span>
-                <span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:#3FAE72">FLOOR</span>
+
+            <div class="os-slab" data-idx="3" style="position:relative;z-index:2;cursor:pointer;margin-top:-5%;transition:opacity .25s ease;display:flex;align-items:center;gap:10px">
+              <div class="os-slabimg" style="position:relative;width:min(52%,270px);flex:0 0 auto"><img src="assets/layer-04.png" alt="Automation Cell" style="display:block;width:100%;filter:drop-shadow(0 10px 22px rgba(19,36,46,.18))"><div class="os-tint" style="position:absolute;inset:0;background:#2C86B0;opacity:0;-webkit-mask:url('assets/layer-04.png') center/contain no-repeat;mask:url('assets/layer-04.png') center/contain no-repeat;pointer-events:none"></div></div>
+              <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+                <span style="flex:0 0 auto;width:18px;height:1px;background:rgba(19,36,46,.3)"></span>
+                <div style="display:flex;flex-direction:column;gap:2px;white-space:nowrap">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(19,36,46,.4)">04</span>
+                  <span style="font-weight:600;font-size:13px;color:#13242E">Automation Cell</span>
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:#3FAE72">FLOOR</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="os-slab" data-idx="4" style="position:relative;z-index:1;cursor:pointer;margin-top:-5%;transition:opacity .25s ease;display:flex;align-items:center;gap:10px">
-            <div class="os-slabimg" style="position:relative;width:min(52%,270px);flex:0 0 auto"><img src="assets/layer-05.png" alt="Logistics" style="display:block;width:100%;filter:drop-shadow(0 10px 22px rgba(19,36,46,.18))"><div class="os-tint" style="position:absolute;inset:0;background:#2C86B0;opacity:0;-webkit-mask:url('assets/layer-05.png') center/contain no-repeat;mask:url('assets/layer-05.png') center/contain no-repeat;pointer-events:none"></div></div>
-            <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
-              <span style="flex:0 0 auto;width:18px;height:1px;background:rgba(19,36,46,.3)"></span>
-              <div style="display:flex;flex-direction:column;gap:2px;white-space:nowrap">
-                <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(19,36,46,.4)">05</span>
-                <span style="font-weight:600;font-size:13px;color:#13242E">Logistics</span>
-                <span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:rgba(44,134,176,.9)">DELIVERY</span>
+
+            <div class="os-slab" data-idx="4" style="position:relative;z-index:1;cursor:pointer;margin-top:-5%;transition:opacity .25s ease;display:flex;align-items:center;gap:10px">
+              <div class="os-slabimg" style="position:relative;width:min(52%,270px);flex:0 0 auto"><img src="assets/layer-05.png" alt="Logistics" style="display:block;width:100%;filter:drop-shadow(0 10px 22px rgba(19,36,46,.18))"><div class="os-tint" style="position:absolute;inset:0;background:#2C86B0;opacity:0;-webkit-mask:url('assets/layer-05.png') center/contain no-repeat;mask:url('assets/layer-05.png') center/contain no-repeat;pointer-events:none"></div></div>
+              <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+                <span style="flex:0 0 auto;width:18px;height:1px;background:rgba(19,36,46,.3)"></span>
+                <div style="display:flex;flex-direction:column;gap:2px;white-space:nowrap">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(19,36,46,.4)">05</span>
+                  <span style="font-weight:600;font-size:13px;color:#13242E">Logistics</span>
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:rgba(44,134,176,.9)">DELIVERY</span>
+                </div>
               </div>
             </div>
+            
           </div>
         </div>
 
